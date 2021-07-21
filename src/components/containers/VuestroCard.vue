@@ -1,17 +1,17 @@
 <template>
   <div class="vuestro-card" :class="[`basis-${cols}`, gutter, { overflowHidden, stretch, shrink, row }]">
     <!--SLOT FOR HEADER TEXT (only show if "heading" slot was provided)-->
-    <div v-if="$slots.heading"
+    <div v-if="$scopedSlots.heading"
          class="vuestro-card-heading"
          :style="colorBarStyle">
       <slot name="heading"></slot>
     </div>
-    <div v-if="$slots.subheading"
+    <div v-if="$scopedSlots.subheading"
          class="vuestro-card-subheading">
       <slot name="subheading"></slot>
     </div>
     <!--SLOT FOR DESCRIPTION (only show if "description" slot was provided)-->
-    <div v-if="$slots.description"
+    <div v-if="$scopedSlots.description"
          class="vuestro-card-description">
       <slot name="description"></slot>
     </div>
@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     resize() {
-      this.$slots.default.resize && this.$slots.default.resize();
+      this.$scopedSlots.default.resize && this.$scopedSlots.default.resize();
     },
   },
 };

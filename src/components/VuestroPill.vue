@@ -4,28 +4,28 @@
                          closable: $listeners.close,
                          shadow, draggable, geopattern, noMargin }]"
        @click="onClick">
-    <div v-if="!$slots.title && !$slots.icon" class="vuestro-pill-title" :class="{ autoCapital }"
+    <div v-if="!$scopedSlots.title && !$scopedSlots.icon" class="vuestro-pill-title" :class="{ autoCapital }"
          :style="titleStyle">
       {{ titleComputed }}
     </div>
-    <div v-if="$slots.title || $slots.icon"
+    <div v-if="$scopedSlots.title || $scopedSlots.icon"
          class="vuestro-pill-title"
-         :class="$slots['title-buttons'] ? ['vuestro-pill-title-no-right']:[]"
+         :class="$scopedSlots['title-buttons'] ? ['vuestro-pill-title-no-right']:[]"
          :style="titleStyle">
-      <div v-if="$slots.icon" class="vuestro-pill-icon-slot">
+      <div v-if="$scopedSlots.icon" class="vuestro-pill-icon-slot">
         <slot name="icon"></slot>
       </div>
-      <div v-if="$slots.title" class="vuestro-pill-title-slot">
+      <div v-if="$scopedSlots.title" class="vuestro-pill-title-slot">
         <slot name="title"></slot>
       </div>
-      <div v-if="$slots['title-buttons']" class="vuestro-pill-button-slot">
+      <div v-if="$scopedSlots['title-buttons']" class="vuestro-pill-button-slot">
         <slot name="title-buttons"></slot>
       </div>
     </div>
-    <div v-if="$slots.value" class="vuestro-pill-value">
+    <div v-if="$scopedSlots.value" class="vuestro-pill-value">
       <slot name="value"></slot>
     </div>
-    <div v-if="$slots['value-buttons']" class="vuestro-pill-button-slot">
+    <div v-if="$scopedSlots['value-buttons']" class="vuestro-pill-button-slot">
       <slot name="value-buttons"></slot>
     </div>
     <div v-if="$listeners.close">
@@ -65,14 +65,14 @@ export default {
         if (this.geopattern.length > 0) {
           text = this.geopattern;
         } else {
-          text = this.$slots.title[0].text || '';
+          text = this.$scopedSlots.title[0].text || '';
         }
         ret['background-image'] = GeoPattern.generate(text.trim()).toDataUrl();
       }
       if (this.color) {
         ret['background-color'] = this.color;
       }
-      if (!this.$slots.value) {
+      if (!this.$scopedSlots.value) {
         ret['flex-grow'] = 1;
         ret['justify-content'] = 'flex-start';
       }
@@ -80,8 +80,8 @@ export default {
     },
     titleComputed() {
       this.autoCapital = true;
-      if (this.$slots.value && this.$slots.value[0]) {
-        let v = this.value || this.$slots.value[0].text;
+      if (this.$scopedSlots.value && this.$scopedSlots.value[0]) {
+        let v = this.value || this.$scopedSlots.value[0].text;
         if (v && _.isString(v)) {
           return v.trim().slice(0, 1).toUpperCase();
         }

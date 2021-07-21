@@ -4,12 +4,12 @@
        v-vuestro-blur="onBlur"
        :style="{ 'z-index': active ? 200:100 }">
     <div class="vuestro-dropdown-inner"
-         :class="{ active, noScroll, bottom, stretch, button: !!$slots.button }"
+         :class="{ active, noScroll, bottom, stretch, button: !!$scopedSlots.button }"
          @mouseleave="onLeave">
-      <div v-if="$slots.title" class="vuestro-dropdown-title" @click="onClick">
+      <div v-if="$scopedSlots.title" class="vuestro-dropdown-title" @click="onClick">
         &#8203;<slot name="title"></slot>&#8203;
       </div>
-      <div class="vuestro-dropdown-button" v-else-if="$slots.button">
+      <div class="vuestro-dropdown-button" v-else-if="$scopedSlots.button">
         <slot name="button"></slot>
       </div>
       <div ref="dropdown"
@@ -23,7 +23,8 @@
              @click="onContentClick">
           <slot :close="close"></slot>
         </div>
-        <div class="vuestro-dropdown-menu-buttons" v-if="$slots.buttons">
+        <div v-if="$scopedSlots.buttons"
+             class="vuestro-dropdown-menu-buttons">
           <slot name="buttons"></slot>
         </div>
       </div>
@@ -65,7 +66,7 @@ export default {
   mounted() {
     // if VuestroButton was used as activator, wire up its events
     this.$nextTick(() => {
-      if (this.$slots.button) {
+      if (this.$scopedSlots.button) {
         this.$children[0].$on('click', () => {
           this.onClick();
         });

@@ -15,7 +15,7 @@
     <div class="vuestro-text-field-input-el-wrapper" :style="style">
       <div ref="iconSlot"
            class="vuestro-text-field-icon-slot"
-           :class="{ active: $slots.icon || variant === 'search' }">
+           :class="{ active: $scopedSlots.icon || variant === 'search' }">
         <slot name="icon">
           <div @click="showDropdown = true">
             <vuestro-icon v-if="variant === 'search'" name="search" scale="0.8"></vuestro-icon>
@@ -35,7 +35,7 @@
              @keyup="onKeyUp">
       </input>
       <!--UNIT-->
-      <div v-if="$slots.unit" class="vuestro-text-field-unit-slot">
+      <div v-if="$scopedSlots.unit" class="vuestro-text-field-unit-slot">
         <slot name="unit"></slot>
       </div>
       <!--CLEAR BUTTON-->
@@ -63,7 +63,7 @@
       </span>
     </div>
     <!--TEMPLATIZED DROPDOWN MENU-->
-    <div v-if="$slots.dropdown"
+    <div v-if="$scopedSlots.dropdown"
          class="vuestro-text-field-dropdown"
          :style="{ visibility: showDropdown ? 'visible':'hidden'}">
         <slot name="dropdown"></slot>
@@ -214,7 +214,7 @@ export default {
       this.$emit('keyup', e);
     },
     onFocus(e) {
-      if (this.$slots.dropdown) {
+      if (this.$scopedSlots.dropdown) {
         this.showDropdown = true;
       }
       this.focused = true;
@@ -223,7 +223,7 @@ export default {
       this.updateStyle();
     },
     onFocusOut() {
-      if (!this.$slots.dropdown) {
+      if (!this.$scopedSlots.dropdown) {
         this.focused = false;
       }
       this.updateStyle();
@@ -233,7 +233,7 @@ export default {
       }
     },
     closeDropdown() {
-      if (this.$slots.dropdown) {
+      if (this.$scopedSlots.dropdown) {
         this.showDropdown = false;
         this.focused = false;
       }

@@ -5,18 +5,18 @@
 			 @mouseenter="onMouseEnter"
 			 @mouseleave="onMouseLeave"
 	     @click="onClick">
-    <div v-if="$slots.icon" class="vuestro-list-item-icon">
+    <div v-if="$scopedSlots.icon" class="vuestro-list-item-icon">
       <slot name="icon"></slot>
     </div>
     <div class="vuestro-list-item-inner">
-      <div v-if="!$slots.default" class="vuestro-list-item-text">
-        <div v-if="$slots.title" class="vuestro-list-item-title">
+      <div v-if="!$scopedSlots.default" class="vuestro-list-item-text">
+        <div v-if="$scopedSlots.title" class="vuestro-list-item-title">
           <slot name="title"></slot>
         </div>
-        <div v-if="$slots.description" class="vuestro-list-item-description">
+        <div v-if="$scopedSlots.description" class="vuestro-list-item-description">
           <slot name="description"></slot>
         </div>
-        <div v-if="$slots.content" class="vuestro-list-item-content">
+        <div v-if="$scopedSlots.content" class="vuestro-list-item-content">
           <slot name="content"></slot>
         </div>
       </div>

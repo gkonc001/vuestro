@@ -78,6 +78,13 @@
         </vuestro-panel>
         <vuestro-panel collapsible collapsed>
           <template #title>Collapsed by default</template>
+          <template #toolbar="{ isCollapsed, toggleCollapse }">
+            <vuestro-button v-if="!isCollapsed"
+                            pill size="sm"
+                            @click="toggleCollapse">
+              Let me close that for you
+            </vuestro-button>
+          </template>
           <vuestro-container>
             <vuestro-card>
               <template #description>Set the collapsed property to have the panel be collapsed by default.

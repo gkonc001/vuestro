@@ -28,10 +28,10 @@
       </template>
       <template v-else>
         <div class="vuestro-button-content" :style="{ 'justify-content': justify }">
-          <span v-if="$slots.placeholder" class="vuestro-button-placeholder">
+          <span v-if="$scopedSlots.placeholder" class="vuestro-button-placeholder">
             <slot name="placeholder"></slot>
           </span>
-          <span v-if="$slots.icon" class="vuestro-button-icon" :class="{ showSlotOnHover }"><slot name="icon"></slot></span>
+          <span v-if="$scopedSlots.icon" class="vuestro-button-icon" :class="{ showSlotOnHover }"><slot name="icon"></slot></span>
           <transition name="vuestro-button" mode="out-in">
             <div v-if="!showSlotOnHover || hovered" class="vuestro-button-default-slot" :class="{ showSlotOnHover }">
               <slot></slot>
@@ -40,7 +40,7 @@
         </div>
       </template>
     </div>
-    <div v-if="checkbox && $slots.default" class="vuestro-button-checkbox-text" :class="[ size, { disabled } ]" @click="onClick">
+    <div v-if="checkbox && $scopedSlots.default" class="vuestro-button-checkbox-text" :class="[ size, { disabled } ]" @click="onClick">
       <slot></slot>
     </div>
   </div>

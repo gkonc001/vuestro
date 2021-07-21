@@ -3,13 +3,13 @@
 
     <!--HEADER BLOCK-->
     <div class="vuestro-sidebar-header">
-      <div v-if="$slots.toolbar" class="vuestro-sidebar-toolbar">
+      <div v-if="$scopedSlots.toolbar" class="vuestro-sidebar-toolbar">
         <slot name="toolbar">
         </slot>
       </div>
 
       <!--LOGO-->
-      <div v-if="$slots.logo" class="vuestro-sidebar-logo">
+      <div v-if="$scopedSlots.logo" class="vuestro-sidebar-logo">
         <slot name="logo"></slot>
       </div>
 

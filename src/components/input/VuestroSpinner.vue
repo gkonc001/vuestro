@@ -4,7 +4,7 @@
       <vuestro-icon name="chevron-up"></vuestro-icon>
     </vuestro-button>
     <div class="vuestro-spinner-text">
-      <div v-if="$slots.placeholder" class="vuestro-spinner-placeholder">
+      <div v-if="$scopedSlots.placeholder" class="vuestro-spinner-placeholder">
         <slot name="placeholder"></slot>
       </div>
       <vuestro-editable-text :value="value"

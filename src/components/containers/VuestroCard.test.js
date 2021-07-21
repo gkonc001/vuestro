@@ -16,7 +16,7 @@ describe('VuestroColumn', () => {
   it('only renders heading slot if provided', () => {
     expect(wrapper.find('.heading').exists()).toBe(false);
 
-    wrapper.vm.$slots.heading = "testheadingslot";
+    wrapper.vm.$scopedSlots.heading = "testheadingslot";
     // use force update since there is no wrapper.setSlots method
     wrapper.vm.$forceUpdate();
     expect(wrapper.find('.heading').exists()).toBe(true);

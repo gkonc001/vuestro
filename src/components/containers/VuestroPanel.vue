@@ -14,7 +14,7 @@
                      @click="toggleCollapse">
         <slot name="title"></slot>
       </vuestro-title>
-      <div v-if="$slots.toolbar" class="vuestro-panel-toolbar">
+      <div v-if="$scopedSlots.toolbar" class="vuestro-panel-toolbar">
         <!--EXPOSE COLLAPSE STATE TO TOOLBAR TO ENABLE A 'CANCEL' BUTTON-->
         <slot name="toolbar"
               :isCollapsed="isCollapsed"
@@ -61,7 +61,7 @@ export default {
   },
   computed: {
     hasTitlebar() {
-      return this.$slots.title || this.$slots.toolbar || this.collapsible;
+      return this.$scopedSlots.title || this.$scopedSlots.toolbar || this.collapsible;
     },
   },
   data() {
