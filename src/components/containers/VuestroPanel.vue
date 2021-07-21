@@ -15,7 +15,11 @@
         <slot name="title"></slot>
       </vuestro-title>
       <div v-if="$slots.toolbar" class="vuestro-panel-toolbar">
-        <slot name="toolbar"></slot>
+        <!--EXPOSE COLLAPSE STATE TO TOOLBAR TO ENABLE A 'CANCEL' BUTTON-->
+        <slot name="toolbar"
+              :is-collapsed="isCollapsed" 
+              :toggle-collapse="toggleCollapse">
+        </slot>
       </div>
     </div>
     <div class="vuestro-panel-contents-wrapper" :class="[contentPadding, { isCollapsed, scroll, frame, overflowHidden, row }]">

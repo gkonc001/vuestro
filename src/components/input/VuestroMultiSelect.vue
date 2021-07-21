@@ -44,6 +44,7 @@
          class="vuestro-multi-select-dropdown"
          :style="{ visibility: showDropdown ? 'visible':'hidden', 'max-height': maxHeight }"
          @scroll="checkHeight">
+        <!--PASS METHODS TO SLOT FOR TIGHT INTEGRATION-->
         <slot name="dropdown"
               :searchTerm="searchTerm"
               :closeDropdown="closeDropdown"

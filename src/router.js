@@ -27,6 +27,7 @@ import ContainersList from './pages/ContainersList';
 import ContainersRow from './pages/ContainersRow';
 import ContainersPanel from './pages/ContainersPanel';
 import ContainersPanelScroll from './pages/ContainersPanelScroll';
+import ContainersOmbre from './pages/ContainersOmbre';
 import Popups from './pages/Popups';
 import PopupsDropdown from './pages/PopupsDropdown';
 import PopupsModal from './pages/PopupsModal';
@@ -148,6 +149,15 @@ export default new Router({
           name: 'breadcrumb',
           path: 'breadcrumb',
           component: ContainersBreadcrumb,
+        },
+        {
+          meta: {
+            title: 'Ombré',
+            sidebar: true,
+          },
+          name: 'ombre',
+          path: 'ombre',
+          component: ContainersOmbre,
         },
       ],
     },

@@ -37,6 +37,7 @@ import VuestroModal from '../components/VuestroModal';
 import VuestroMultiSelect from '../components/input/VuestroMultiSelect';
 import VuestroNotifications from '../components/VuestroNotifications';
 import VuestroObjectBrowser from '../components/VuestroObjectBrowser';
+import VuestroOmbre from '../components/containers/VuestroOmbre';
 import VuestroPanel from '../components/containers/VuestroPanel';
 import VuestroParameterList from '../components/input/VuestroParameterList';
 import VuestroPill from '../components/VuestroPill';
@@ -98,6 +99,7 @@ export default {
     Vue.component(VuestroMultiSelect.name, VuestroMultiSelect);
     Vue.component(VuestroNotifications.name, VuestroNotifications);
     Vue.component(VuestroObjectBrowser.name, VuestroObjectBrowser);
+    Vue.component(VuestroOmbre.name, VuestroOmbre);
     Vue.component(VuestroPanel.name, VuestroPanel);
     Vue.component(VuestroParameterList.name, VuestroParameterList);
     Vue.component(VuestroPill.name, VuestroPill);
