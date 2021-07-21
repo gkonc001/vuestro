@@ -268,8 +268,8 @@ export default {
 .vuestro-app {
   --vuestro-text-field-font-weight: 300;
   --vuestro-text-field-fg: var(--vuestro-text-color);
-  --vuestro-text-field-placeholder: var(--vuestro-outline);
-  --vuestro-text-field-placeholder-font-weight: 300;
+  --vuestro-text-field-placeholder: var(--vuestro-text-color-muted);
+  --vuestro-text-field-placeholder-font-weight: 400;
 }
 
 </style>
@@ -385,7 +385,7 @@ export default {
   padding: 0 8px;
 }
 .vuestro-text-field-shaded .vuestro-text-field-placeholder.active {
-  top: 5px;
+  top: 6px;
 }
 
 .vuestro-text-field-input-el-wrapper {
@@ -411,7 +411,7 @@ export default {
 .vuestro-text-field-shaded .vuestro-text-field-input-el {
   align-self: flex-end;
   padding-left: 0.4em;
-  padding-bottom: 0.4em;
+  padding-bottom: 0.3em;
 }
 .vuestro-text-field.center .vuestro-text-field-input-el {
   text-align: center;
