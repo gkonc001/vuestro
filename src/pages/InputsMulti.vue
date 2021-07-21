@@ -131,6 +131,22 @@
       </vuestro-multi-select>
     </vuestro-card>
 
+    <vuestro-card>
+      <template #subheading><span>No title</span></template>
+      <vuestro-multi-select size="xl" readonly :value="exampleValue3">
+        <template #dropdown>
+          <vuestro-container gutter="none" column>
+            <template v-if="filteredLong.length > 0">
+              <vuestro-pill v-for="e in filteredLong" :key="e.id"
+                            clickable @click="onSelect2(e)">
+                <template #value>{{ e.first_name }}</template>
+              </vuestro-pill>
+            </template>
+          </vuestro-container>
+        </template>
+      </vuestro-multi-select>
+    </vuestro-card>
+
   </vuestro-container>
 </template>
 

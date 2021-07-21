@@ -1,7 +1,7 @@
 <template>
   <div class="vuestro-tray"
        :class="[`vuestro-tray-${variant}`, size, { stretch, noMargin }]">
-    <div v-if="$scopedSlots.title" class="vuestro-tray-title flex-align-self-center">
+    <div v-if="$slots.title" class="vuestro-tray-title flex-align-self-center">
       <slot name="title"></slot>
     </div>
     <vuestro-title v-else-if="title" class="vuestro-tray-title flex-align-self-center">{{ title }}</vuestro-title>
