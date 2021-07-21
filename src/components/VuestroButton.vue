@@ -40,7 +40,7 @@
         </div>
       </template>
     </div>
-    <div v-if="checkbox && $scopedSlots.default" class="vuestro-button-checkbox-text" :class="[ size, { disabled } ]" @click="onClick">
+    <div v-if="checkbox && $slots.default" class="vuestro-button-checkbox-text" :class="[ size, { disabled } ]" @click="onClick">
       <slot></slot>
     </div>
   </div>

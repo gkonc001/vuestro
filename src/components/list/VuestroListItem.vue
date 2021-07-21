@@ -9,7 +9,7 @@
       <slot name="icon"></slot>
     </div>
     <div class="vuestro-list-item-inner">
-      <div v-if="!$scopedSlots.default" class="vuestro-list-item-text">
+      <div v-if="!$slots.default" class="vuestro-list-item-text">
         <div v-if="$scopedSlots.title" class="vuestro-list-item-title">
           <slot name="title"></slot>
         </div>

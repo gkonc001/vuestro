@@ -119,7 +119,7 @@ export default {
             x: evt.clientX - mouseX,
             y: evt.clientY - mouseY
           };
-          this.$scopedSlots.default.resize && this.$scopedSlots.default.resize();
+          this.$slots.default.resize && this.$slots.default.resize();
           this.$emit('resizeEnd', { offset });
         };
 

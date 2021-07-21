@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     resize() {
-      this.$scopedSlots.default.resize && this.$scopedSlots.default.resize();
+      this.$slots.default.resize && this.$slots.default.resize();
     },
   },
 };

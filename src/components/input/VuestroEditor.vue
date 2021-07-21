@@ -118,8 +118,8 @@ export default {
 
     this.setColorTheme();
 
-    if (this.$scopedSlots.default) {
-      vm.editor.setValue(this.$scopedSlots.default[0].text, 1);
+    if (this.$slots.default) {
+      vm.editor.setValue(this.$slots.default[0].text, 1);
     } else {
       vm.editor.setValue(vm.value, 1);
     }

@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     getTokens() {
-      let text = this.$scopedSlots.default[0].text;
+      let text = this.$slots.default[0].text;
       if (text) {
         let regex;
         if (this.sensitive) {
