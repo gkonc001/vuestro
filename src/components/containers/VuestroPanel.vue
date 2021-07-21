@@ -17,8 +17,8 @@
       <div v-if="$slots.toolbar" class="vuestro-panel-toolbar">
         <!--EXPOSE COLLAPSE STATE TO TOOLBAR TO ENABLE A 'CANCEL' BUTTON-->
         <slot name="toolbar"
-              :is-collapsed="isCollapsed" 
-              :toggle-collapse="toggleCollapse">
+              :isCollapsed="isCollapsed"
+              :toggleCollapse="toggleCollapse">
         </slot>
       </div>
     </div>
