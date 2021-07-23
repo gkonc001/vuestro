@@ -133,9 +133,14 @@ export default {
         this.showDropdown = false;
       }
     },
-    // keyup passthrough, so you can use @keyup.enter
+    // keyup passthrough, passes through keyup but also provides
+    // special case for enter key which provides closeDropdown as a callback
     onKeyup(e) {
       this.$emit('keyup', e);
+      if (e.key == 'Enter') {
+        this.$emit('search', e.target.value, this.closeDropdown);
+        this.clearSearchTerm();
+      }
     },
     onClear() {
       this.searchTerm = '';
