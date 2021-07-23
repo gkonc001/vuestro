@@ -278,7 +278,7 @@ export default {
   /* redefine style vars for vuestro components */
   --vuestro-text-field-fg: var(--vuestro-dropdown-content-fg);
   --vuestro-pill-value-fg: var(--vuestro-dropdown-content-fg);
-  --vuestro-pill-value-bg: var(--vuestro-gray-med);
+  --vuestro-pill-value-bg: var(--vuestro-gray-dark);
 }
 .vuestro-dropdown-inner.noScroll .vuestro-dropdown-menu {
   overflow: visible;

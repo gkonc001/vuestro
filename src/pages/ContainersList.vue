@@ -28,7 +28,7 @@
         </template>
         <template #title>{{ i.sender }}</template>
         <template #description>{{ i.subject }}</template>
-        <!-- <template #content>{{ i.content }}</template>  -->
+         <template #content>Some Content</template>  
         <template #buttons>
           <vuestro-button round no-border size="sm" @click="onEdit(i)">
             <vuestro-icon name="pen"></vuestro-icon>

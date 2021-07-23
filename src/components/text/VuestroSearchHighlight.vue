@@ -67,6 +67,9 @@ export default {
 
 .vuestro-app {
   --vuestro-highlight-bg: var(--vuestro-yellow);
+  --vuestro-highlight-fg: var(--vuestro-text-color);
+}
+.vuestro-dark {
   --vuestro-highlight-fg: var(--vuestro-text-color-inverse);
 }
 

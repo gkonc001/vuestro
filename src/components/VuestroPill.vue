@@ -65,14 +65,14 @@ export default {
         if (this.geopattern.length > 0) {
           text = this.geopattern;
         } else {
-          text = this.$scopedSlots.title[0].text || '';
+          text = this.$slots.title[0].text || '';
         }
         ret['background-image'] = GeoPattern.generate(text.trim()).toDataUrl();
       }
       if (this.color) {
         ret['background-color'] = this.color;
       }
-      if (!this.$scopedSlots.value) {
+      if (!this.$slots.value) {
         ret['flex-grow'] = 1;
         ret['justify-content'] = 'flex-start';
       }
@@ -80,8 +80,8 @@ export default {
     },
     titleComputed() {
       this.autoCapital = true;
-      if (this.$scopedSlots.value && this.$scopedSlots.value[0]) {
-        let v = this.value || this.$scopedSlots.value[0].text;
+      if (this.$slots.value && this.$slots.value[0]) {
+        let v = this.value || this.$slots.value[0].text;
         if (v && _.isString(v)) {
           return v.trim().slice(0, 1).toUpperCase();
         }

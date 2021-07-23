@@ -220,7 +220,7 @@ export default {
 
   --vuestro-tooltip-opacity: 0.8;
 
-  --vuestro-selection: var(--vuestro-cobalt);
+  --vuestro-selection: #aab9d0;
   --vuestro-outline: #aaa;
   --vuestro-active: #cfdaee;
   --vuestro-hover: #d4d7da;
@@ -230,7 +230,7 @@ export default {
   /* text colors */
   --vuestro-text-color: #323334;
   --vuestro-text-color-secondary: #696969;
-  --vuestro-text-color-muted: #888;
+  --vuestro-text-color-muted: #777;
   --vuestro-text-color-inverse: #eee; /* inverse text, changes with theme */
   --vuestro-text-color-dark: #323334; /* meant for always dark text */
   --vuestro-text-color-light: #ccc; /* meant for always light text */
