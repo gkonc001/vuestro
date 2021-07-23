@@ -122,7 +122,7 @@ export default {
 }
 .vuestro-button-text {
   --variant-color: var(--vuestro-text-color);
-  --variant-text-color: var(--vuestro-dark);
+  --variant-text-color: var(--vuestro-text-color-inverse);
 }
 
 .vuestro-button {
@@ -270,6 +270,7 @@ export default {
 }
 .vuestro-button-inner.vuestro-button-link.value,
 .vuestro-button-inner.vuestro-button-link:hover {
+  color: var(--vuestro-primary);
   filter: brightness(150%);
   background-color: transparent;
 }
