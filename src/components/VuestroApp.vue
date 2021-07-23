@@ -285,6 +285,8 @@ export default {
   --vuestro-warning: var(--vuestro-yellow);
   --vuestro-danger: var(--vuestro-red);
 
+  --vuestro-selection: var(--vuestro-cobalt);
+
   --vuestro-text-color: #ccc;
   --vuestro-text-color-secondary: #696969;
   --vuestro-text-color-muted: #aaa;
