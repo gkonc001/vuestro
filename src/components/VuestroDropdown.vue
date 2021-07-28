@@ -6,7 +6,7 @@
     <div class="vuestro-dropdown-inner"
          :class="{ active, noScroll, bottom, stretch, button: !!$scopedSlots.button }"
          @mouseleave="onLeave">
-      <div v-if="$scopedSlots.title" class="vuestro-dropdown-title" @click="onClick">
+      <div v-if="$scopedSlots.title" class="vuestro-dropdown-title" @click.stop="onClick">
         &#8203;<slot name="title"></slot>&#8203;
       </div>
       <div class="vuestro-dropdown-button" v-else-if="$scopedSlots.button">
@@ -67,8 +67,9 @@ export default {
     // if VuestroButton was used as activator, wire up its events
     this.$nextTick(() => {
       if (this.$scopedSlots.button) {
-        this.$children[0].$on('click', () => {
+        this.$children[0].$on('click', (e) => {
           this.onClick();
+          e.stopPropagation();
         });
       }
     });
