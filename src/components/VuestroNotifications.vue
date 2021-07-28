@@ -13,6 +13,7 @@
           </vuestro-icon>
         </div>
       </template>
+      <!--TEMPORARY POPUP (timed display of new notification)-->
       <template v-if="popupMode">
         <div class="vuestro-notification-item" @click="onClick(latest)" @mouseover="onDropdownHover">
           <div class="vuestro-notification-item-dot" :class="{ unread: latest.unread }"></div>
@@ -32,20 +33,31 @@
              :style="{ 'animation-duration': `${this.popupTimeout}ms`}">
         </div>
       </template>
+      <!--NORMAL POPUP-->
       <template v-else>
         <!--HEADER-->
-        <vuestro-container class="vuestro-notifcations-header" align="center" gutter="none" no-wrap>
-          <div class="vuestro-notification-count">{{ sortedData.length }} notifications</div>
-          <vuestro-button class="vuestro-mla" variant="info" pill value size="sm" @click="onMarkAllRead">
-            Mark All as Read
-          </vuestro-button>
-          <vuestro-button variant="danger" pill value size="sm" @click="onClear">
-            Clear
-          </vuestro-button>
+        <vuestro-container justify="space-between" align="center" gutter="none" no-wrap>
+          <!--SEARCH BOX-->
+          <vuestro-text-field class="vuestro-notification-search-box"
+                              variant="search"
+                              v-model="searchTerm"
+                              no-margin>
+          </vuestro-text-field>
+          <!--COUNT-->
+          <div class="vuestro-notification-count">{{ allNotifications.length }} notifications</div>
+          <!--HEADER BUTTONS-->
+          <vuestro-container gutter="none" justify="flex-end" no-wrap>
+            <vuestro-button variant="info" pill value size="sm" @click="onMarkAllRead">
+              Mark All as Read
+            </vuestro-button>
+            <vuestro-button variant="danger" pill value size="sm" @click="onClear">
+              Clear
+            </vuestro-button>
+          </vuestro-container>
         </vuestro-container>
         <vuestro-hr margin="0.2em"></vuestro-hr>
         <!--NOTIFICATIONS LIST-->
-        <div class="vuestro-notification-item" v-for="item in sortedData" :key="item[idName]"
+        <div class="vuestro-notification-item" v-for="item in sortedFilteredData" :key="item[idName]"
              @click="onClick(item)" @mouseover="onDropdownHover">
           <div class="vuestro-notification-item-dot" :class="{ unread: item.unread }"></div>
           <vuestro-container gutter="none" no-wrap align="center">
@@ -59,7 +71,7 @@
             <div class="vuestro-notification-item-date">{{ item.created | vuestroLocaleDate }}<br>{{ item.created | vuestroLocaleTime }}</div>
           </vuestro-container>
         </div>
-        <div v-if="sortedData.length === 0"
+        <div v-if="sortedFilteredData.length === 0"
              class="vuestro-no-notifications">
           No Notifications
         </div>
@@ -76,9 +88,9 @@ export default {
   name: 'VuestroNotifications',
   props: {
     notifications: { type: Array, default: () => []},
-    getterName: { type: String, default: 'notifications' },
-    readAction: { type: String, default: 'notificationRead' },
-    clearAction: { type: String, default: 'notificationsClear' },
+    getterName: { type: String, default: 'notifications' },       // name of Vuex getter
+    readAction: { type: String, default: 'notificationRead' },    // name of Vuex read action
+    clearAction: { type: String, default: 'notificationsClear' }, // name of Vuex clear action
     idName: { type: String, default: '_id' },
     popupTimeout: { type: Number, default: 2000 },
   },
@@ -86,22 +98,32 @@ export default {
     return {
       popupMode: false,
       popupTimer: null,
+      searchTerm: '',
     };
   },
   computed: {
-    sortedData() {
+    allNotifications() {
       let data;
-      // if store is setup to provide isDarkUI, use it
       if (this.$store && this.$store.getters[this.getterName]) {
         data = this.$store.getters[this.getterName];
       } else {
         // use prop
         data = this.notifications;
       }
+      return data;
+    },
+    sortedFilteredData() {
+      let data = this.allNotifications;
+      if (this.searchTerm.length > 0) {
+        let regex = new RegExp(this.searchTerm, 'i');
+        data = _.filter(data, (o) => {
+          return regex.test(`${o.title} ${o.description}`);
+        });
+      }
       return _.orderBy(data, 'created', ['desc']);
     },
     unread() {
-      return _.filter(this.sortedData, 'unread');
+      return _.filter(this.allNotifications, 'unread');
     },
     latest() {
       return this.unread[0];
@@ -133,7 +155,7 @@ export default {
       }
     },
     onMarkAllRead() {
-      for (let n of this.sortedData) {
+      for (let n of this.allNotifications) {
         this.$store.dispatch(this.readAction, n[this.idName]);
       }
     },
@@ -166,6 +188,9 @@ export default {
 }
 .vuestro-app.mobile .vuestro-notifications-icon {
   margin-right: 1em;
+}
+.vuestro-notification-search-box {
+  min-width: 10em;
 }
 .vuestro-notifications-icon-count {
   position: absolute;
@@ -226,7 +251,7 @@ export default {
 .vuestro-notification-count {
   color: var(--vuestro-text-color-muted);
   font-size: 0.9em;
-  margin-left: 0.2em;
+  margin-left: 1em;
   margin-right: 1em;
   white-space: nowrap;
 }

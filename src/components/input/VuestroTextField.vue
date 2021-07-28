@@ -40,6 +40,7 @@
       </div>
       <!--CLEAR BUTTON-->
       <vuestro-button v-if="(!invalid && clearable && value && !readonly) || variant === 'search'"
+                      class="vuestro-text-field-button"
                       size="sm" round no-border @click.stop="onClear">
         <vuestro-icon name="times"></vuestro-icon>
       </vuestro-button>
@@ -392,7 +393,7 @@ export default {
   flex: 1 1 auto;
   display: flex;
   padding-left: 0.4em;
-  padding-right: 0.4em;
+  padding-right: 0.2em;
   transition: all 0.15s;
   border-radius: var(--vuestro-control-border-radius);
 }
@@ -448,6 +449,9 @@ export default {
 
 .vuestro-text-field-editing-buttons {
   display: flex;
+}
+.vuestro-text-field-button {
+  flex-shrink: 0;
 }
 
 .vuestro-text-field-invalid-msg {
