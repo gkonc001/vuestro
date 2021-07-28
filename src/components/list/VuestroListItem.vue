@@ -52,7 +52,7 @@ export default {
             return e.stopPropagation();
           }
         }
-        this.$emit('click');
+        this.$emit('click', e);
       }
     },
 		onMouseEnter() {
