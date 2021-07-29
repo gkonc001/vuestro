@@ -4,7 +4,8 @@
       <!--NAVBAR ICON-->
       <template #title>
         <div class="vuestro-notifications-icon">
-          <vuestro-icon name="bell">
+          <vuestro-icon v-if="muted" name="bell-slash"></vuestro-icon>
+          <vuestro-icon v-else name="bell">
             <div v-if="unread.length > 0" class="vuestro-notifications-icon-count">
               <vuestro-pill color="var(--vuestro-info)" size="sm" no-margin>
                 <template #title>{{ unread.length }}</template>
@@ -53,13 +54,28 @@
             <vuestro-button variant="danger" pill value size="sm" @click="onClear">
               Clear
             </vuestro-button>
+            <vuestro-button pill value size="sm"
+                            :variant="muted ? 'danger':'secondary'"
+                            @click="toggleMute">
+              <vuestro-icon name="volume-mute"></vuestro-icon>
+            </vuestro-button>
           </vuestro-container>
         </vuestro-container>
         <vuestro-hr margin="0.2em"></vuestro-hr>
         <!--NOTIFICATIONS LIST-->
-        <div class="vuestro-notification-item" v-for="item in sortedFilteredData" :key="item[idName]"
+        <div class="vuestro-notification-item"
+             v-for="item in sortedFilteredData" :key="item[idName]"
              @click="onClick(item)" @mouseover="onDropdownHover">
-          <div class="vuestro-notification-item-dot" :class="{ unread: item.unread }"></div>
+          <!--DOT-->
+          <vuestro-container v-if="item.grouped && item.grouped.length > 0"
+                             class="vuestro-notification-item-count-pill"
+                             gutter="none" justify="center" column>
+            <vuestro-pill size="sm" :color="item.unread ? 'var(--vuestro-info)':'var(--vuestro-secondary)'">
+              <template #title>{{ item.grouped.length + 1 }}</template>
+            </vuestro-pill>
+          </vuestro-container>
+          <div v-else class="vuestro-notification-item-dot" :class="{ unread: item.unread }"></div>
+          <!--BLOCK CONTENT-->
           <vuestro-container gutter="none" no-wrap align="center">
             <vuestro-container gutter="none" column>
               <div class="vuestro-notification-item-title">
@@ -91,14 +107,16 @@ export default {
     getterName: { type: String, default: 'notifications' },       // name of Vuex getter
     readAction: { type: String, default: 'notificationRead' },    // name of Vuex read action
     clearAction: { type: String, default: 'notificationsClear' }, // name of Vuex clear action
-    idName: { type: String, default: '_id' },
-    popupTimeout: { type: Number, default: 2000 },
+    idName: { type: String, default: '_id' },                     // name of id field
+    popupTimeout: { type: Number, default: 2000 },                // ms to keep popup open
+    grouped: { type: Boolean, default: false },                   // grouped notifications by simple compare
   },
   data() {
     return {
       popupMode: false,
       popupTimer: null,
       searchTerm: '',
+      muted: false,
     };
   },
   computed: {
@@ -120,7 +138,27 @@ export default {
           return regex.test(`${o.title} ${o.description}`);
         });
       }
-      return _.orderBy(data, 'created', ['desc']);
+      let ordered = _.orderBy(data, 'created', ['desc']);
+      if (this.grouped) {
+        let grouped = [];
+        for (let current of ordered) {
+          let previous = grouped[grouped.length-1];
+          if (previous && current.title === previous.title &&
+                          current.description === previous.description) {
+            // duplicate, update previous with new count and drop this one
+            if (previous.grouped === undefined) {
+              previous.grouped = [];
+            }
+            previous.grouped.push(current[this.idName]);
+          } else {
+            // if not duplicate, push it
+            grouped.push(current);
+          }
+        }
+        return grouped;
+      } else {
+        return ordered;
+      }
     },
     unread() {
       return _.filter(_.orderBy(this.allNotifications, 'created', ['desc']), 'unread');
@@ -131,7 +169,7 @@ export default {
   },
   watch: {
     unread(newVal, oldVal) {
-      if (newVal.length > oldVal.length) {
+      if (!this.muted && newVal.length > oldVal.length) {
         this.popupMode = true;
         // manual open dropdown
         this.$refs.theDropdown.open();
@@ -146,7 +184,14 @@ export default {
   },
   methods: {
     onClick(item) {
+      // mark the main item read
       this.$store.dispatch(this.readAction, item[this.idName]);
+      // mark any duplicates from the ids in .grouped
+      if (item.grouped) {
+        for (let g of item.grouped) {
+          this.$store.dispatch(this.readAction, g);
+        }
+      }
       if (item.path) {
         if (item.path !== this.$route.path) {
           this.$router.push(item.path);
@@ -168,6 +213,10 @@ export default {
       // cancel timer
       clearTimeout(this.popupTimer);
       this.popupMode = false;
+    },
+    toggleMute() {
+      this.muted = !this.muted;
+      this.$emit('mute', this.muted);
     },
   },
 };
@@ -241,7 +290,10 @@ export default {
   align-self: center;
   border-radius: 50%;
   margin: 0.4em 1em 0.4em 0.5em;
-  cursor: pointer ;
+  cursor: pointer;
+}
+.vuestro-notification-item-count-pill {
+  margin-right: 0.5em;
 }
 .vuestro-notification-item-dot.unread {
   background-color: var(--vuestro-info);
