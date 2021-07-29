@@ -96,17 +96,18 @@
           </vuestro-button>
         </vuestro-container>
         <!--OPTION/SELECT-->
-        <vuestro-dropdown v-else-if="p.type === 'option'"
-                          stretch close-on-content-click>
+        <vuestro-dropdown v-else-if="p.type === 'option'" stretch>
           <template #button>
             <vuestro-button pill value variant="info">
               {{ getValueOrSetDefault(p) || 'Select...' }}
             </vuestro-button>
           </template>
-          <vuestro-list-button v-for="o in p.options" :key="o"
-                               @click="setField(p, o)">
-            {{ o }}
-          </vuestro-list-button>
+          <template #default="{ close }">
+            <vuestro-list-button v-for="o in p.options" :key="o"
+                                 @click.stop="setField(p, o, close)">
+              {{ o }}
+            </vuestro-list-button>
+          </template>
         </vuestro-dropdown>
         <vuestro-editor v-else-if="p.type === 'text'"
                         :options="editorOptions"
@@ -172,7 +173,7 @@ export default {
         return null;
       }
     },
-    setField(param, value) {
+    setField(param, value, callback) {
       let newVal = _.cloneDeep(this.value);
       // coerce value
       switch (param.type) {
@@ -189,6 +190,7 @@ export default {
           newVal[param.field] = value;
       }
       this.$emit('input', newVal);
+      callback && callback();
     },
     onAddNewArrayItem(param) {
       let newVal = _.cloneDeep(this.value);
