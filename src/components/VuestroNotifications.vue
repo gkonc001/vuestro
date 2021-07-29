@@ -123,7 +123,7 @@ export default {
       return _.orderBy(data, 'created', ['desc']);
     },
     unread() {
-      return _.filter(this.allNotifications, 'unread');
+      return _.filter(_.orderBy(this.allNotifications, 'created', ['desc']), 'unread');
     },
     latest() {
       return this.unread[0];
