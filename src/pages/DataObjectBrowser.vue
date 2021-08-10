@@ -76,6 +76,17 @@
     </vuestro-card>
 
 
+    <vuestro-card>
+      <template #subheading>
+        <span>VuestroObjectBrowserModal is a useful modal for inspecting raw objects</span>
+      </template>
+      <vuestro-object-browser-modal ref="browserModal">
+        <template #title>VuestroObjectBrowserModal</template>
+      </vuestro-object-browser-modal>
+      <vuestro-button @click="$refs.browserModal.openWithObj(testObject)">Open</vuestro-button>
+    </vuestro-card>
+
+
   </vuestro-container>
 </template>
 
