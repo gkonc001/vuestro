@@ -1,4 +1,4 @@
-/* global _ */
+/* global _, moment */
 import VuestroApp from '../components/VuestroApp';
 import VuestroAreaChart from '../components/charts/VuestroAreaChart';
 import VuestroAsyncText from '../components/text/VuestroAsyncText';
@@ -151,9 +151,10 @@ export default {
     Vue.filter('vuestroHMS', (d) => {
       if (d === null || d === undefined) {
         return '';
-      }
-      if (_.isString(d)) {
+      } else if (_.isString(d)) {
         d = new Date(d);
+      } else if (_.isNumber(d)) {
+        d = new Date(parseInt(d, 10)*1000);
       }
       return `${('0' + d.getHours()).slice(-2)}:${('0' + d.getMinutes()).slice(-2)}:${('0' + d.getSeconds()).slice(-2)}`;
     });
@@ -161,9 +162,10 @@ export default {
     Vue.filter('vuestroIsoDate', (d) => {
       if (d === null || d === undefined) {
         return '';
-      }
-      if (_.isString(d)) {
+      } else if (_.isString(d)) {
         d = new Date(d);
+      } else if (_.isNumber(d)) {
+        d = new Date(parseInt(d, 10)*1000);
       }
       return d.toISOString();
     });
@@ -171,9 +173,10 @@ export default {
     Vue.filter('vuestroDate', (d) => {
       if (d === null || d === undefined) {
         return '';
-      }
-      if (_.isString(d)) {
+      } else if (_.isString(d)) {
         d = new Date(d);
+      } else if (_.isNumber(d)) {
+        d = new Date(parseInt(d, 10)*1000);
       }
       return d.toLocaleString();
     });
@@ -181,9 +184,10 @@ export default {
     Vue.filter('vuestroLocaleDate', (d) => {
       if (d === null || d === undefined) {
         return '';
-      }
-      if (_.isString(d)) {
+      } else if (_.isString(d)) {
         d = new Date(d);
+      } else if (_.isNumber(d)) {
+        d = new Date(parseInt(d, 10)*1000);
       }
       return d.toLocaleDateString();
     });
@@ -191,9 +195,10 @@ export default {
     Vue.filter('vuestroLocaleTime', (d) => {
       if (d === null || d === undefined) {
         return '';
-      }
-      if (_.isString(d)) {
+      } else if (_.isString(d)) {
         d = new Date(d);
+      } else if (_.isNumber(d)) {
+        d = new Date(parseInt(d, 10)*1000);
       }
       return d.toLocaleTimeString();
     });

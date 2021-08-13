@@ -23,10 +23,12 @@
     <!--USER BLOCK-->
     <template v-if="user">
       <vuestro-geo-pattern class="vuestro-user-block" :seed="user" @color="(c) => {this.geoColor = c}">
-        <img v-if="userImg"
-             :src="userImg"
-             :class="{ clickable: $listeners.profile }"
-             @click="onUserImgClick"/>
+        <div v-if="userImg">
+          <img
+               :src="userImg"
+               :class="{ clickable: $listeners.profile }"
+               @click="onUserImgClick"/>
+        </div>
         <transition name="vuestro-user-block" mode="out-in">
           <div v-if="!localMini" class="vuestro-user-block-text">
             <span class="vuestro-sidebar-username">{{ user }}</span>

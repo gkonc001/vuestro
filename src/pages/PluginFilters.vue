@@ -18,20 +18,27 @@
 
     <vuestro-card>
       <template #subheading>vuestroHMS</template>
-      <template #description>Render simple hours:minutes:seconds from a Date object or string</template>
-      {{ testDate }} -> {{ testDate | vuestroHMS }}
+      <template #description>Render simple hours:minutes:seconds from a Date object, string, or UNIX time</template>
+      <div>{{ testDate }} -> {{ testDate | vuestroHMS }}</div>
+      <div>{{ testUnix }} -> {{ testUnix | vuestroHMS }}</div>
     </vuestro-card>
 
     <vuestro-card>
       <template #subheading>vuestroIsoDate</template>
-      <template #description>Render ISO8601 date from a Date object or string</template>
+      <template #description>Render ISO8601 date from a Date object, string, or UNIX time</template>
       {{ testDate }} -> {{ testDate | vuestroIsoDate }}
     </vuestro-card>
 
     <vuestro-card>
       <template #subheading>vuestroDate</template>
-      <template #description>Render localized date from a Date object or string</template>
+      <template #description>Render localized datetime from a Date object, string, or UNIX time</template>
       {{ testDate }} -> {{ testDate | vuestroDate }}
+    </vuestro-card>
+
+    <vuestro-card>
+      <template #subheading>vuestroLocaleDate</template>
+      <template #description>Render localized date only from a Date object, string, or UNIX time</template>
+      {{ testDate }} -> {{ testDate | vuestroLocaleDate }}
     </vuestro-card>
 
     <vuestro-card>
@@ -53,12 +60,15 @@
 
 <script>
 
+/* global moment */
+
 export default {
   name: 'PluginFilters',
   data() {
     return {
       testNumber: 2373373432,
       testDate: new Date(),
+      testUnix: moment().unix(),
       testString1: 'imagine working with vuestro',
       testString2: 'i also handle special-cases',
       testString3: 'and having the word "and" at the beginning',
