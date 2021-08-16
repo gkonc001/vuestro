@@ -1,10 +1,11 @@
-/* global _, moment */
+/* global _ */
 import VuestroApp from '../components/VuestroApp';
 import VuestroAreaChart from '../components/charts/VuestroAreaChart';
 import VuestroAsyncText from '../components/text/VuestroAsyncText';
 import VuestroBarChart from '../components/charts/VuestroBarChart';
 import VuestroBreadcrumb from '../components/containers/VuestroBreadcrumb';
 import VuestroButton from '../components/VuestroButton';
+import VuestroCalendar from '../components/containers/calendar/VuestroCalendar';
 import VuestroCaret from '../components/VuestroCaret';
 import VuestroCard from '../components/containers/VuestroCard';
 import VuestroChartPanel from '../components/charts/VuestroChartPanel';
@@ -69,6 +70,7 @@ export default {
     Vue.component(VuestroBarChart.name, VuestroBarChart);
     Vue.component(VuestroBreadcrumb.name, VuestroBreadcrumb);
     Vue.component(VuestroButton.name, VuestroButton);
+    Vue.component(VuestroCalendar.name, VuestroCalendar);
     Vue.component(VuestroCaret.name, VuestroCaret);
     Vue.component(VuestroCard.name, VuestroCard);
     Vue.component(VuestroChartPanel.name, VuestroChartPanel);

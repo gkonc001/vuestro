@@ -21,6 +21,7 @@ import InputsParameterList from './pages/InputsParameterList';
 import Containers from './pages/Containers';
 import ContainersBreadcrumb from './pages/ContainersBreadcrumb';
 import ContainersContainer from './pages/ContainersContainer';
+import ContainersCalendar from './pages/ContainersCalendar';
 import ContainersCard from './pages/ContainersCard';
 import ContainersColumn from './pages/ContainersColumn';
 import ContainersList from './pages/ContainersList';
@@ -149,6 +150,15 @@ export default new Router({
           name: 'breadcrumb',
           path: 'breadcrumb',
           component: ContainersBreadcrumb,
+        },
+        {
+          meta: {
+            title: 'Calendar',
+            sidebar: true,
+          },
+          name: 'calendar',
+          path: 'calendar',
+          component: ContainersCalendar,
         },
         {
           meta: {

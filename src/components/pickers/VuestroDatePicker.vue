@@ -2,6 +2,7 @@
   <div class="vuestro-date-picker">
     <template v-for="m in monthOffsets">
       <div class="vuestro-date-picker-block">
+        <!--YEAR PICKER MODE-->
         <div v-if="pickYear">
           <div class="vuestro-date-picker-header">
             <vuestro-button class="back" round size="sm" no-margin no-border @click="backYears">
@@ -24,6 +25,7 @@
             </table>
           </div>
         </div>
+        <!--MONTH PICKER MODE-->
         <div v-else-if="pickMonth">
           <div class="vuestro-date-picker-header">
             <div class="name single" @click="onSelectYear">{{ getYear() }}</div>
@@ -56,6 +58,7 @@
           </div>
 
         </div>
+        <!--NORMAL (MONTH) MODE-->
         <template v-else>
           <div class="vuestro-date-picker-header">
             <vuestro-button class="back" v-if="m == monthOffsets[0]" round no-border @click="backMonth">

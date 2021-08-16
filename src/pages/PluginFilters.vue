@@ -60,8 +60,6 @@
 
 <script>
 
-/* global moment */
-
 export default {
   name: 'PluginFilters',
   data() {

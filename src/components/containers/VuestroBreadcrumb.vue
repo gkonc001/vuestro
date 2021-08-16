@@ -1,5 +1,5 @@
 <template>
-  <vuestro-container class="vuestro-breadcrumb">
+  <vuestro-container class="vuestro-breadcrumb" :gutter="gutter">
     <div class="vuestro-breadcrumb-trail">
       <template v-for="(p, idx) in stack">
         <div v-if="idx !== 0" class="vuestro-breadcrumb-delimiter">
@@ -20,13 +20,12 @@
 
 <script>
 
-/* global _ */
-
 export default {
   name: 'VuestroBreadcrumb',
   props: {
     pages: { type: Array, required: true },
     delimiter: { type: String, default: 'angle-right' },
+    gutter: { type: String, default: 'md' },
   },
   data() {
     return {
