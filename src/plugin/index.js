@@ -149,14 +149,21 @@ export default {
     });
 
     Vue.filter('vuestroHMS', (d) => {
+      let hours, minutes, seconds;
       if (d === null || d === undefined) {
         return '';
       } else if (_.isString(d)) {
         d = new Date(d);
+        hours = d.getHours();
+        minutes = d.getMinutes();
+        seconds = d.getSeconds();
       } else if (_.isNumber(d)) {
         d = new Date(parseInt(d, 10)*1000);
+        hours = d.getUTCHours();
+        minutes = d.getUTCMinutes();
+        seconds = d.getUTCSeconds();
       }
-      return `${('0' + d.getHours()).slice(-2)}:${('0' + d.getMinutes()).slice(-2)}:${('0' + d.getSeconds()).slice(-2)}`;
+      return `${('0' + hours).slice(-2)}:${('0' + minutes).slice(-2)}:${('0' + seconds).slice(-2)}`;
     });
 
     Vue.filter('vuestroIsoDate', (d) => {

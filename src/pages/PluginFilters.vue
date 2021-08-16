@@ -68,7 +68,7 @@ export default {
     return {
       testNumber: 2373373432,
       testDate: new Date(),
-      testUnix: moment().unix(),
+      testUnix: 48748,
       testString1: 'imagine working with vuestro',
       testString2: 'i also handle special-cases',
       testString3: 'and having the word "and" at the beginning',
