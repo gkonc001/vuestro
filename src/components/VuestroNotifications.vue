@@ -14,83 +14,88 @@
           </vuestro-icon>
         </div>
       </template>
-      <!--TEMPORARY POPUP (timed display of new notification)-->
-      <template v-if="popupMode">
-        <div class="vuestro-notification-item" @click="onClick(latest)" @mouseover="onDropdownHover">
-          <div class="vuestro-notification-item-dot" :class="{ unread: latest.unread }"></div>
-          <vuestro-container gutter="none" no-wrap align="center">
-            <vuestro-container gutter="none" column>
-              <div class="vuestro-notification-item-title">
-                {{ latest.title }}
-                <vuestro-icon v-if="latest.path" scale="0.8" name="share"></vuestro-icon>
-              </div>
-              <div class="vuestro-notification-item-desc">{{ latest.description }}</div>
+      <template #default>
+        <!--TEMPORARY POPUP (timed display of new notification)-->
+        <template v-if="popupMode">
+          <div class="vuestro-notification-item" @click="onClick(latest)" @mouseover="onDropdownHover">
+            <div class="vuestro-notification-icon">
+              <div class="vuestro-notification-item-dot" :class="{ unread: latest.unread }"></div>
+            </div>
+            <vuestro-container gutter="none" no-wrap align="center">
+              <vuestro-container gutter="none" column>
+                <div class="vuestro-notification-item-title">
+                  {{ latest.title }}
+                  <vuestro-icon v-if="latest.path" scale="0.8" name="share"></vuestro-icon>
+                </div>
+                <div class="vuestro-notification-item-desc">{{ latest.description }}</div>
+              </vuestro-container>
+              <div class="vuestro-notification-item-date">{{ latest.created | vuestroLocaleDate }}<br>{{ latest.created | vuestroLocaleTime }}</div>
             </vuestro-container>
-            <div class="vuestro-notification-item-date">{{ latest.created | vuestroLocaleDate }}<br>{{ latest.created | vuestroLocaleTime }}</div>
-          </vuestro-container>
-        </div>
-        <div v-if="popupMode"
-             class="vuestro-notification-timer"
-             :style="{ 'animation-duration': `${this.popupTimeout}ms`}">
-        </div>
-      </template>
-      <!--NORMAL POPUP-->
-      <template v-else>
-        <!--HEADER-->
-        <vuestro-container justify="space-between" align="center" gutter="none" no-wrap>
-          <!--SEARCH BOX-->
-          <vuestro-text-field class="vuestro-notification-search-box"
-                              variant="search"
-                              v-model="searchTerm"
-                              no-margin>
-          </vuestro-text-field>
-          <!--COUNT-->
-          <div class="vuestro-notification-count">{{ allNotifications.length }} notifications</div>
-          <!--HEADER BUTTONS-->
-          <vuestro-container gutter="none" justify="flex-end" no-wrap>
-            <vuestro-button variant="info" pill value size="sm" @click="onMarkAllRead">
-              Mark All as Read
-            </vuestro-button>
-            <vuestro-button variant="danger" pill value size="sm" @click="onClear">
-              Clear
-            </vuestro-button>
-            <vuestro-button pill value size="sm"
-                            :variant="muted ? 'danger':'secondary'"
-                            @click="toggleMute">
-              <vuestro-icon name="volume-mute"></vuestro-icon>
-            </vuestro-button>
-          </vuestro-container>
-        </vuestro-container>
-        <vuestro-hr margin="0.2em"></vuestro-hr>
-        <!--NOTIFICATIONS LIST-->
-        <div class="vuestro-notification-item"
-             v-for="item in sortedFilteredData" :key="item[idName]"
-             @click="onClick(item)" @mouseover="onDropdownHover">
-          <!--DOT-->
-          <vuestro-container v-if="item.grouped && item.grouped.length > 0"
-                             class="vuestro-notification-item-count-pill"
-                             gutter="none" justify="center" column>
-            <vuestro-pill size="sm" :color="item.unread ? 'var(--vuestro-info)':'var(--vuestro-secondary)'">
-              <template #title>{{ item.grouped.length + 1 }}</template>
-            </vuestro-pill>
-          </vuestro-container>
-          <div v-else class="vuestro-notification-item-dot" :class="{ unread: item.unread }"></div>
-          <!--BLOCK CONTENT-->
-          <vuestro-container gutter="none" no-wrap align="center">
-            <vuestro-container gutter="none" column>
-              <div class="vuestro-notification-item-title">
-                {{ item.title }}
-                <vuestro-icon v-if="item.path" scale="0.8" name="share"></vuestro-icon>
-              </div>
-              <div class="vuestro-notification-item-desc">{{ item.description }}</div>
+          </div>
+          <div v-if="popupMode"
+               class="vuestro-notification-timer"
+               :style="{ 'animation-duration': `${this.popupTimeout}ms`}">
+          </div>
+        </template>
+        <!--NORMAL POPUP-->
+        <template v-else>
+          <!--HEADER-->
+          <vuestro-container justify="space-between" align="center" gutter="none" no-wrap>
+            <!--SEARCH BOX-->
+            <vuestro-text-field class="vuestro-notification-search-box"
+                                variant="search"
+                                v-model="searchTerm"
+                                no-margin>
+            </vuestro-text-field>
+            <!--COUNT-->
+            <div class="vuestro-notification-count">{{ allNotifications.length }} notifications</div>
+            <!--HEADER BUTTONS-->
+            <vuestro-container gutter="none" justify="flex-end" no-wrap>
+              <vuestro-button variant="info" pill value size="sm" @click="onMarkAllRead">
+                Mark All as Read
+              </vuestro-button>
+              <vuestro-button variant="danger" pill value size="sm" @click="onClear">
+                Clear
+              </vuestro-button>
+              <vuestro-button pill value size="sm"
+                              :variant="muted ? 'danger':'secondary'"
+                              @click="toggleMute">
+                <vuestro-icon name="volume-mute"></vuestro-icon>
+              </vuestro-button>
             </vuestro-container>
-            <div class="vuestro-notification-item-date">{{ item.created | vuestroLocaleDate }}<br>{{ item.created | vuestroLocaleTime }}</div>
           </vuestro-container>
-        </div>
-        <div v-if="sortedFilteredData.length === 0"
-             class="vuestro-no-notifications">
-          No Notifications
-        </div>
+          <vuestro-hr margin="0.2em"></vuestro-hr>
+          <!--NOTIFICATIONS LIST-->
+          <div class="vuestro-notification-item"
+               v-for="item in sortedFilteredData" :key="item[idName]"
+               @click="onClick(item)" @mouseover="onDropdownHover">
+            <!--DOT (OR NUMBERED PILL FOR GROUPED MODE)-->
+            <div v-if="item.grouped && item.grouped.length > 0" class="vuestro-notification-icon">
+              <vuestro-pill size="sm"
+                            :color="item.unread ? 'var(--vuestro-info)':'var(--vuestro-secondary)'">
+                <template #title>{{ item.grouped.length }}</template>
+              </vuestro-pill>
+            </div>
+            <div v-else class="vuestro-notification-icon">
+              <div class="vuestro-notification-item-dot" :class="{ unread: item.unread }"></div>
+            </div>
+            <!--BLOCK CONTENT-->
+            <vuestro-container gutter="none" no-wrap align="center">
+              <vuestro-container gutter="none" column>
+                <div class="vuestro-notification-item-title">
+                  {{ item.title }}
+                  <vuestro-icon v-if="item.path" scale="0.8" name="share"></vuestro-icon>
+                </div>
+                <div class="vuestro-notification-item-desc">{{ item.description }}</div>
+              </vuestro-container>
+              <div class="vuestro-notification-item-date">{{ item.created | vuestroLocaleDate }}<br>{{ item.created | vuestroLocaleTime }}</div>
+            </vuestro-container>
+          </div>
+          <div v-if="sortedFilteredData.length === 0"
+               class="vuestro-no-notifications">
+            No Notifications
+          </div>
+        </template>
       </template>
     </vuestro-dropdown>
   </div>
@@ -139,6 +144,7 @@ export default {
         });
       }
       let ordered = _.orderBy(data, 'created', ['desc']);
+      // process grouped notifications
       if (this.grouped) {
         let grouped = [];
         for (let current of ordered) {
@@ -281,30 +287,30 @@ export default {
 .vuestro-mobile .vuestro-notification-item-desc {
   min-width: 100vw;
 }
+.vuestro-notification-icon {
+  min-width: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .vuestro-notification-item-dot {
   background-color: transparent;
-  border: 1px solid transparent;
   flex: none;
   height: 1em;
   width: 1em;
   align-self: center;
   border-radius: 50%;
-  margin: 0.4em 1em 0.4em 0.5em;
   cursor: pointer;
-}
-.vuestro-notification-item-count-pill {
-  margin-right: 0.5em;
 }
 .vuestro-notification-item-dot.unread {
   background-color: var(--vuestro-info);
-  border: 1px solid var(--vuestro-outline);
 }
 
 .vuestro-notification-count {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
   color: var(--vuestro-text-color-muted);
   font-size: 0.9em;
-  margin-left: 1em;
-  margin-right: 1em;
   white-space: nowrap;
 }
 

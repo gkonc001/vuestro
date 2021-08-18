@@ -49,7 +49,7 @@
             </vuestro-container>
           </template>
         </vuestro-text-field>
-        <vuestro-notifications></vuestro-notifications>
+        <vuestro-notifications grouped></vuestro-notifications>
       </slot>
     </div>
   </div>

@@ -23,6 +23,12 @@
           </template>
         </vuestro-pill>
         <vuestro-pill>
+          <template #title>3</template>
+        </vuestro-pill>
+        <vuestro-pill>
+          <template #title>343</template>
+        </vuestro-pill>
+        <vuestro-pill>
           <template #icon>
             <vuestro-icon name="pills"></vuestro-icon>
           </template>
@@ -142,6 +148,9 @@
         </vuestro-pill>
         <vuestro-pill color="var(--vuestro-blue)" size="xl">
           <template #value>Blue</template>
+        </vuestro-pill>
+        <vuestro-pill color="var(--vuestro-blue)" size="xl">
+          <template #title>1</template>
         </vuestro-pill>
       </vuestro-container>
     </vuestro-card>

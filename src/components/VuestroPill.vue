@@ -4,21 +4,21 @@
                          closable: $listeners.close,
                          shadow, draggable, geopattern, noMargin }]"
        @click="onClick">
-    <div v-if="!$scopedSlots.title && !$scopedSlots.icon" class="vuestro-pill-title" :class="{ autoCapital }"
+    <div v-if="!$slots.title && !$slots.icon" class="vuestro-pill-title" :class="{ autoCapital }"
          :style="titleStyle">
       {{ titleComputed }}
     </div>
-    <div v-if="$scopedSlots.title || $scopedSlots.icon"
+    <div v-if="$slots.title || $slots.icon"
          class="vuestro-pill-title"
-         :class="$scopedSlots['title-buttons'] ? ['vuestro-pill-title-no-right']:[]"
+         :class="$slots['title-buttons'] ? ['vuestro-pill-title-no-right']:[]"
          :style="titleStyle">
-      <div v-if="$scopedSlots.icon" class="vuestro-pill-icon-slot">
+      <div v-if="$slots.icon" class="vuestro-pill-icon-slot">
         <slot name="icon"></slot>
       </div>
-      <div v-if="$scopedSlots.title" class="vuestro-pill-title-slot">
+      <div v-if="$slots.title" class="vuestro-pill-title-slot">
         <slot name="title"></slot>
       </div>
-      <div v-if="$scopedSlots['title-buttons']" class="vuestro-pill-button-slot">
+      <div v-if="$slots['title-buttons']" class="vuestro-pill-button-slot">
         <slot name="title-buttons"></slot>
       </div>
     </div>
@@ -71,10 +71,6 @@ export default {
       }
       if (this.color) {
         ret['background-color'] = this.color;
-      }
-      if (!this.$slots.value) {
-        ret['flex-grow'] = 1;
-        ret['justify-content'] = 'flex-start';
       }
       return ret;
     },
@@ -183,8 +179,8 @@ export default {
   border-radius: var(--vuestro-pill-radius);
 }
 .vuestro-pill-title-slot {
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding-left: 0.6em;
+  padding-right: 0.6em;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
