@@ -10,7 +10,7 @@
                       value
                       :style="{ '--variant-color': value }">
         <!--PROXY THE PLACEHOLDER-->
-        <template #placeholder>
+        <template v-if="$slots.placeholder" #placeholder>
           <slot name="placeholder"></slot>
         </template>
         <vuestro-icon name="angle-down"></vuestro-icon>
