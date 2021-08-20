@@ -1,7 +1,5 @@
 <template>
-  <div v-if="day"
-       class="vuestro-calendar-day"
-       :class="{ isSelected }">
+  <div v-if="day" class="vuestro-calendar-day">
     <div class="vuestro-calendar-day-header">
       <div class="vuestro-calendar-day-label" :class="{ isToday }">
         {{ day }}
@@ -17,7 +15,7 @@ import moment from 'moment';
 
 export default {
   name: 'VuestroCalendarDay',
-  props: ['date', 'value', 'utc'],
+  props: ['date', 'utc'],
   computed: {
     isToday() {
       return this.date && moment(this.date).isSame(moment(), 'day');

@@ -31,7 +31,6 @@
           <tr v-for="w in 6">
             <td v-for="d in 7" :class="`vuestro-calendar-day-cell-${d}`">
               <vuestro-calendar-day :date="getDate(w, d)"
-                                    :value="value"
                                     :utc="utc"
                                     @click="onClickDay">
                 <template #default="{ date, isToday }">
@@ -48,7 +47,7 @@
 
 <script>
 
-/* global moment, _ */
+/* global moment */
 import VuestroCalendarDay from './VuestroCalendarDay';
 
 export default {
@@ -57,7 +56,6 @@ export default {
     VuestroCalendarDay,
   },
   props: {
-    value: { type: null, required: true },  // the selected day
     utc: { type: Boolean, default: false }, // utc mode
   },
   data() {
@@ -88,13 +86,6 @@ export default {
         }
       }
       return null;
-    },
-    onClickDay(d) {
-      if (_.isString(this.value)) {
-        this.$emit('input', d.toISOString());
-      } else {
-        this.$emit('input', d);
-      }
     },
     backMonth() {
       this.displayedMoment.subtract(1, 'month');
