@@ -101,6 +101,8 @@ export default {
 <style scoped>
 
 .vuestro-breadcrumb-trail {
+  padding-left: 0.2em;
+  padding-right: 0.2em;
   flex: none;
   height: var(--vuestro-breadcrumb-height);
   width: 100%;

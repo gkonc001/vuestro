@@ -31,8 +31,7 @@
           <tr v-for="w in 6">
             <td v-for="d in 7" :class="`vuestro-calendar-day-cell-${d}`">
               <vuestro-calendar-day :date="getDate(w, d)"
-                                    :utc="utc"
-                                    @click="onClickDay">
+                                    :utc="utc">
                 <template #default="{ date, isToday }">
                   <slot name="day" :date="date" :isToday="isToday"></slot>
                 </template>
