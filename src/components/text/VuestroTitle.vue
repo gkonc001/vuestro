@@ -1,12 +1,17 @@
 <template>
   <div class="vuestro-title"
+       :class="{ clickable,
+                 drag: draggable }"
        @click="onClick">
-    <span class="vuestro-title-title"
-          :class="{ clickable,
-                    drag: draggable }">
+    <span v-if="$slots.icon" class="vuestro-title-icon">
+      <slot name="icon"></slot>
+    </span>
+    <span class="vuestro-title-title">
       <slot></slot>
     </span>
-    <vuestro-icon scale="0.7" name="spinner" pulse v-if="spinner"></vuestro-icon>
+    <span class="vuestro-title-spinner">
+      <vuestro-icon scale="0.7" name="spinner" pulse v-if="spinner"></vuestro-icon>
+    </span>
   </div>
 </template>
 
@@ -52,6 +57,15 @@ export default {
   text-transform: var(--vuestro-title-text-transform);
   min-width: 1px;
 }
+.vuestro-title.clickable {
+  pointer-events: initial;
+  cursor: pointer;
+}
+
+.vuestro-title.drag {
+  pointer-events: initial;
+  cursor: move;
+}
 .vuestro-title-title {
   display: inline-block;
   text-overflow: ellipsis;
@@ -59,19 +73,13 @@ export default {
   overflow: hidden;
   pointer-events: none;
 }
-.vuestro-title-title.clickable {
-  pointer-events: initial;
-  cursor: pointer;
+
+.vuestro-title-icon {
+  margin-right: 0.4em;
 }
 
-.vuestro-title-title.drag {
-  pointer-events: initial;
-  cursor: move;
-}
-
-.vuestro-icon {
-  margin-left: 5px;
-  margin-right: 5px;
+.vuestro-title-spinner {
+  margin-left: 0.4em;
 }
 
 </style>

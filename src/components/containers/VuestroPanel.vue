@@ -12,6 +12,9 @@
                      :clickable="collapsible"
                      :draggable="draggable"
                      @click="toggleCollapse">
+        <template v-if="$slots.icon" #icon>
+          <slot name="icon"></slot>
+        </template>
         <slot name="title"></slot>
       </vuestro-title>
       <div v-if="$scopedSlots.toolbar" class="vuestro-panel-toolbar">
@@ -178,6 +181,7 @@ export default {
   padding-right: 0.2em;
 }
 .vuestro-panel-title {
+  flex-grow: 1;
   padding: 0.2em 0.4em;
   color: var(--vuestro-panel-toolbar-fg);
 }

@@ -20,6 +20,8 @@
 
 <script>
 
+/* global atob, btoa */
+
 export default {
   name: 'VuestroBreadcrumb',
   props: {
@@ -41,7 +43,7 @@ export default {
     // initialize stack with either query param or the pages param
     if (Object.keys(this.$route.query).length > 0) {
       try {
-        this.stack = JSON.parse(this.$route.query.p);
+        this.stack = JSON.parse(atob(this.$route.query.p));
       } catch (e) {
         console.error('error parsing breadcrumb query param', e);
         this.stack = this.pages;
@@ -82,7 +84,7 @@ export default {
       this.updateUrl();
     },
     updateUrl() {
-      this.$router.push({ query: { p: JSON.stringify(this.stack) }}).catch(()=>{});
+      this.$router.push({ query: { p: btoa(JSON.stringify(this.stack)) }}).catch(()=>{});
     },
   },
 };

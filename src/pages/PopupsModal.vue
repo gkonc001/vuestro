@@ -183,6 +183,7 @@ export default {
 .example-container {
   display: flex;
   align-items: flex-start;
+  font-size: 59px;
 }
 .example-container-center {
   display: flex;

@@ -94,6 +94,9 @@
           </vuestro-container>
         </vuestro-panel>
         <vuestro-panel collapsible defer-content>
+          <template #icon>
+            <vuestro-icon name="drafting-compass"></vuestro-icon>
+          </template>
           <template #title>Collapsible Panel with deferred content rendering</template>
           <vuestro-container>
             <vuestro-card>
@@ -165,6 +168,36 @@
           </vuestro-container>
         </vuestro-panel>
       </vuestro-card>
+
+      <vuestro-card cols="6">
+        <vuestro-panel>
+          <template #icon>
+            <vuestro-icon name="drafting-compass"></vuestro-icon>
+          </template>
+          <template #title><span>Vuestro Panel with <vuestro-code>icon</vuestro-code> set</span></template>
+          <vuestro-container>
+            <vuestro-card>
+              <template #description>
+                <span>Add a VuestroIcon to the <vuestro-code>icon</vuestro-code> slot to render an icon on the titlebar</span>
+              </template>
+            </vuestro-card>
+          </vuestro-container>
+        </vuestro-panel>
+      </vuestro-card>
+
+      <vuestro-card cols="6">
+        <vuestro-panel draggable>
+          <template #title>Vuestro Panel with draggable title</template>
+          <vuestro-container>
+            <vuestro-card>
+              <template #description>
+                <span>Set the <vuestro-code>draggable</vuestro-code> property</span>
+              </template>
+            </vuestro-card>
+          </vuestro-container>
+        </vuestro-panel>
+      </vuestro-card>
+
 
     </vuestro-container>
   </vuestro-container>
