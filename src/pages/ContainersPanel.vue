@@ -199,6 +199,20 @@
       </vuestro-card>
 
 
+      <vuestro-card cols="6">
+        <vuestro-panel class="colorized-toolbar" collapsible collapsed no-stretch>
+          <template #title>Collapsible with colorized toolbar</template>
+          <vuestro-container>
+            <vuestro-card>
+              <template #description>
+                <span>Set the <vuestro-code>--vuestro-panel-toolbar-bg</vuestro-code> CSS var</span>
+              </template>
+            </vuestro-card>
+          </vuestro-container>
+        </vuestro-panel>
+      </vuestro-card>
+
+
     </vuestro-container>
   </vuestro-container>
 </template>
@@ -236,6 +250,10 @@ export default {
 .dark-toolbar {
   --vuestro-panel-toolbar-bg: var(--vuestro-dark);
   --vuestro-panel-toolbar-fg: white;
+}
+
+.colorized-toolbar {
+  --vuestro-panel-toolbar-bg: var(--vuestro-green);
 }
 
 </style>

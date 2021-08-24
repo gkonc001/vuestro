@@ -1,6 +1,6 @@
 <template>
   <div class="vuestro-panel"
-       :class="[ gutter, { scroll, noStretch, noBorder, hasTitlebar }]">
+       :class="[ gutter, { isCollapsed, scroll, noStretch, noBorder, hasTitlebar }]">
     <!--TOOLBAR-->
     <div v-if="hasTitlebar" class="vuestro-panel-title-toolbar">
       <vuestro-caret v-if="collapsible"
@@ -175,10 +175,14 @@ export default {
   align-items: center;
   border-bottom: var(--vuestro-panel-toolbar-border);
   background-color: var(--vuestro-panel-toolbar-bg);
-  border-top-left-radius: var(--vuestro-panel-border-radius);
-  border-top-right-radius: var(--vuestro-panel-border-radius);
+  border-top-left-radius: calc(var(--vuestro-panel-border-radius) - 1px);
+  border-top-right-radius: calc(var(--vuestro-panel-border-radius) - 1px);
   padding-left: 0.2em;
   padding-right: 0.2em;
+}
+.vuestro-panel.isCollapsed .vuestro-panel-title-toolbar {
+  border-bottom-left-radius: calc(var(--vuestro-panel-border-radius) - 1px);
+  border-bottom-right-radius: calc(var(--vuestro-panel-border-radius) - 1px);
 }
 .vuestro-panel-title {
   flex-grow: 1;
