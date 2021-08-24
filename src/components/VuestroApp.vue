@@ -153,7 +153,7 @@ export default {
 /* GLOBAL STYLE VARIABLES */
 .vuestro-app {
   /* global dimensions */
-  --vuestro-font-size: 14px;
+  --vuestro-base-font-size: 14px;
   --vuestro-selection-border-radius: 8px;
   --vuestro-control-border-width: 1px;
   --vuestro-control-border-radius: 5px;

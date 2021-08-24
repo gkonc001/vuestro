@@ -68,6 +68,7 @@ export default {
 <style>
 /* override these css vars to set style */
 .vuestro-app {
+  --vuestro-modal-font-size: 14px;
   --vuestro-modal-title-bg: var(--vuestro-dark);
   --vuestro-modal-title-fg: var(--vuestro-text-color-light);
   --vuestro-modal-content-bg: var(--vuestro-content-bg);
@@ -80,6 +81,7 @@ export default {
 }
 
 .vuestro-app.mobile {
+  --vuestro-modal-font-size: 32px;
   --vuestro-modal-header-footer-border: 1px solid var(--vuestro-outline);
   --vuestro-modal-width: 90vw;
 }
@@ -108,6 +110,7 @@ export default {
   background-color: var(--vuestro-modal-active-bg);
   overflow: auto;
   backdrop-filter: blur(0.4em);
+  font-size: var(--vuestro-modal-font-size);
 }
 
 .vuestro-modal-inner {

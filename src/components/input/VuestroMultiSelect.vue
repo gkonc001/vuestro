@@ -177,10 +177,10 @@ export default {
   font-size: calc(var(--vuestro-control-md-height) * 0.5);
 }
 .vuestro-multi-select.lg {
-  font-size: calc(var(--vuestro-control-lg-height) * 0.5);
+  font-size: calc(var(--vuestro-control-lg-height) * 0.45);
 }
 .vuestro-multi-select.xl {
-  font-size: calc(var(--vuestro-control-xl-height) * 0.5);
+  font-size: calc(var(--vuestro-control-xl-height) * 0.4);
 }
 .vuestro-multi-select {
   position: relative;
