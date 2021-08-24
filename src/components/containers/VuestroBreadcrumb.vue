@@ -1,5 +1,5 @@
 <template>
-  <vuestro-container class="vuestro-breadcrumb" :gutter="gutter" :column="column" :no-wrap="noWrap">
+  <vuestro-container class="vuestro-breadcrumb" :gutter="gutter" :column="column">
     <div class="vuestro-breadcrumb-trail">
       <template v-for="(p, idx) in stack">
         <div v-if="idx !== 0" class="vuestro-breadcrumb-delimiter">
@@ -29,7 +29,6 @@ export default {
     delimiter: { type: String, default: 'angle-right' },
     gutter: { type: String, default: 'md' },   // proxy vuestro-container option
     column: { type: Boolean, default: false }, // proxy vuestro-container option
-    noWrap: { type: Boolean, default: false }, // proxy vuestro-container option
   },
   data() {
     return {
