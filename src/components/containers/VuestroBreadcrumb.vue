@@ -1,5 +1,5 @@
 <template>
-  <vuestro-container class="vuestro-breadcrumb" :gutter="gutter" :column="column">
+  <vuestro-container class="vuestro-breadcrumb" :gutter="gutter">
     <div class="vuestro-breadcrumb-trail">
       <template v-for="(p, idx) in stack">
         <div v-if="idx !== 0" class="vuestro-breadcrumb-delimiter">
@@ -28,7 +28,6 @@ export default {
     pages: { type: Array, required: true },
     delimiter: { type: String, default: 'angle-right' },
     gutter: { type: String, default: 'md' },   // proxy vuestro-container option
-    column: { type: Boolean, default: false }, // proxy vuestro-container option
   },
   data() {
     return {
@@ -54,6 +53,12 @@ export default {
     }
   },
   methods: {
+    // re-read the stack from the pages prop
+    reset() {
+      this.stack = this.pages;
+      this.updateUrl();
+    },
+    // add the given pageObj to the stack
     onDescend(pageObj) {
       // add to stack if it has the required fields
       if (pageObj.title && pageObj.component) {
@@ -84,6 +89,7 @@ export default {
       this.stack = this.stack.slice(0, idx+1);
       this.updateUrl();
     },
+    // re-render the stack onto the URL as a query string
     updateUrl() {
       this.$router.push({ query: { p: btoa(JSON.stringify(this.stack)) }}).catch(()=>{});
     },
