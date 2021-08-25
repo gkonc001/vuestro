@@ -181,11 +181,13 @@ export default {
       for (let [di, d] of this.localData.entries()) {
         d.field = this.valueField; // alias for tooltip to pick up color too
         d.title = this.valueTitle; // alias for tooltip to pick up color too
-        d.startAngle = arcData[di]["startAngle"],
-        d.endAngle = arcData[di]["endAngle"],
-        d.innerRadius = this.maxRadius * this.donutRadius / 100.0,
-        d.outerRadius = this.maxRadius,
-        d.color = this.color(d[this.valueField]);
+        d.startAngle = arcData[di]["startAngle"];
+        d.endAngle = arcData[di]["endAngle"];
+        d.innerRadius = this.maxRadius * this.donutRadius / 100.0;
+        d.outerRadius = this.maxRadius;
+        if (!d.color) {
+          d.color = this.color(d[this.valueField]);
+        }
         if (this.showLabels) {
           this.arcLabels(arcData, di, this.maxRadius * this.donutRadius / 100.0, d3.arc());
         }
