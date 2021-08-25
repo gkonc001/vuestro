@@ -111,7 +111,7 @@ export default {
   --vuestro-panel-toolbar-fg: inherit;
   --vuestro-panel-toolbar-border: none;
   --vuestro-panel-border: none;
-  --vuestro-panel-box-shadow: 1px 3px 5px 0px rgba(0,0,0,0.1);
+  --vuestro-panel-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.15);
   --vuestro-panel-border-radius: var(--vuestro-control-border-radius);
   --vuestro-panel-titlebar-min-height: 1.8em;
 }

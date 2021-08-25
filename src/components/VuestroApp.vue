@@ -223,7 +223,7 @@ export default {
   --vuestro-selection: #aab9d0;
   --vuestro-outline: #aaa;
   --vuestro-active: #cfdaee;
-  --vuestro-hover: #d4d7da;
+  --vuestro-hover: #c4c7c9;
 
   --vuestro-notifications-bg: var(--vuestro-salmon);
 
@@ -310,6 +310,9 @@ export default {
 }
 .vuestro-mra {
   margin-right: auto;
+}
+.vuestro-clickable {
+  cursor: pointer;
 }
 
 </style>
