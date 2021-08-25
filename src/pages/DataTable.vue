@@ -141,7 +141,8 @@
       <vuestro-panel>
         <vuestro-table ref="tableWithDetail"
                        :options="exampleOptions2"
-                       :data="exampleData">
+                       :data="exampleData"
+                       @row-click="onRowClick">
           <template #header-buttons>
             <vuestro-button pill no-border @click="$refs.tableWithDetail.expandAll()">
               <template #icon>
@@ -157,7 +158,7 @@
             </vuestro-button>
           </template>
           <template #row-buttons="{ index }">
-            <vuestro-button round no-border>
+            <vuestro-button round no-border @click.stop="onViewClick">
               <vuestro-icon name="eye"></vuestro-icon>
             </vuestro-button>
             <vuestro-button round no-border>
@@ -332,6 +333,12 @@ export default {
   methods: {
     onDelete(index) {
       console.log(index);
+    },
+    onRowClick(row) {
+      alert('catch the @row-click event to capture row clicks, but it will include any buttons in the row unless they @click.stop (or e.stopPropagation())');
+    },
+    onViewClick() {
+      alert('this button didn\'t trigger the @row-click b/c it uses @click.stop');
     },
   },
 };

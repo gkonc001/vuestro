@@ -44,10 +44,10 @@
           </td>
         </tr>
         <template v-for="(row, idx) in sortedFilteredData">
-          <tr class="vuestro-table-row">
+          <tr class="vuestro-table-row" @click.exact="onRowClick(row)">
             <!-- detail expander caret, always give it minimum width -->
             <td v-if="$scopedSlots.detail" style="width:1px">
-              <vuestro-caret :collapsed="!isExpanded(idx)" @click="toggleDetail(idx)"></vuestro-caret>
+              <vuestro-caret :collapsed="!isExpanded(idx)" @click.stop="toggleDetail(idx)"></vuestro-caret>
             </td>
             <!--ROW SLOT-->
             <slot v-if="$scopedSlots.row" name="row" :item="row" :index="idx"></slot>
@@ -199,6 +199,9 @@ export default {
     },
     isExpanded(idx) {
       return this.expandedRows.indexOf(idx) > -1;
+    },
+    onRowClick(row) {
+      this.$emit('row-click', row);
     },
     toggleDetail(idx) {
       let expandedRowsIdx = this.expandedRows.indexOf(idx);
