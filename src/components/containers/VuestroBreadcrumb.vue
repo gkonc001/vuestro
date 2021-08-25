@@ -103,6 +103,8 @@ export default {
 .vuestro-app {
   --vuestro-breadcrumb-height: 30px;
   --vuestro-breadcrumb-root-bg: var(--vuestro-primary);
+  --vuestro-breadcrumb-font-size: 1.2em;
+  --vuestro-breadcrumb-font-weight: 500;
 }
 
 </style>
@@ -117,6 +119,8 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
+  font-size: var(--vuestro-breadcrumb-font-size);
+  font-weight: var(--vuestro-breadcrumb-font-weight);
 }
 .vuestro-breadcrumb-item {
   display: flex;
