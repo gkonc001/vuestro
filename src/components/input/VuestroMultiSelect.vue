@@ -32,7 +32,7 @@
                  @focus="onFocus"
                  @keyup="onKeyup">
           </input>
-          <vuestro-button v-if="!single" round size="sm" no-border no-margin @click="onClear">
+          <vuestro-button v-if="!single" round size="sm" no-border no-margin @click="clearSearchTerm">
             <vuestro-icon name="times"></vuestro-icon>
           </vuestro-button>
         </div>
@@ -48,7 +48,8 @@
         <slot name="dropdown"
               :searchTerm="searchTerm"
               :closeDropdown="closeDropdown"
-              :clearSearchTerm="clearSearchTerm">
+              :clearSearchTerm="clearSearchTerm"
+              :closeAndClear="closeAndClear">
         </slot>
     </div>
   </vuestro-tray>
@@ -142,12 +143,13 @@ export default {
         this.clearSearchTerm();
       }
     },
-    onClear() {
+    clearSearchTerm() {
       this.searchTerm = '';
       this.$emit('clear');
     },
-    clearSearchTerm() {
-      this.searchTerm = '';
+    closeAndClear() {
+      this.closeDropdown();
+      this.clearSearchTerm();
     },
     focus() { // proxy the focus() call
       if (!this.readonly) {
