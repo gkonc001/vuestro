@@ -21,8 +21,8 @@ export default {
 .vuestro-app {
   --vuestro-label-margin: 0 0.4em;
   --vuestro-label-font-size: 1em;
-  --vuestro-label-font-weight: initial;
-  --vuestro-label-text-transform: none;
+  --vuestro-label-font-weight: inherit;
+  --vuestro-label-text-transform: inherit;
 }
 
 </style>
