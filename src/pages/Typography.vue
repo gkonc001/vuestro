@@ -24,6 +24,14 @@
     </vuestro-card>
 
     <vuestro-card>
+      <template #subheading>VuestroCleanKvp</template>
+      <template #description><span>A component to use for spacing against adjacent components (e.g. icons). Use <vuestro-code>flush-left</vuestro-code> and <vuestro-code>flush-right</vuestro-code> props as needed.</span></template>
+      <vuestro-container>
+        <vuestro-label flush-left>Label</vuestro-label><vuestro-icon name="spinner" pulse></vuestro-icon>
+      </vuestro-container>
+    </vuestro-card>
+
+    <vuestro-card>
       <template #subheading>Async Text</template>
       <template #description>
         <span>Simple spinner that shows for a text field that evaluates to null or undefined.</span>

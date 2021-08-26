@@ -29,6 +29,7 @@ import VuestroGrid from '../components/grid/VuestroGrid';
 import VuestroGridBox from '../components/grid/VuestroGridBox';
 import VuestroHr from '../components/VuestroHr';
 import VuestroIcon from '../components/VuestroIcon';
+import VuestroLabel from '../components/text/VuestroLabel';
 import VuestroListButton from '../components/list/VuestroListButton';
 import VuestroListGroup from '../components/list/VuestroListGroup';
 import VuestroListGroupToggle from '../components/list/VuestroListGroupToggle';
@@ -93,6 +94,7 @@ export default {
     Vue.component(VuestroGridBox.name, VuestroGridBox);
     Vue.component(VuestroHr.name, VuestroHr);
     Vue.component(VuestroIcon.name, VuestroIcon);
+    Vue.component(VuestroLabel.name, VuestroLabel);
     Vue.component(VuestroListButton.name, VuestroListButton);
     Vue.component(VuestroListGroup.name, VuestroListGroup);
     Vue.component(VuestroListGroupToggle.name, VuestroListGroupToggle);
