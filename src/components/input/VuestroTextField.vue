@@ -39,7 +39,7 @@
         <slot name="unit"></slot>
       </div>
       <!--CLEAR BUTTON-->
-      <vuestro-button v-if="(!invalid && clearable && value && !readonly) || variant === 'search'"
+      <vuestro-button v-if="(!invalid && clearable && isContent && !readonly) || variant === 'search'"
                       class="vuestro-text-field-button"
                       size="sm" round no-border @click.stop="onClear">
         <vuestro-icon name="times"></vuestro-icon>
@@ -91,24 +91,23 @@
 export default {
   name: 'VuestroTextField',
   props: {
-    value: { type: null, required: true },
-    placeholder: { type: String, default: null },
-    variant: { type: String, default: 'regular' }, // { 'regular', 'outline', 'shaded', 'search' }
-    type: { type: String, default: 'text' },
-    hint: { type: String, default: null },
-    center: { type: Boolean, default: false },
-    noMargin: { type: Boolean, default: false },
-    presets: { type: Array, default: () => [] },
-    clearable: { type: Boolean, default: false },
-    size: { type: String, default: 'md' },
-    editingButtons: { type: Boolean, default: false },
-    selected: { type: Boolean, default: false },      // true for all text selected by default
-    readonly: { type: Boolean, default: false },      // true for readonly
+    value: { type: null, default: '' },               // initial value, or bind with v-model
+    placeholder: { type: String, default: null },     // custom placeholder, doesn't use input el standard placeholder
+    variant: { type: String, default: 'regular' },    // { 'regular', 'outline', 'shaded', 'search' }
+    type: { type: String, default: 'text' },          // standard input el type string
+    hint: { type: String, default: null },            // set to a hint string, this is in addition to placeholder
+    center: { type: Boolean, default: false },        // set true to center text
+    noMargin: { type: Boolean, default: false },      // disable standard vuestro control margins
+    clearable: { type: Boolean, default: false },     // set true to show X button to clear
+    size: { type: String, default: 'md' },            // standard vuestro size string
+    editingButtons: { type: Boolean, default: false }, // set true to show save/cancel buttons
+    selected: { type: Boolean, default: false },      // set true for all text selected by default
+    readonly: { type: Boolean, default: false },      // set true for readonly
     validate: { type: Function, default: () => { return false; } }, // return true or string to set invalid state
-    autocomplete: { type: String, default: null },
-    spellcheck: { type: String, default: null },
-    stretch: { type: Boolean, default: false },
-    autoFocus: { type: Boolean, default: false },
+    autocomplete: { type: String, default: null }, // standard autocomplete field for input el
+    spellcheck: { type: String, default: null },   // standard spellcheck field for input el
+    stretch: { type: Boolean, default: false },    // set true for flexbox grow
+    autoFocus: { type: Boolean, default: false },  // set true for focus on mount
   },
   data() {
     return {
@@ -133,10 +132,17 @@ export default {
       }
       return false;
     },
+    // convenience computed var to know when the text box has content
+    isContent() {
+      if (this.value || this.value === 0 || this.inputBuffer.length > 0) {
+        return true;
+      }
+      return false;
+    },
   },
   watch: {
     value(newVal) {
-      if (newVal || this.focused) {
+      if (newVal || newVal === 0 || this.focused) {
         this.raisedPlaceholder = true;
       } else {
         this.raisedPlaceholder = false;
@@ -146,11 +152,6 @@ export default {
     }
   },
   mounted() {
-    // move placeholder for initial value
-    // check for zero explicitly, since it's falsy
-    if (this.value || this.value === 0) {
-      this.raisedPlaceholder = true;
-    }
     // special sauce to see if browser autofilled in this text field, if so,
     // move the placeholder out of the way
     this.checkPlaceholder();
@@ -188,8 +189,12 @@ export default {
       }, 100);
     },
     checkPlaceholder() {
-      if (this.$refs.inputEl && window.getComputedStyle(this.$refs.inputEl).content === `"${String.fromCharCode(0xFEFF)}"`) {
+      if (this.$refs.inputEl &&
+         (window.getComputedStyle(this.$refs.inputEl).content === `"${String.fromCharCode(0xFEFF)}"` ||
+          this.isContent)) {
         this.raisedPlaceholder = true;
+      } else {
+        this.raisedPlaceholder = false;
       }
       if (!this.center && this.$refs.iconSlot) {
         this.placeholderStyle = { left: `${this.$refs.iconSlot.getBoundingClientRect().width*1.5}px` };
@@ -227,11 +232,7 @@ export default {
       if (!this.$scopedSlots.dropdown) {
         this.focused = false;
       }
-      this.updateStyle();
-      // only lower placeholder if no text in value
-      if (!this.value || this.value.length == 0) {
-        this.raisedPlaceholder = false;
-      }
+      this.checkPlaceholder();
     },
     closeDropdown() {
       if (this.$scopedSlots.dropdown) {
@@ -257,6 +258,7 @@ export default {
     },
     onClear() {
       this.$emit('input', '');
+      this.inputBuffer = '';
       this.focus();
     },
   },
