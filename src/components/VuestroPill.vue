@@ -1,8 +1,10 @@
 <template>
   <div class="vuestro-pill"
-       :class="[ size, { clickable: $listeners.click,
-                         closable: $listeners.close,
-                         shadow, draggable, geopattern, noMargin }]"
+       :class="[ size, variant,
+                 { clickable: $listeners.click,
+                   closable: $listeners.close,
+                   shadow, draggable, geopattern, noMargin }]"
+       :style="style"
        @click="onClick">
     <div v-if="!$slots.title && !$slots.icon" class="vuestro-pill-title" :class="{ autoCapital }"
          :style="titleStyle">
@@ -10,8 +12,7 @@
     </div>
     <div v-if="$slots.title || $slots.icon"
          class="vuestro-pill-title"
-         :class="$slots['title-buttons'] ? ['vuestro-pill-title-no-right']:[]"
-         :style="titleStyle">
+         :class="$slots['title-buttons'] ? ['vuestro-pill-title-no-right']:[]">
       <div v-if="$slots.icon" class="vuestro-pill-icon-slot">
         <slot name="icon"></slot>
       </div>
@@ -45,7 +46,8 @@ export default {
   name: 'VuestroPill',
   props: {
     size: { type: String, default: 'md' },
-    color: { type: String, default: null },
+    color: { type: String, default: 'var(--vuestro-primary)' },
+    variant: { type: String, default: 'default' }, // default, outline, capsule, inverted
     draggable: { type: Boolean, default: false },
     shadow: { type: Boolean, default: false },
     geopattern: { type: null, default: null },
@@ -57,7 +59,7 @@ export default {
     };
   },
   computed: {
-    titleStyle() {
+    style() {
       let ret = {};
       if (_.isString(this.geopattern)) {
         let text;
@@ -67,10 +69,10 @@ export default {
         } else {
           text = this.$slots.title[0].text || '';
         }
-        ret['background-image'] = GeoPattern.generate(text.trim()).toDataUrl();
+        ret['--vuestro-pill-geopattern'] = GeoPattern.generate(text.trim()).toDataUrl();
       }
       if (this.color) {
-        ret['background-color'] = this.color;
+        ret['--vuestro-pill-title-bg'] = this.color;
       }
       return ret;
     },
@@ -103,6 +105,7 @@ export default {
 
 .vuestro-app {
   --vuestro-pill-radius: 999px;
+  /* --vuestro-pill-title-bg defined above */
   --vuestro-pill-title-fg: var(--vuestro-text-color-inverse);
   --vuestro-pill-value-fg: var(--vuestro-text-color);
   --vuestro-pill-value-bg: var(--vuestro-widget-light-bg);
@@ -126,6 +129,14 @@ export default {
   min-width: 0;
   margin: var(--vuestro-control-margin-v) var(--vuestro-control-margin-h);
 }
+.vuestro-pill.inverted {
+  background-color: var(--vuestro-pill-title-bg);
+  background-image: var(--vuestro-pill-geopattern);
+}
+.vuestro-pill.outline {
+  border: 1px solid var(--vuestro-pill-title-bg);
+}
+
 .vuestro-pill.noMargin {
   margin: 0;
 }
@@ -174,10 +185,20 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--vuestro-primary);
+  background-color: var(--vuestro-pill-title-bg);
   color: var(--vuestro-pill-title-fg);
   border-radius: var(--vuestro-pill-radius);
+  background-image: var(--vuestro-pill-geopattern);
 }
+.vuestro-pill.capsule .vuestro-pill-title {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.vuestro-pill.inverted .vuestro-pill-title {
+  background-image: none;
+  background-color: var(--vuestro-pill-value-bg);
+}
+
 .vuestro-pill-title-slot {
   padding-left: 0.6em;
   padding-right: 0.6em;
@@ -211,6 +232,7 @@ export default {
   overflow: hidden;
 	color: var(--vuestro-pill-value-fg);
 }
+
 .vuestro-pill.closable .vuestro-pill-value {
   padding-right: 0.33em;
 }

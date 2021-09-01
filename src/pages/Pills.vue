@@ -56,6 +56,33 @@
 
     <vuestro-card>
       <template #description>
+        <span>Specify a variant using the <vuestro-code>variant</vuestro-code> property, or stack them (with spaces) for a customized look.
+        </span>
+      </template>
+      <vuestro-container>
+        <vuestro-pill variant="default">
+          <template #value>default</template>
+        </vuestro-pill>
+        <vuestro-pill variant="outline">
+          <template #value>outline</template>
+        </vuestro-pill>
+        <vuestro-pill variant="capsule">
+          <template #value>capsule</template>
+        </vuestro-pill>
+        <vuestro-pill variant="inverted">
+          <template #value>inverted</template>
+        </vuestro-pill>
+        <vuestro-pill variant="inverted capsule">
+          <template #value>inverted capsule</template>
+        </vuestro-pill>
+        <vuestro-pill variant="inverted capsule outline">
+          <template #value>inverted capsule outline</template>
+        </vuestro-pill>
+      </vuestro-container>
+    </vuestro-card>
+
+    <vuestro-card>
+      <template #description>
         <span>Use the <vuestro-code>title-buttons</vuestro-code> slot to add some buttons to the title template</span>
       </template>
       <vuestro-container>
@@ -101,12 +128,24 @@
       </template>
   		<vuestro-tray title="Pill Tray" variant="outline">
   			<vuestro-pill>
-  			  <template #title>Pill Value</template>
+  			  <template #title>Title Slot</template>
   			</vuestro-pill>
   			<vuestro-pill>
-  			  <template #value>Pill Value</template>
+  			  <template #value>Value Slot</template>
 			  </vuestro-pill>
   		</vuestro-tray>
+    </vuestro-card>
+
+    <vuestro-card>
+      <template #description>
+        <span>Set the <vuestro-code>inverted</vuestro-code> property to flip the colorization to the value</span>
+      </template>
+      <vuestro-container>
+        <vuestro-pill inverted>
+          <template #title>Title</template>
+          <template #value>Value</template>
+        </vuestro-pill>
+      </vuestro-container>
     </vuestro-card>
 
     <vuestro-card>
@@ -249,6 +288,10 @@
           <template #title>
             ...or set geopattern to a string to set the seed!
           </template>
+        </vuestro-pill>
+        <vuestro-pill inverted geopattern="yo">
+          <template #title>Works for</template>
+          <template #value>inverted</template>
         </vuestro-pill>
       </vuestro-container>
     </vuestro-card>

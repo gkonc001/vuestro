@@ -28,9 +28,6 @@
 
 export default {
   name: 'VuestroObjectBrowserModal',
-  props: {
-
-  },
   data() {
     return {
       active: false,
