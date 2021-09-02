@@ -17,7 +17,7 @@
 
     <!--TITLE BLOCK-->
     <transition v-if="title" name="vuestro-title-text" mode="out-in">
-      <div v-if="!localMini" class="vuestro-title-text">{{ title }}</div>
+      <div v-if="!mini" class="vuestro-title-text">{{ title }}</div>
     </transition>
 
     <!--USER BLOCK-->
@@ -30,7 +30,7 @@
                @click="onUserImgClick"/>
         </div>
         <transition name="vuestro-user-block" mode="out-in">
-          <div v-if="!localMini" class="vuestro-user-block-text">
+          <div v-if="!mini" class="vuestro-user-block-text">
             <span class="vuestro-sidebar-username">{{ user }}</span>
             <span>{{ role }}</span>
           </div>
@@ -40,7 +40,7 @@
 
     <!--MENU-->
     <transition name="vuestro-sidebar" mode="out-in" @after-leave="afterLeave">
-      <vuestro-sidebar-menu v-if="!localMini"
+      <vuestro-sidebar-menu v-if="!mini"
                             :role="role"
                             :routes="routes"
                             @click="toggleSidebar"></vuestro-sidebar-menu>
@@ -88,47 +88,24 @@ export default {
   },
   data() {
     return {
-      geoColor: '',
-      localMini: this.mini,
-      debounceAuto: false,
+      geoColor: '', // the geopattern base color
     };
   },
-  created() {
-    window.addEventListener('resize', this.onResize);
-  },
-  destroyed() {
-    window.removeEventListener('resize', this.onResize);
-  },
   beforeMount() {
-    this.localMini = this.mini;
     this.checkSidebar();
-    this.onResize();
   },
   watch: {
     mini(newVal) {
-      this.localMini = newVal;
       this.checkSidebar();
     },
   },
   methods: {
-    onResize() {
-      console.log('new window size', window.innerWidth);
-      if (!this.debounceAuto && window.innerWidth <= 980) {
-        this.toggleSidebar(true);
-      }
-    },
-    toggleSidebar(newVal = !this.localMini) {
-      this.debounceAuto = true;
-      if (this.$root.mobile) {
-        this.localMini = false;
-      } else {
-        this.localMini = newVal;
-      }
-      this.$emit('update:mini', this.localMini);
+    toggleSidebar() {
+      this.$emit('update:mini', !this.mini);
       this.checkSidebar();
     },
     checkSidebar() {
-      if (this.localMini) {
+      if (this.mini) {
         document.body.classList.add('vuestro-mini-sidebar');
       } else {
         document.body.classList.remove('vuestro-mini-sidebar');
