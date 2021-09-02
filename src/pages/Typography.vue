@@ -24,7 +24,7 @@
     </vuestro-card>
 
     <vuestro-card>
-      <template #subheading>VuestroCleanKvp</template>
+      <template #subheading>VuestroLabel</template>
       <template #description><span>A component to use for spacing against adjacent components (e.g. icons). Use <vuestro-code>flush-left</vuestro-code> and <vuestro-code>flush-right</vuestro-code> props as needed.</span></template>
       <vuestro-container>
         <vuestro-label flush-left>Label</vuestro-label><vuestro-icon name="spinner" pulse></vuestro-icon>

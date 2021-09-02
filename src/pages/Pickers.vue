@@ -9,15 +9,18 @@
 
     <vuestro-card>
       <template #subheading>Vuestro Color Picker</template>
-      <template #description>
-        Simple drop-down color picker to choose within a pre-defined palette.
-      </template>
+      <template #description><span>
+        Simple drop-down color picker to choose within a pre-defined palette. There are <vuestro-code>placeholder</vuestro-code> and <vuestro-code>extra</vuestro-code> slots available.
+      </span></template>
       <vuestro-container>
         <vuestro-color-picker v-model="color" size="lg"></vuestro-color-picker>
         <vuestro-color-picker v-model="color" size="md"></vuestro-color-picker>
         <vuestro-color-picker v-model="color" size="sm"></vuestro-color-picker>
         <vuestro-color-picker v-model="color" size="lg" pill>
           <template #placeholder>Color</template>
+          <template #extra>
+            <vuestro-button pill>Auto</vuestro-button>
+          </template>
         </vuestro-color-picker>
         <vuestro-color-picker v-model="color" size="md" pill></vuestro-color-picker>
         <vuestro-color-picker v-model="color" size="sm" pill right></vuestro-color-picker>

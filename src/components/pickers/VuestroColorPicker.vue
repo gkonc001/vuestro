@@ -24,6 +24,7 @@
            :style="{ 'background-color': c }"
            @click="onSelectColor(c)">
       </div>
+      <slot name="extra"></slot>
     </vuestro-container>
   </vuestro-dropdown>
 </template>
@@ -33,12 +34,12 @@
 export default {
   name: 'VuestroColorPicker',
   props: {
-    size: { type: String, default: 'md' },
-    right: { type: Boolean },
-    pill: { type: Boolean },
-    value: { type: String, required: true },
-    disabled: { type: Boolean, default: false },
-    palette: { type: Array },
+    size: { type: String, default: 'md' },           // standard vuestro size prop
+    right: { type: Boolean },                        // force right-justify
+    pill: { type: Boolean },                         // pill mode for button
+    value: { type: String, required: true },         // v-model support
+    disabled: { type: Boolean, default: false },     // disable (for readonly)
+    palette: { type: Array },                        // array of HTML color strings or CSS vars
     closeOnLeave: { type: Boolean, default: false }, // automatically close on mouseleave
   },
   data() {
