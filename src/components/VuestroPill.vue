@@ -6,8 +6,9 @@
                    shadow, draggable, geopattern, noMargin }]"
        :style="style"
        @click="onClick">
-    <div v-if="!$slots.title && !$slots.icon" class="vuestro-pill-title" :class="{ autoCapital }"
-         :style="titleStyle">
+    <div v-if="!$slots.title && !$slots.icon"
+         class="vuestro-pill-title"
+         :class="{ autoCapital }">
       {{ titleComputed }}
     </div>
     <div v-if="$slots.title || $slots.icon"
@@ -105,7 +106,7 @@ export default {
 
 .vuestro-app {
   --vuestro-pill-radius: 999px;
-  /* --vuestro-pill-title-bg defined above */
+  /*--vuestro-pill-title-bg: var(--vuestro-secondary);*/
   --vuestro-pill-title-fg: var(--vuestro-text-color-inverse);
   --vuestro-pill-value-fg: var(--vuestro-text-color);
   --vuestro-pill-value-bg: var(--vuestro-widget-light-bg);
@@ -185,7 +186,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--vuestro-pill-title-bg);
+  background-color: var(--vuestro-pill-title-bg, var(--vuestro-secondary));
   color: var(--vuestro-pill-title-fg);
   border-radius: var(--vuestro-pill-radius);
   background-image: var(--vuestro-pill-geopattern);

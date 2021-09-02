@@ -150,7 +150,7 @@
 
     <vuestro-card>
       <template #description>
-        Pills can also have different colors by specifying a color property
+        <span>Pills can also have different colors by specifying a color property, undefined CSS vars will fallback to <vuestro-code>---vuestro-secondary</vuestro-code></span>
       </template>
       <vuestro-container>
         <vuestro-pill color="var(--vuestro-orange)">
@@ -167,6 +167,10 @@
         </vuestro-pill>
         <vuestro-pill color="var(--vuestro-purple)">
           <template #value>Purple</template>
+        </vuestro-pill>
+        <vuestro-pill color="var(--blah-blah)">
+          <template #title>Undefined</template>
+          <template #value>Color</template>
         </vuestro-pill>
       </vuestro-container>
     </vuestro-card>
