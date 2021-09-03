@@ -3,6 +3,7 @@
        :class="{ stretch }">
     <div class="vuestro-button-inner"
          :class="[`vuestro-button-${variant}`,
+                  size,
                   { mobile: $root.mobile,
                     value,
                     noBorder,
@@ -12,7 +13,7 @@
                     pill,
                     checkbox,
                     disabled,
-                    shadow }, size]"
+                    shadow }]"
          @mouseover="onEnter"
          @mouseleave="onLeave"
          @click="onClick">

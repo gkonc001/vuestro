@@ -17,13 +17,41 @@
         <vuestro-color-picker v-model="color" size="md"></vuestro-color-picker>
         <vuestro-color-picker v-model="color" size="sm"></vuestro-color-picker>
         <vuestro-color-picker v-model="color" size="lg" pill>
-          <template #placeholder>Color</template>
+          <template #title>Title</template>
           <template #extra>
             <vuestro-button pill>Auto</vuestro-button>
           </template>
         </vuestro-color-picker>
         <vuestro-color-picker v-model="color" size="md" pill></vuestro-color-picker>
         <vuestro-color-picker v-model="color" size="sm" pill right></vuestro-color-picker>
+      </vuestro-container>
+    </vuestro-card>
+
+    <vuestro-card>
+      <template #description>
+        <span><vuestro-code>variant="shaded"</vuestro-code></span>
+      </template>
+      <vuestro-container>
+        <vuestro-color-picker v-model="color" variant="shaded">
+          <template #title>Title</template>
+          <template #extra>
+            <vuestro-button pill>Auto</vuestro-button>
+          </template>
+        </vuestro-color-picker>
+      </vuestro-container>
+    </vuestro-card>
+
+    <vuestro-card>
+      <template #description>
+        <span><vuestro-code>variant="outline"</vuestro-code></span>
+      </template>
+      <vuestro-container>
+        <vuestro-color-picker v-model="color" variant="outline">
+          <template #title>Title</template>
+          <template #extra>
+            <vuestro-button pill>Auto</vuestro-button>
+          </template>
+        </vuestro-color-picker>
       </vuestro-container>
     </vuestro-card>
 
@@ -145,5 +173,8 @@ export default {
 </script>
 
 <style scoped>
+
+.vuestro-container {
+}
 
 </style>

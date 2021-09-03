@@ -1,3 +1,11 @@
+// Used as a container for VuestroPill and as the base container for VuestroMultiSelect
+//
+// CSS Vars:
+// --vuestro-tray-title-font-size
+// --vuestro-tray-title-font-weight
+// --vuestro-tray-title-text-transform
+// --vuestro-tray-title-margin-right
+//
 <template>
   <div class="vuestro-tray"
        :class="[`vuestro-tray-${variant}`, size, { stretch, noMargin }]">
@@ -11,15 +19,14 @@
 
 <script>
 
-
 export default {
   name: 'VuestroTray',
   props: {
-    title: { type: String, required: false },
-    variant: { type: String, default: 'regular' },
-    size: { type: String, default: 'md' },
-    stretch: { type: Boolean, default: false },
-    noMargin: { type: Boolean, default: false },
+    title: { type: String, required: false },      // title string
+    variant: { type: String, default: 'regular' }, // regular, outline, shaded
+    size: { type: String, default: 'md' },         // standard vuestro size string
+    stretch: { type: Boolean, default: false },    // enable flex-grow
+    noMargin: { type: Boolean, default: false },   // set margin: 0
   },
 };
 
@@ -69,11 +76,11 @@ export default {
 }
 
 .vuestro-tray-title {
-  text-transform: uppercase;
-  font-size: 0.7em;
-  font-weight: 500;
+  text-transform: var(--vuestro-tray-title-text-transform, uppercase);
+  font-size: var(--vuestro-tray-title-font-size, 0.7em);
+  font-weight: var(--vuestro-tray-title-font-weight, 500);
   margin-left: calc(var(--vuestro-tray-min-height) / 4);
-  margin-right: 0.5em;
+  margin-right: var(--vuestro-tray-title-margin-right, 0.5em);
   align-self: center;
   pointer-events: none;
 }
