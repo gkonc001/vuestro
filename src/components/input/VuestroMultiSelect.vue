@@ -1,3 +1,16 @@
+// Full-featured mult-select control
+//
+// Notes:
+// - Clear button (x) will first clear the search field, and if clicked with an empty search field, it will
+// emit the clear event so the parent can remove all
+// - the watch on the value will clear the search field when value changes under the assumption that an item
+// was either added or removed
+//
+// Events:
+// add - item added
+// remove - item removed
+// clear - clear button clicked
+//
 <template>
   <vuestro-tray class="vuestro-multi-select"
                 :class="{ stretch }"
@@ -25,6 +38,7 @@
       <!--FOOTER (DEFAULT INPUT FIELD)-->
       <template #footer v-if="!readonly && (!single || this.value.length < 1)">
         <div class="vuestro-multi-input-el-wrapper">
+          <!--SEARCH FIELD-->
           <input ref="inputEl"
                  class="vuestro-multi-input-el"
                  :placeholder="placeholder"
@@ -32,7 +46,8 @@
                  @focus="onFocus"
                  @keyup="onKeyup">
           </input>
-          <vuestro-button v-if="!single" round size="sm" no-border no-margin @click="clearSearchTerm">
+          <!--CLEAR BUTTON-->
+          <vuestro-button v-if="!single" round size="sm" no-border no-margin @click="clear">
             <vuestro-icon name="times"></vuestro-icon>
           </vuestro-button>
         </div>
@@ -47,8 +62,8 @@
         <!--PASS METHODS TO SLOT FOR TIGHT INTEGRATION-->
         <slot name="dropdown"
               :searchTerm="searchTerm"
-              :closeDropdown="closeDropdown"
-              :clearSearchTerm="clearSearchTerm"
+              :close="closeDropdown"
+              :clear="clear"
               :closeAndClear="closeAndClear">
         </slot>
     </div>
@@ -94,6 +109,7 @@ export default {
   watch: {
     value(newVal) {
       this.contents = newVal;
+      this.searchTerm = '';
     },
   },
   mounted() {
@@ -143,13 +159,16 @@ export default {
         this.clearSearchTerm();
       }
     },
-    clearSearchTerm() {
-      this.searchTerm = '';
-      this.$emit('clear');
+    clear() {
+      if (this.searchTerm.length > 0) {
+        this.searchTerm = '';
+      } else {
+        this.$emit('clear');
+      }
     },
     closeAndClear() {
       this.closeDropdown();
-      this.clearSearchTerm();
+      this.clear();
     },
     focus() { // proxy the focus() call
       if (!this.readonly) {
@@ -252,7 +271,7 @@ export default {
   /* redefine style vars for vuestro components */
   --vuestro-text-field-fg: var(--vuestro-dropdown-content-fg);
   --vuestro-pill-value-fg: var(--vuestro-dropdown-content-fg);
-  --vuestro-pill-value-bg: var(--vuestro-gray-dark);
+  --vuestro-pill-value-bg: rgba(255,255,255,0.1);
 }
 
 
