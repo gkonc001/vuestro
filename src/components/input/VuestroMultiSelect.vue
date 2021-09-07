@@ -271,7 +271,7 @@ export default {
   /* redefine style vars for vuestro components */
   --vuestro-text-field-fg: var(--vuestro-dropdown-content-fg);
   --vuestro-pill-value-fg: var(--vuestro-dropdown-content-fg);
-  --vuestro-pill-value-bg: rgba(255,255,255,0.1);
+  --vuestro-pill-value-bg: var(--vuestro-gray-med);
 }
 
 
