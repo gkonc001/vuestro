@@ -156,7 +156,7 @@ export default {
       this.$emit('keyup', e);
       if (e.key == 'Enter') {
         this.$emit('search', e.target.value, this.closeDropdown);
-        this.clearSearchTerm();
+        this.clear();
       }
     },
     clear() {

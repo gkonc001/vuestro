@@ -168,6 +168,9 @@
         <vuestro-pill color="var(--vuestro-purple)">
           <template #value>Purple</template>
         </vuestro-pill>
+        <vuestro-pill color="var(--vuestro-purple)" variant="inverted">
+          <template #value>Purple</template>
+        </vuestro-pill>
         <vuestro-pill color="var(--blah-blah)">
           <template #title>Undefined</template>
           <template #value>Color</template>
