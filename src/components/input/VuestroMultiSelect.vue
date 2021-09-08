@@ -7,9 +7,9 @@
 // was either added or removed
 //
 // Events:
-// add - item added
-// remove - item removed
-// clear - clear button clicked
+//  add - item added
+//  remove - item removed
+//  clear - clear button clicked
 //
 <template>
   <vuestro-tray class="vuestro-multi-select"

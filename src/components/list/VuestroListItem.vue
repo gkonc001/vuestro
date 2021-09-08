@@ -1,3 +1,26 @@
+// A versatile container for lists, provides slots for icons, 3 lines of text, and right-justified buttons.
+//
+// Slots:
+//  #icon - left-most block for icons
+//  #default - overrides entire 3 line text block, otherwise use #title, #description, #content
+//  #title - first line, larger and bolder
+//  #description - 2nd line, a little smaller than title, normal weight
+//  #content - 3rd line, smallest, defaults to muted text
+//  #buttons - right-justified button slot that spans the height, opposite of #icon slot
+//
+// Events:
+//  click: emitted with e event
+//
+// CSS Vars:
+// --vuestro-list-item-title-font-size
+// --vuestro-list-item-title-font-weight
+// --vuestro-list-item-description-font-size
+// --vuestro-list-item-content-font-size
+// --vuestro-list-item-icon-margin
+// --vuestro-list-item-inner-margin
+// --vuestro-list-item-selected-bg
+// --vuestro-list-item-alt-bg
+//
 <template>
   <div class="vuestro-list-item"
 	     :class="{ selected, readonly }"
@@ -69,15 +92,7 @@ export default {
 <style>
 
 .vuestro-app {
-  --vuestro-list-item-title-font-size: 0.9em;
-  --vuestro-list-item-title-font-weight: 600;
-  --vuestro-list-item-description-font-size: 0.85em;
-  --vuestro-list-item-content-font-size: 0.8em;
-  --vuestro-list-item-icon-margin: 0 0 0 0.8em;
-  --vuestro-list-item-inner-margin: 0.4em 0.2em 0.4em 0.8em;
-  --vuestro-list-item-selected-bg: var(--vuestro-selection);
   --vuestro-list-item-alt-bg: var(--vuestro-light);
-  --vuestro-list-item-padding: 0.3em 0.4em;
 }
 .vuestro-dark.vuestro-app {
   --vuestro-list-item-alt-bg: var(--vuestro-gray-dark);
@@ -105,7 +120,7 @@ export default {
   left: 0;
   right: 0;
   border-radius: var(--vuestro-selection-border-radius);
-  background-color: var(--vuestro-list-item-selected-bg);
+  background-color: var(--vuestro-list-item-selected-bg, var(--vuestro-selection));
   z-index: -1000;
 }
 /* draw a border at the bottom of all but the last child */
@@ -120,13 +135,13 @@ export default {
 	z-index: -2;
 }
 .vuestro-list-item-icon {
-  margin: var(--vuestro-list-item-icon-margin);
+  margin: var(--vuestro-list-item-icon-margin, 0 0 0 0.8em);
   display: flex;
   align-items: center;
 }
 .vuestro-list-item-inner {
   min-width: 0;
-  margin: var(--vuestro-list-item-inner-margin);
+  margin: var(--vuestro-list-item-inner-margin, 0.4em 0.2em 0.4em 0.8em);
   display: flex;
   flex-grow: 1;
 }
@@ -135,21 +150,21 @@ export default {
   min-width: 0;
 }
 .vuestro-list-item-title {
-  font-size: var(--vuestro-list-item-title-font-size);
-  font-weight: var(----vuestro-list-item-title-font-weight);
+  font-size: var(--vuestro-list-item-title-font-size, 0.9em);
+  font-weight: var(--vuestro-list-item-title-font-weight, 600);
 	text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 .vuestro-list-item-description {
-  font-size: var(--vuestro-list-item-description-font-size);
+  font-size: var(--vuestro-list-item-description-font-size, 0.85em);
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 .vuestro-list-item-content {
   color: var(--vuestro-text-color-muted);
-  font-size: var(--vuestro-list-item-content-font-size);
+  font-size: var(--vuestro-list-item-content-font-size, 0.8em);
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
