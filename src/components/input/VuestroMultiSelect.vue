@@ -6,6 +6,11 @@
 // - the watch on the value will clear the search field when value changes under the assumption that an item
 // was either added or removed
 //
+// Slots:
+//  #title
+//  #item
+//  #dropdown
+//
 // Events:
 //  add - item added
 //  remove - item removed

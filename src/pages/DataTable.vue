@@ -112,6 +112,16 @@
 
     <vuestro-card>
       <template #subheading>
+        <span>Set the <vuestro-code>rowStyleCallback</vuestro-code> option a function which returns style attributs to style a row</span>
+      </template>
+      <vuestro-panel>
+        <vuestro-table :options="{ ...exampleOptions4, rowStyleCallback: styleTheRow }" :data="exampleData">
+        </vuestro-table>
+      </vuestro-panel>
+    </vuestro-card>
+
+    <vuestro-card>
+      <template #subheading>
         <span>Set the <vuestro-code>header-buttons</vuestro-code> or <vuestro-code>row-buttons</vuestro-code> slot to provide buttons at the end of the header or row</span>
       </template>
       <vuestro-panel>
@@ -339,6 +349,15 @@ export default {
     },
     onViewClick() {
       alert('this button didn\'t trigger the @row-click b/c it uses @click.stop');
+    },
+    styleTheRow(row) {
+      console.log(row)
+      if (row.firstName === 'Grace') {
+        return {
+          'background-color': 'var(--vuestro-indigo)',
+        };
+      }
+      return {};
     },
   },
 };

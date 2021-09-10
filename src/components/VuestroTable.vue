@@ -44,7 +44,7 @@
           </td>
         </tr>
         <template v-for="(row, idx) in sortedFilteredData">
-          <tr class="vuestro-table-row" @click.exact="onRowClick(row)">
+          <tr class="vuestro-table-row" @click.exact="onRowClick(row)" :style="getRowStyle(row)">
             <!-- detail expander caret, always give it minimum width -->
             <td v-if="$scopedSlots.detail" style="width:1px">
               <vuestro-caret :collapsed="!isExpanded(idx)" @click.stop="toggleDetail(idx)"></vuestro-caret>
@@ -105,6 +105,7 @@ export default {
       scroll: false,
       expandedRows: [],
       transparentHeader: false,
+      rowStyleCallback: null,
     };
   },
   beforeMount() {
@@ -238,6 +239,16 @@ export default {
         return classes(field, row);
       }
       return classes;
+    },
+    //
+    // proxy method for the user's provided rowStyleCallback, if it is a valid function,
+    // it's return will be used for the row style, the row data is provided to the user
+    //
+    getRowStyle(row) {
+      if (_.isFunction(this.rowStyleCallback)) {
+        return this.rowStyleCallback(row);
+      }
+      return {};
     },
   },
   filters: {
