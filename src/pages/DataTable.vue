@@ -112,7 +112,7 @@
 
     <vuestro-card>
       <template #subheading>
-        <span>Set the <vuestro-code>rowStyleCallback</vuestro-code> option a function which returns style attributs to style a row</span>
+        <span>Set the <vuestro-code>rowStyleCallback</vuestro-code> option a function which returns style attributs to style a row (the --vuestro-muted-* colors work great for this)</span>
       </template>
       <vuestro-panel>
         <vuestro-table :options="{ ...exampleOptions4, rowStyleCallback: styleTheRow }" :data="exampleData">
@@ -328,7 +328,7 @@ export default {
           }
         },
         {
-          firstName: 'Trent',
+          firstName: 'Troy',
           lastName: 'Washington',
           phone: '5558382833',
           email: 'justintime@ymail.net',
@@ -351,11 +351,23 @@ export default {
       alert('this button didn\'t trigger the @row-click b/c it uses @click.stop');
     },
     styleTheRow(row) {
-      console.log(row)
-      if (row.firstName === 'Grace') {
-        return {
-          'background-color': 'var(--vuestro-indigo)',
-        };
+      switch (row.firstName) {
+        case 'Grace':
+          return {
+            'background-color': 'var(--vuestro-muted-warning)',
+          };
+        case 'Trent':
+          return {
+            'background-color': 'var(--vuestro-muted-danger)',
+          };
+        case 'Ashley':
+          return {
+            'background-color': 'var(--vuestro-muted-success)',
+          };
+        case 'Troy':
+          return {
+            'background-color': 'var(--vuestro-muted-info)',
+          };
       }
       return {};
     },

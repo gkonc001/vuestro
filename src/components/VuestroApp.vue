@@ -207,6 +207,13 @@ export default {
   --vuestro-warning: var(--vuestro-yellow);
   --vuestro-danger: var(--vuestro-red);
 
+  --vuestro-muted-primary: #21529e;
+  --vuestro-muted-secondary: #696767;
+  --vuestro-muted-success: #106532;
+  --vuestro-muted-info: #106686;
+  --vuestro-muted-warning: #826500;
+  --vuestro-muted-danger: #981521;
+
   /* colors responsible for change to dark */
   --vuestro-content-bg: #dfdfdf;
 
@@ -284,6 +291,13 @@ export default {
   --vuestro-info: var(--vuestro-cyan);
   --vuestro-warning: var(--vuestro-yellow);
   --vuestro-danger: var(--vuestro-red);
+
+  --vuestro-muted-primary: #21529e;
+  --vuestro-muted-secondary: #696767;
+  --vuestro-muted-success: #106532;
+  --vuestro-muted-info: #106686;
+  --vuestro-muted-warning: #826500;
+  --vuestro-muted-danger: #981521;
 
   --vuestro-selection: var(--vuestro-cobalt);
 
