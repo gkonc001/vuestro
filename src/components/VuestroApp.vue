@@ -301,7 +301,7 @@ export default {
 
   --vuestro-selection: var(--vuestro-cobalt);
 
-  --vuestro-text-color: #ccc;
+  --vuestro-text-color: #ddd;
   --vuestro-text-color-secondary: #696969;
   --vuestro-text-color-muted: #aaa;
   --vuestro-text-color-inverse: #323334; /* inverse text, changes with theme */
