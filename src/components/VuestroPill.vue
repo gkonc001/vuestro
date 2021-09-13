@@ -25,22 +25,26 @@
       {{ titleComputed }}
     </div>
     <div v-if="$slots.title || $slots.icon"
-         class="vuestro-pill-title"
-         :class="$slots['title-buttons'] ? ['vuestro-pill-title-no-right']:[]">
+         class="vuestro-pill-title">
       <div v-if="$slots.icon" class="vuestro-pill-icon-slot">
         <slot name="icon"></slot>
       </div>
-      <div v-if="$slots.title" class="vuestro-pill-title-slot">
+      <div v-if="$slots.title"
+           class="vuestro-pill-title-slot"
+           :class="{ 'vuestro-pill-title-slot-with-buttons': $slots['title-buttons'] }">
         <slot name="title"></slot>
       </div>
-      <div v-if="$slots['title-buttons']" class="vuestro-pill-button-slot">
+      <div v-if="$slots['title-buttons']" class="vuestro-pill-title-buttons">
         <slot name="title-buttons"></slot>
       </div>
     </div>
-    <div v-if="$scopedSlots.value" class="vuestro-pill-value vuestro-pill-value-layer">
+    <div v-if="$scopedSlots.value"
+         class="vuestro-pill-value vuestro-pill-value-layer"
+         :class="{ 'vuestro-pill-value-no-right-padding': isValueButtons }">
       <slot name="value"></slot>
     </div>
-    <div class="vuestro-pill-value-buttons vuestro-pill-value-layer">
+    <div v-if="isValueButtons"
+         class="vuestro-pill-value-buttons vuestro-pill-value-layer">
       <template v-if="$scopedSlots['value-buttons']">
         <slot name="value-buttons"></slot>
       </template>
@@ -101,6 +105,9 @@ export default {
         }
       }
       return '';
+    },
+    isValueButtons() {
+      return this.$scopedSlots['value-buttons'] || this.$listeners.close;
     },
   },
   methods: {
@@ -228,8 +235,14 @@ export default {
 .vuestro-pill-title.autoCapital {
   padding: 0;
 }
-.vuestro-pill-title-no-right {
-  padding-right: 0;
+.vuestro-pill-title-slot-with-buttons {
+  padding-right: 0.3em;
+}
+.vuestro-pill-title-buttons {
+  display: flex;
+  /* automatically remove margins for embedded vuestro controls */
+  --vuestro-control-margin-v: 0;
+  --vuestro-control-margin-h: 0;
 }
 
 .vuestro-pill-value-layer {
@@ -238,7 +251,7 @@ export default {
 	border-bottom-right-radius: var(--vuestro-pill-radius);
   /* offsets to simulate wrapping around a round title (chinking) */
 	margin-left: calc(var(--vuestro-pill-height) / -2);
-	padding-left: calc(var(--vuestro-pill-height) / 2 + 0.33em);
+	padding-left: calc(var(--vuestro-pill-height) / 2 + 0.3em);
 }
 
 .vuestro-pill-value {
@@ -253,21 +266,23 @@ export default {
 	transition: background-color 0.4s;
 	z-index: -1;
 }
+.vuestro-pill-value-no-right-padding {
+  padding-right: 0;
+}
 .vuestro-pill.inverted .vuestro-pill-value {
   color: var(--vuestro-pill-title-fg);
   background-color: var(--vuestro-pill-title-bg);
+  background-image: var(--vuestro-pill-geopattern);
 }
 .vuestro-pill.outline .vuestro-pill-value {
   border: 1px solid var(--vuestro-pill-title-bg);
   box-sizing: content-box;
 }
-.vuestro-pill.closable .vuestro-pill-value {
-  padding-right: 0em;
-}
 
 /* add slight overlap for multiple buttons so they don't take up as much space */
 .vuestro-pill-value-buttons {
   display: flex;
+  /* automatically remove margins for embedded vuestro controls */
   --vuestro-control-margin-v: 0;
   --vuestro-control-margin-h: 0;
 	z-index: -2;

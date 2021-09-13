@@ -349,7 +349,7 @@
             ...or set geopattern to a string to set the seed!
           </template>
         </vuestro-pill>
-        <vuestro-pill inverted geopattern="yo">
+        <vuestro-pill variant="inverted" geopattern="yo">
           <template #title>Works for</template>
           <template #value>inverted</template>
         </vuestro-pill>
