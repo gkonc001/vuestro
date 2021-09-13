@@ -61,7 +61,7 @@
     <!--DROPDOWN-->
     <div v-if="$scopedSlots.dropdown"
          ref="dropdown"
-         class="vuestro-multi-select-dropdown"
+         class="vuestro-multi-select-dropdown vuestro-dark"
          :style="{ visibility: showDropdown ? 'visible':'hidden', 'max-height': maxHeight }"
          @scroll="checkHeight">
         <!--PASS METHODS TO SLOT FOR TIGHT INTEGRATION-->
@@ -274,9 +274,9 @@ export default {
   z-index: 999;
   padding: 0.2em;
   /* redefine style vars for vuestro components */
-  --vuestro-text-field-fg: var(--vuestro-dropdown-content-fg);
-  --vuestro-pill-value-fg: var(--vuestro-dropdown-content-fg);
-  --vuestro-pill-value-bg: var(--vuestro-gray-med);
+  /*--vuestro-text-field-fg: var(--vuestro-dropdown-content-fg);*/
+  /*--vuestro-pill-value-fg: var(--vuestro-dropdown-content-fg);*/
+  /*--vuestro-pill-value-bg: var(--vuestro-gray-dark);*/
 }
 
 

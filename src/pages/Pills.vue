@@ -83,7 +83,7 @@
 
     <vuestro-card>
       <template #description>
-        <span>Use the <vuestro-code>title-buttons</vuestro-code> slot to add some buttons to the title template</span>
+        <span>Use the <vuestro-code>title-buttons</vuestro-code> slot to add some buttons to the title</span>
       </template>
       <vuestro-container>
         <vuestro-pill>
@@ -104,6 +104,37 @@
               <vuestro-icon name="save"></vuestro-icon>
             </vuestro-button>
             <vuestro-button round no-border variant="white">
+              <vuestro-icon name="times"></vuestro-icon>
+            </vuestro-button>
+          </template>
+        </vuestro-pill>
+      </vuestro-container>
+    </vuestro-card>
+
+    <vuestro-card>
+      <template #description>
+        <span><vuestro-code>value-buttons</vuestro-code> to add some buttons to the value</span>
+      </template>
+      <vuestro-container>
+        <vuestro-pill>
+          <template #title>33</template>
+          <template #value>Fan</template>
+          <template #value-buttons>
+            <vuestro-button round no-border>
+              <vuestro-icon name="fan"></vuestro-icon>
+            </vuestro-button>
+          </template>
+        </vuestro-pill>
+        <vuestro-pill>
+          <template #icon>
+            <vuestro-icon name="tractor" scale="0.8"></vuestro-icon>
+          </template>
+          <template #title>Tractor</template>
+          <template #value-buttons>
+            <vuestro-button round no-border>
+              <vuestro-icon name="save"></vuestro-icon>
+            </vuestro-button>
+            <vuestro-button round no-border>
               <vuestro-icon name="times"></vuestro-icon>
             </vuestro-button>
           </template>
@@ -260,6 +291,28 @@
         <vuestro-pill v-if="!exampleClosed" @close="exampleClosed = true" @click="exampleClicked = !exampleClicked">
           <template #value>
             Click or close
+          </template>
+        </vuestro-pill>
+        <span class="example-action-text" v-if="exampleClosed">
+          Pill closed! <vuestro-button variant="link" @click="exampleClosed = false">Click</vuestro-button> to reopen.
+        </span>
+        <span class="example-action-text" v-if="exampleClicked">Pill clicked!</span>
+      </vuestro-container>
+    </vuestro-card>
+
+    <vuestro-card>
+      <template #description>
+        <span>Combining <vuestro-code>@click</vuestro-code>, <vuestro-code>@close</vuestro-code>, and buttons in the <vuestro-code>value-buttons</vuestro-code> slot will also work</span>
+      </template>
+      <vuestro-container>
+        <vuestro-pill v-if="!exampleClosed" @close="exampleClosed = true" @click="exampleClicked = !exampleClicked">
+          <template #value>
+            Click or close
+          </template>
+          <template #value-buttons>
+            <vuestro-button round no-border>
+              <vuestro-icon name="fan"></vuestro-icon>
+            </vuestro-button>
           </template>
         </vuestro-pill>
         <span class="example-action-text" v-if="exampleClosed">

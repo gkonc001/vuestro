@@ -1,3 +1,16 @@
+// On of the most useful Vuestro components, can be used for tags, badges, key value pairs, etc.
+//
+// Events:
+//  click - emitted when there is a click listener
+//  close - emitted when there is a close listener and the x is clicked
+//
+// CSS Vars:
+// --vuestro-pill-radius - use to get squared or slightly-rounded corners
+// --vuestro-pill-title-fg - foreground color for title side (left side)
+// --vuestro-pill-title-bg - background color for title side (left side)
+// --vuestro-pill-value-fg - foreground color for value side (right side)
+// --vuestro-pill-value-bg - background color for value side (right side)
+//
 <template>
   <div class="vuestro-pill"
        :class="[ size, variant,
@@ -24,16 +37,18 @@
         <slot name="title-buttons"></slot>
       </div>
     </div>
-    <div v-if="$scopedSlots.value" class="vuestro-pill-value">
+    <div v-if="$scopedSlots.value" class="vuestro-pill-value vuestro-pill-value-layer">
       <slot name="value"></slot>
     </div>
-    <div v-if="$scopedSlots['value-buttons']" class="vuestro-pill-button-slot">
-      <slot name="value-buttons"></slot>
-    </div>
-    <div v-if="$listeners.close">
-      <vuestro-button no-margin :size="size" round no-border @click.stop="onClose">
-        <vuestro-icon name="times"></vuestro-icon>
-      </vuestro-button>
+    <div class="vuestro-pill-value-buttons vuestro-pill-value-layer">
+      <template v-if="$scopedSlots['value-buttons']">
+        <slot name="value-buttons"></slot>
+      </template>
+      <template v-if="$listeners.close">
+        <vuestro-button :size="size" round no-border @click.stop="onClose">
+          <vuestro-icon name="times"></vuestro-icon>
+        </vuestro-button>
+      </template>
     </div>
   </div>
 </template>
@@ -46,13 +61,13 @@ import GeoPattern from 'geopattern/geopattern.js';
 export default {
   name: 'VuestroPill',
   props: {
-    size: { type: String, default: 'md' },
-    color: { type: String, default: 'var(--vuestro-primary)' },
-    variant: { type: String, default: 'default' }, // default, outline, capsule, inverted
-    draggable: { type: Boolean, default: false },
-    shadow: { type: Boolean, default: false },
-    geopattern: { type: null, default: null },
-    noMargin: { type: Boolean, default: false },
+    size: { type: String, default: 'md' },                      // standard vuestro size string
+    color: { type: String, default: 'var(--vuestro-primary)' }, // color override (title bg)
+    variant: { type: String, default: 'default' },              // default, outline, capsule, inverted
+    draggable: { type: Boolean, default: false },               // adds a move cursor
+    shadow: { type: Boolean, default: false },                  // adds a shadow
+    geopattern: { type: null, default: null },                  // uses title for geopattern, or given string
+    noMargin: { type: Boolean, default: false },                // remove margins
   },
   data() {
     return {
@@ -216,16 +231,14 @@ export default {
 .vuestro-pill-title-no-right {
   padding-right: 0;
 }
-/* add slight overlap for multiple buttons so they don't take up as much space */
-.vuestro-pill-button-slot {
-  display: flex;
-}
-.vuestro-pill-button-slot > .vuestro-button:not(:first-child) {
-  margin-left: -0.2em;
-}
-.vuestro-pill-button-slot {
-  --vuestro-control-margin-v: 0;
-  --vuestro-control-margin-h: 0;
+
+.vuestro-pill-value-layer {
+  background-color: var(--vuestro-pill-value-bg);
+  border-top-right-radius: var(--vuestro-pill-radius);
+	border-bottom-right-radius: var(--vuestro-pill-radius);
+  /* offsets to simulate wrapping around a round title (chinking) */
+	margin-left: calc(var(--vuestro-pill-height) / -2);
+	padding-left: calc(var(--vuestro-pill-height) / 2 + 0.33em);
 }
 
 .vuestro-pill-value {
@@ -238,9 +251,6 @@ export default {
 	border-bottom-right-radius: var(--vuestro-pill-radius);
 	background-color: var(--vuestro-pill-value-bg);
 	transition: background-color 0.4s;
-	/* offsets to simulate wrapping around a round title (chinking) */
-	margin-left: calc(var(--vuestro-pill-height) / -2);
-	padding-left: calc(var(--vuestro-pill-height) / 2 + 0.33em);
 	z-index: -1;
 }
 .vuestro-pill.inverted .vuestro-pill-value {
@@ -251,9 +261,19 @@ export default {
   border: 1px solid var(--vuestro-pill-title-bg);
   box-sizing: content-box;
 }
-
 .vuestro-pill.closable .vuestro-pill-value {
-  padding-right: 0.33em;
+  padding-right: 0em;
+}
+
+/* add slight overlap for multiple buttons so they don't take up as much space */
+.vuestro-pill-value-buttons {
+  display: flex;
+  --vuestro-control-margin-v: 0;
+  --vuestro-control-margin-h: 0;
+	z-index: -2;
+}
+.vuestro-pill-value-buttons > .vuestro-button:not(:first-child) {
+  margin-left: -0.2em;
 }
 
 .vuestro-pill-icon-slot {

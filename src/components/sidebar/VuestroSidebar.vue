@@ -61,14 +61,12 @@
 <script>
 
 /* global _, window, Event */
-import VuestroGeoPattern from '../VuestroGeoPattern.vue';
 import VuestroSidebarMenu from './VuestroSidebarMenu.vue';
 import VuestroMiniSidebarMenu from './VuestroMiniSidebarMenu.vue';
 
 export default {
   name: 'VuestroSidebar',
   components: {
-    VuestroGeoPattern,
     VuestroSidebarMenu,
     VuestroMiniSidebarMenu,
   },

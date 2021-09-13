@@ -7,13 +7,8 @@
 
 <script>
 
-import VuestroCaret from '../VuestroCaret.vue';
-
 export default {
   name: 'VuestroListGroupToggle',
-  components: {
-    VuestroCaret,
-  },
   props: {
     title: { type: String, required: true },
     expanded: { type: Boolean, required: true },

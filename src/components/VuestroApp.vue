@@ -220,10 +220,10 @@ export default {
   --vuestro-widget-light-bg: #e8e9ec;
   --vuestro-widget-dark-bg: #2f353f;
 
-  --vuestro-field-bg: #c7c5c5;
+  --vuestro-field-bg: #d1d1d1;
 
-  --vuestro-popup-bg: #464748;
-  --vuestro-popup-fg: #eee;
+  --vuestro-popup-bg: #323334;
+  --vuestro-popup-fg: #ddd;
 
   --vuestro-tooltip-opacity: 0.8;
 
