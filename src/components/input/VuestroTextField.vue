@@ -1,3 +1,15 @@
+// The all-important text field
+//
+// CSS Vars:
+// --vuestro-text-field-fg - text color for entered text
+// --vuestro-text-field-font-weight - font weight for entered text
+// --vuestro-text-field-placeholder - placeholder color
+// --vuestro-text-field-placeholder-font-weight - font weight for placeholder
+// --vuestro-control-margin-v - inherited vuestro vertical margin
+// --vuestro-control-margin-h - inherited vuestro horizontal margin
+// --vuestro-control-border-width - inherited vuestro border width
+// --vuestro-control-border-radius - inherited vuestro border radius
+//
 <template>
   <div class="vuestro-text-field"
        :class="[ `vuestro-text-field-${variant}`,

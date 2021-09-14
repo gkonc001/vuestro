@@ -73,6 +73,7 @@ export default {
         '--vuestro-pink',
 
         '--vuestro-prussian',
+        '--vuestro-navy',
         '--vuestro-royal',
         '--vuestro-blue',
         '--vuestro-cobalt',
@@ -102,11 +103,17 @@ export default {
       ],
       semanticColors: [
         '--vuestro-primary',
+        '--vuestro-muted-primary',
         '--vuestro-secondary',
+        '--vuestro-muted-secondary',
         '--vuestro-success',
+        '--vuestro-muted-success',
         '--vuestro-info',
+        '--vuestro-muted-info',
         '--vuestro-warning',
+        '--vuestro-muted-warning',
         '--vuestro-danger',
+        '--vuestro-muted-danger',
         '--vuestro-content-bg',
         '--vuestro-widget-dark-bg',
         '--vuestro-widget-light-bg',
@@ -137,7 +144,12 @@ export default {
   padding: 1em;
   border-radius: var(--vuestro-selection-border-radius);
   color: white;
-  text-shadow: 0 0 3px black;
+  text-shadow: 0 0 5px black;
+}
+
+.vuestro-container {
+  --vuestro-text-field-fg: white;
+  --vuestro-text-field-placeholder: white;
 }
 
 </style>

@@ -169,11 +169,12 @@ export default {
   /* palette */
   --vuestro-indigo: #682fa1;
   --vuestro-purple: #551A8B;
-  --vuestro-magenta: #ed23a9;
+  --vuestro-magenta: #d831a0;
   --vuestro-pink: #f13c6e;
 
-  --vuestro-prussian: #1f2233;
-  --vuestro-royal: #101c5a;
+  --vuestro-prussian: #3b4161;
+  --vuestro-navy: #004475;
+  --vuestro-royal: #1a2c88;
   --vuestro-blue: #217ada;
   --vuestro-cobalt: #2163C9;
   --vuestro-cyan: #42b9cc;
@@ -209,9 +210,9 @@ export default {
 
   --vuestro-muted-primary: #21529e;
   --vuestro-muted-secondary: #696767;
-  --vuestro-muted-success: #106532;
-  --vuestro-muted-info: #106686;
-  --vuestro-muted-warning: #826500;
+  --vuestro-muted-success: #3c8a5b;
+  --vuestro-muted-info: #558fa5;
+  --vuestro-muted-warning: #dabe5e;
   --vuestro-muted-danger: #981521;
 
   /* colors responsible for change to dark */
@@ -262,6 +263,7 @@ export default {
   --vuestro-pink: #e04aad;
 
   --vuestro-prussian: #1f2233;
+  --vuestro-navy: #002540;
   --vuestro-royal: #101c5a;
   --vuestro-blue: #27538a;
   --vuestro-cobalt: #2163C9;
