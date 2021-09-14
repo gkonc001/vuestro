@@ -277,6 +277,9 @@
           <template #title>Close</template>
           <template #value>Me</template>
         </vuestro-pill>
+        <vuestro-pill v-if="!exampleClosed" closable @close="exampleClosed = true">
+          <template #title>Close</template>
+        </vuestro-pill>
         <span class="example-action-text" v-if="exampleClosed">
           Pill closed! <vuestro-button variant="link" @click="exampleClosed = false">Click</vuestro-button> to reopen.
         </span>

@@ -50,6 +50,7 @@ import NavigationSidebar from './pages/NavigationSidebar';
 import Example from './pages/Example';
 import ExampleForms from './pages/ExampleForms';
 import Settings from './pages/Settings';
+import Misc from './pages/Misc';
 
 Vue.use(Router);
 
@@ -433,6 +434,16 @@ export default new Router({
           component: InputsParameterList,
         },
       ]
+    },
+    {
+      meta: {
+        title: 'Misc',
+        sidebar: true,
+        icon: 'tools',
+      },
+      name: 'misc',
+      path: '/misc',
+      component: Misc,
     },
     {
       meta: {

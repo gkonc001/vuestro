@@ -1,3 +1,12 @@
+// Shimmer component for building modern loading indicators
+//
+// CSS Vars:
+// --vuestro-shimmer-bg - the background color
+// --vuestro-shimmer-fg - the color of the shimmer
+// --vuestro-pill-radius - border radius for pill mode (same as VuestroPill)
+// --vuestro-control-margin-v - standard vuestro vertical margin
+// --vuestro-control-margin-h - standard vuestro horizontal margin
+//
 <template>
   <div class="vuestro-shimmer" :class="[size, { pill, noMargin }]"></div>
 </template>
@@ -7,13 +16,22 @@
 export default {
   name: 'VuestroShimmer',
   props: {
-    pill: { type: Boolean, default: false },
-    size: { type: String, default: 'md' },
-    noMargin: { type: Boolean, default: false },
+    pill: { type: Boolean, default: false },     // pill mode
+    size: { type: String, default: 'md' },       // standard vuestro size string
+    noMargin: { type: Boolean, default: false }, // remove margins
   },
 };
 
 </script>
+
+<style>
+
+.vuestro-app {
+  --vuestro-shimmer-bg: var(--vuestro-gray);
+  --vuestro-shimmer-fg: var(--vuestro-gray-med);
+}
+
+</style>
 
 <style scoped>
 
@@ -23,7 +41,7 @@ export default {
   flex: 1 1 auto;
   position: relative;
   overflow: hidden;
-  background-color: #eee;
+  background-color: var(--vuestro-shimmer-bg);
   z-index: 1;
 }
 .vuestro-shimmer.sm {
@@ -39,7 +57,7 @@ export default {
   height: var(--vuestro-control-xl-height);
 }
 .vuestro-shimmer.pill {
-  border-radius: 999px;
+  border-radius: var(--vuestro-pill-radius);
 }
 
 .vuestro-shimmer::after {
@@ -50,7 +68,7 @@ export default {
   left: 0;
   content: '';
   transform: translateX(-65%);
-  background-image: linear-gradient(to right, transparent 25%, var(--vuestro-gray-dark) 50%, transparent 85%);
+  background-image: linear-gradient(to right, transparent 25%, var(--vuestro-shimmer-fg) 50%, transparent 85%);
   animation: shimmer 2s infinite;
 }
 
@@ -58,10 +76,6 @@ export default {
   100% {
     transform: translateX(65%);
   }
-}
-
-.vuestro-dark .vuestro-shimmer {
-  background: var(--vuestro-gray);
 }
 
 </style>

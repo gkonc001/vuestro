@@ -10,6 +10,8 @@
 // --vuestro-pill-title-bg - background color for title side (left side)
 // --vuestro-pill-value-fg - foreground color for value side (right side)
 // --vuestro-pill-value-bg - background color for value side (right side)
+// --vuestro-control-margin-v - standard vuestro vertical margin
+// --vuestro-control-margin-h - standard vuestro horizontal margin
 //
 <template>
   <div class="vuestro-pill"
@@ -251,11 +253,12 @@ export default {
 	border-bottom-right-radius: var(--vuestro-pill-radius);
   /* offsets to simulate wrapping around a round title (chinking) */
 	margin-left: calc(var(--vuestro-pill-height) / -2);
-	padding-left: calc(var(--vuestro-pill-height) / 2 + 0.3em);
+	padding-left: calc(var(--vuestro-pill-height) / 2);
 }
 
 .vuestro-pill-value {
   position: relative;
+  padding-left: calc(var(--vuestro-pill-height) / 2 + 0.3em); /* add a little extra */
   padding-right: 0.5em;
   white-space: nowrap;
   text-overflow: ellipsis;
