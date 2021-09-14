@@ -18,17 +18,17 @@
       </template>
       <!--SEARCH BOX-->
       <template #description>
-        <vuestro-text-field variant="search" v-model="searchTerm" stretch></vuestro-text-field>
+        <vuestro-text-field variant="search" v-model="vuestroSearchTerm" stretch></vuestro-text-field>
       </template>
       <!--THE LIST-->
-      <vuestro-container justify="center" v-if="filteredItems.length === 0">No matching items</vuestro-container>
-      <vuestro-list-item v-else v-for="i in filteredItems" :key="i.name" :selected="selectedItem == i" @click="onClick(i)">
+      <vuestro-container justify="center" v-if="vuestroFilteredMatches.length === 0">No matching items</vuestro-container>
+      <vuestro-list-item v-else v-for="i in vuestroFilteredMatches" :key="i.name" :selected="selectedItem == i" @click="onClick(i)">
         <template #icon>
           <vuestro-icon name="user"></vuestro-icon>
         </template>
         <template #title>{{ i.sender }}</template>
         <template #description>{{ i.subject }}</template>
-         <template #content>Some Content</template>  
+         <template #content>Some Content</template>
         <template #buttons>
           <vuestro-button round no-border size="sm" @click="onEdit(i)">
             <vuestro-icon name="pen"></vuestro-icon>
@@ -76,22 +76,7 @@ export default {
 {"id":19,"sender":"Chryste McWilliams","subject":"Configurable 24/7 knowledge base","content":"Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui. Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc.","date":"2020-07-27T15:53:02Z","read":false},
 {"id":20,"sender":"Jarret Mitchard","subject":"Multi-layered solution-oriented task-force","content":"Nulla facilisi. Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque. Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.","date":"2020-12-11T12:48:20Z","read":false}],
       selectedItem: null,
-      searchTerm: '',
     };
-  },
-  computed: {
-    filteredItems() {
-      let ret = [];
-      if (this.searchTerm.length > 0) {
-        let regex = new RegExp(this.searchTerm, 'i');
-        ret = _.filter(this.items, (o) => {
-          return regex.test(Object.values(o).join(' '));
-        });
-      } else {
-        ret = this.items;
-      }
-      return ret;
-    },
   },
   methods: {
     onNew() {

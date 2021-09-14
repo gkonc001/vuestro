@@ -1,3 +1,6 @@
+// The requisite dropdown
+//
+//
 <template>
   <div class="vuestro-dropdown"
        :class="{ disabled, stretch }"
@@ -6,14 +9,17 @@
     <div class="vuestro-dropdown-inner"
          :class="{ active, noScroll, bottom, stretch, button: !!$scopedSlots.button }"
          @mouseleave="onLeave">
+      <!--TITLE SLOT-->
       <div v-if="$scopedSlots.title" class="vuestro-dropdown-title" @click.stop="onClick">
         &#8203;<slot name="title"></slot>&#8203;
       </div>
+      <!--BUTTON SLOT (vuestro-button wired up automatically)-->
       <div class="vuestro-dropdown-button" v-else-if="$scopedSlots.button">
         <slot name="button"></slot>
       </div>
+      <!--THE DROPDOWN PART-->
       <div ref="dropdown"
-           class="vuestro-dropdown-menu"
+           class="vuestro-dropdown-menu vuestro-dark"
            :style="{ visibility: active ? 'visible':'hidden', 'max-height': maxHeight }"
            :class="{ left, bottom }"
            @scroll="checkDimensions">
@@ -140,6 +146,7 @@ export default {
       } else {
         this.activate();
       }
+      this.$el.click(); // emit a native event for vuestro-blur
     },
     onBlur() {
       if (!this.holdOpen) {
@@ -276,10 +283,6 @@ export default {
   border-top-right-radius: var(--vuestro-control-border-radius);
   border-bottom-left-radius: var(--vuestro-control-border-radius);
   z-index: -1;
-  /* redefine style vars for vuestro components */
-  --vuestro-text-field-fg: var(--vuestro-dropdown-content-fg);
-  --vuestro-pill-value-fg: var(--vuestro-dropdown-content-fg);
-  --vuestro-pill-value-bg: var(--vuestro-gray-dark);
 }
 .vuestro-dropdown-inner.noScroll .vuestro-dropdown-menu {
   overflow: visible;

@@ -26,10 +26,8 @@ export default {
 <style scoped>
 
 .vuestro-code {
-  display: inline-block;
   font-family: var(--vuestro-code-font-family);
   border: var(--vuestro-code-border, 1px dashed var(--vuestro-outline));
-  margin: 1px 0;
   padding: 0 0.3em;
   border-radius: var(--vuestro-selection-border-radius);
   background-color: var(--vuestro-field-bg);

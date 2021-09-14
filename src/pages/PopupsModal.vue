@@ -6,9 +6,23 @@
 
     <vuestro-card>
       <template #description>
-        VuestroModal default configuration with a VuestroButton as trigger
+        <span>VuestroModal with all slots labelled (opened using <vuestro-code>$refs</vuestro-code>)</span>
       </template>
-      <vuestro-button @click="modalOpen1 = true">Open Modal</vuestro-button>
+      <vuestro-button value @click="$refs.slotLabelModal.onOpen()">Open Modal</vuestro-button>
+      <vuestro-modal ref="slotLabelModal">
+        <template #title><vuestro-code>#title</vuestro-code></template>
+        <template #toolbar><vuestro-code>#toolbar</vuestro-code></template>
+        <template #default><vuestro-code>#default</vuestro-code></template>
+        <template #footer><vuestro-code>#footer</vuestro-code></template>
+        <template #buttons><vuestro-code>#buttons</vuestro-code></template>
+      </vuestro-modal>
+    </vuestro-card>
+
+    <vuestro-card>
+      <template #description>
+        <span>VuestroModal with example components opened using <vuestro-code>active</vuestro-code> prop</span>
+      </template>
+      <vuestro-button value @click="modalOpen1 = true">Open Modal</vuestro-button>
       <vuestro-modal :active.sync="modalOpen1" no-scroll>
         <template #title>VuestroModal</template>
         <template #toolbar>
@@ -63,13 +77,39 @@
             </template>
           </vuestro-tooltip>
         </vuestro-container>
+        <template #footer>
+          <vuestro-container>
+            This could show contextual help
+          </vuestro-container>
+        </template>
         <template #buttons>
+          <vuestro-container gutter="none">
+            <vuestro-button checkbox value>Enabled</vuestro-button>
+            <vuestro-dropdown close-on-content-click>
+              <template #button>
+                <vuestro-button>
+                  <template #icon>
+                    <vuestro-icon name="list"></vuestro-icon>
+                  </template>
+                  Dropdown Button
+                </vuestro-button>
+              </template>
+              <vuestro-list-button>Item 1</vuestro-list-button>
+              <vuestro-list-button>Item 2</vuestro-list-button>
+            </vuestro-dropdown>
+          </vuestro-container>
           <vuestro-tooltip position="bottom">
-            <vuestro-button variant="success">Button w/Tooltip</vuestro-button>
+            <vuestro-button variant="info">Button w/Tooltip</vuestro-button>
             <template #content>
               Tooltip Test
             </template>
           </vuestro-tooltip>
+          <vuestro-button variant="success" value>
+            <template #icon>
+              <vuestro-icon name="save"></vuestro-icon>
+            </template>
+            Save
+          </vuestro-button>
         </template>
       </vuestro-modal>
     </vuestro-card>
@@ -78,7 +118,7 @@
       <template #description>
         Close modal when clicking outside by setting the close-on-blur property
       </template>
-      <vuestro-button @click="modalOpen2 = true">Open Modal</vuestro-button>
+      <vuestro-button value @click="modalOpen2 = true">Open Modal</vuestro-button>
       <vuestro-modal :active.sync="modalOpen2" close-on-blur>
         <template #title>VuestroModal</template>
         <template #buttons></template>
@@ -90,60 +130,6 @@
             SOS
           </vuestro-button>
         </vuestro-container>
-      </vuestro-modal>
-    </vuestro-card>
-
-    <vuestro-card>
-      <template #description>
-        VuestroModal has a "toolbar" slot for adding VuestroButtons to the top right, and a "buttons" slot for adding VuestroButtons to the bottom right.
-      </template>
-      <vuestro-button @click="modalOpen3 = true">Open Modal</vuestro-button>
-      <vuestro-modal :active.sync="modalOpen3" close-on-blur close-text="Done" @after-open="onAfterOpen">
-        <template #title>VuestroModal</template>
-        <template #toolbar>
-          <vuestro-button pill no-border variant="info">
-            <template #icon>
-              <vuestro-icon name="sync-alt"></vuestro-icon>
-            </template>
-            Refresh
-          </vuestro-button>
-        </template>
-        <template #footer>
-          <vuestro-hr></vuestro-hr>
-        </template>
-        <template #buttons>
-          <vuestro-dropdown close-on-content-click>
-            <template #button>
-              <vuestro-button variant="info">
-                <template #icon>
-                  <vuestro-icon name="list"></vuestro-icon>
-                </template>
-                Dropdown Button
-              </vuestro-button>
-            </template>
-            <vuestro-list-button>Item 1</vuestro-list-button>
-            <vuestro-list-button>Item 2</vuestro-list-button>
-          </vuestro-dropdown>
-          <vuestro-button variant="primary">
-            <template #icon>
-              <vuestro-icon name="download"></vuestro-icon>
-            </template>
-            Download
-          </vuestro-button>
-          <vuestro-button variant="warning">
-            <template #icon>
-              <vuestro-icon name="times"></vuestro-icon>
-            </template>
-            Cancel
-          </vuestro-button>
-          <vuestro-button variant="success">
-            <template #icon>
-              <vuestro-icon name="save"></vuestro-icon>
-            </template>
-            Save
-          </vuestro-button>
-        </template>
-        <p>Modal content</p>
       </vuestro-modal>
     </vuestro-card>
 

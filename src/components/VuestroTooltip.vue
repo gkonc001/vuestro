@@ -6,7 +6,7 @@
        @mouseleave="onMouseLeave">
     <slot></slot>
     <div ref="content"
-         class="vuestro-tooltip-content"
+         class="vuestro-tooltip-content vuestro-dark"
          :class="{ noWrap, noPadding }"
          :style="[ contentPos, { 'min-width': `${minWidth}px`, visibility: active ? 'visible':'hidden', opacity: active ? '1':'0' }]">
       <slot name="content"></slot>
@@ -52,8 +52,9 @@ export default {
       }
     },
     open() {
-      // onmouseover triggers often when inside the component, so prevent retriggering
-      if (this.active) return;
+      // onmouseover triggers often when inside the component, so prevent retriggering when active
+      // also exit if the DOM els aren't present
+      if (this.active || !this.$el || !this.$refs.content) return;
       // get origin of default slot content (usually a button)
       let elBcr = this.$el.getBoundingClientRect();
       let bcr = this.$refs.content.getBoundingClientRect();

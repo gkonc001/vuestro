@@ -20,7 +20,10 @@ console.log('VUESTRO DEV MODE');
 let oldConsoleLog = console.log;
 console.log = function() {
   try {
-    let body = JSON.stringify(arguments);
+    let body = [];
+    for (let a of arguments) {
+      body.push(JSON.stringify(a));
+    }
     axios.post('/vuestro-dev-console/log', body);
   } catch (e) {}
   oldConsoleLog(...arguments);
@@ -28,7 +31,10 @@ console.log = function() {
 let oldConsoleWarn = console.warn;
 console.warn = function() {
   try {
-    let body = JSON.stringify(arguments);
+    let body = [];
+    for (let a of arguments) {
+      body.push(JSON.stringify(a));
+    }
     axios.post('/vuestro-dev-console/warn', body);
   } catch (e) {}
   oldConsoleWarn(...arguments);
@@ -36,7 +42,10 @@ console.warn = function() {
 let oldConsoleError = console.error;
 console.error = function() {
   try {
-    let body = JSON.stringify(arguments);
+    let body = [];
+    for (let a of arguments) {
+      body.push(JSON.stringify(a));
+    }
     axios.post('/vuestro-dev-console/error', body);
   } catch (e) {}
   oldConsoleError(...arguments);
@@ -44,7 +53,10 @@ console.error = function() {
 let oldConsoleInfo = console.info;
 console.info = function() {
   try {
-    let body = JSON.stringify(arguments);
+    let body = [];
+    for (let a of arguments) {
+      body.push(JSON.stringify(a));
+    }
     axios.post('/vuestro-dev-console/info', body);
   } catch (e) {}
   oldConsoleInfo(...arguments);

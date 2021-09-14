@@ -21,6 +21,14 @@
         {{ vuestroColorPalette() }}
       </vuestro-container>
     </vuestro-card>
+
+    <vuestro-card>
+      <template #subheading>vuestroGenerateId()</template>
+      <template #description>Mixin will return a random (using browser crypto) hex string usable as a unique id</template>
+      <vuestro-container>
+        {{ vuestroGenerateId() }}
+      </vuestro-container>
+    </vuestro-card>
   </vuestro-container>
 </template>
 

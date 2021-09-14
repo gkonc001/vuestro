@@ -77,7 +77,7 @@
     </div>
     <!--TEMPLATIZED DROPDOWN MENU-->
     <div v-if="$scopedSlots.dropdown"
-         class="vuestro-text-field-dropdown"
+         class="vuestro-text-field-dropdown vuestro-dark"
          :style="{ visibility: showDropdown ? 'visible':'hidden'}">
         <slot name="dropdown"></slot>
     </div>

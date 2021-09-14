@@ -1,13 +1,19 @@
+// Modal component
+//
+//
 <template>
   <transition name="vuestro-modal" mode="out-in"
               @after-enter="onAfterOpen"
               @after-leave="onAfterClose">
-    <div class="vuestro-modal" v-if="active" @click.exact="onBlur">
+    <div class="vuestro-modal" v-if="active || localActive" @click.exact="onBlur">
       <div class="vuestro-modal-inner">
-        <div class="vuestro-modal-titlebar">
+        <!--TITLEBAR (ALWAYS DARK)-->
+        <div class="vuestro-modal-titlebar vuestro-dark">
+          <!--TITLE-->
           <div class="vuestro-modal-title">
             <slot name="title"></slot>
           </div>
+          <!--BUTTON SLOT-->
           <div class="vuestro-modal-toolbar-buttons">
             <slot name="toolbar"></slot>
             <template v-if="closeText.length > 0">
@@ -20,12 +26,15 @@
             </template>
           </div>
         </div>
+        <!--MODAL BODY SLOT-->
         <div class="vuestro-modal-default-slot">
           <slot></slot>
         </div>
+        <!--FOOTER SLOT-->
         <div v-if="$scopedSlots.footer">
           <slot name="footer"></slot>
         </div>
+        <!--BUTTON SLOT-->
         <div v-if="$scopedSlots.buttons" class="vuestro-modal-buttons">
           <slot name="buttons"></slot>
         </div>
@@ -43,10 +52,20 @@ export default {
     closeText: { type: String, default: '' },
     closeOnBlur: { type: Boolean, default: false },
   },
+  data() {
+    return {
+      localActive: false, // local value to allow standalone-operation (without using active prop)
+    };
+  },
   methods: {
+    // open method for standalone operation (not using active prop)
+    onOpen() {
+      this.localActive = true;
+    },
     onClose() {
       this.$emit('update:active', false);
       this.$emit('close');
+      this.localActive = false;
     },
     onBlur(e) {
       if (this.closeOnBlur && e.target.classList.contains('vuestro-modal')) {
@@ -157,6 +176,7 @@ export default {
 .vuestro-modal-toolbar-buttons {
   display: flex;
   margin-left: auto;
+  align-items: center;
 }
 .vuestro-modal-default-slot {
   flex-grow: 1;

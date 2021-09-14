@@ -273,10 +273,6 @@ export default {
   border-radius: var(--vuestro-control-border-radius);
   z-index: 999;
   padding: 0.2em;
-  /* redefine style vars for vuestro components */
-  /*--vuestro-text-field-fg: var(--vuestro-dropdown-content-fg);*/
-  /*--vuestro-pill-value-fg: var(--vuestro-dropdown-content-fg);*/
-  /*--vuestro-pill-value-bg: var(--vuestro-gray-dark);*/
 }
 
 

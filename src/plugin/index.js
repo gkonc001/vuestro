@@ -61,11 +61,13 @@ import VuestroTitle from '../components/text/VuestroTitle';
 import VuestroTooltip from '../components/VuestroTooltip';
 import VuestroTray from '../components/containers/VuestroTray';
 
-import * as d3 from 'd3';
-let colors = d3.scaleOrdinal(d3.schemeCategory10);
+import VuestroMixins from './mixins';
 
 export default {
   install(Vue, options) {
+    //
+    // COMPONENT REGISTRATION
+    //
     Vue.component(VuestroApp.name, VuestroApp);
     Vue.component(VuestroAreaChart.name, VuestroAreaChart);
     Vue.component(VuestroAsyncText.name, VuestroAsyncText);
@@ -127,7 +129,10 @@ export default {
     Vue.component(VuestroTooltip.name, VuestroTooltip);
     Vue.component(VuestroTray.name, VuestroTray);
     Vue.component(VuestroUpload.name, VuestroUpload);
-
+    //
+    // FILTERS
+    //
+    // filter to add commas to a number
     Vue.filter('vuestroCommas', (d) => {
       if (d === null || d === undefined) {
         return '';
@@ -143,7 +148,7 @@ export default {
       }
       return d;
     });
-
+    // filter to render a group of 10 digits as a US phone number
     Vue.filter('vuestroPhoneUS', (d) => {
       if (d === null || d === undefined) {
         return '';
@@ -153,7 +158,7 @@ export default {
       }
       return d.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
     });
-
+    // render the given string or UNIX time or date object as HH:MM:SS
     Vue.filter('vuestroHMS', (d) => {
       let hours, minutes, seconds;
       if (d === null || d === undefined) {
@@ -171,7 +176,7 @@ export default {
       }
       return `${('0' + hours).slice(-2)}:${('0' + minutes).slice(-2)}:${('0' + seconds).slice(-2)}`;
     });
-
+    // render the given string or UNIX time or date object as ISO8601
     Vue.filter('vuestroIsoDate', (d) => {
       if (d === null || d === undefined) {
         return '';
@@ -182,7 +187,7 @@ export default {
       }
       return d.toISOString();
     });
-
+    // render the given string or UNIX time or date object as a local datetime
     Vue.filter('vuestroDate', (d) => {
       if (d === null || d === undefined) {
         return '';
@@ -193,7 +198,7 @@ export default {
       }
       return d.toLocaleString();
     });
-
+    // render the given string or UNIX time or date object as a local date only
     Vue.filter('vuestroLocaleDate', (d) => {
       if (d === null || d === undefined) {
         return '';
@@ -204,7 +209,7 @@ export default {
       }
       return d.toLocaleDateString();
     });
-
+    // render the given string or UNIX time or date object as a local time only
     Vue.filter('vuestroLocaleTime', (d) => {
       if (d === null || d === undefined) {
         return '';
@@ -215,7 +220,7 @@ export default {
       }
       return d.toLocaleTimeString();
     });
-
+    // filter to humanize a byte count with the ppropriate suffix, uses 1k=1000
     Vue.filter('vuestroBytes', (intNum) => {
       if (intNum === null || intNum === undefined) {
         return '';
@@ -227,7 +232,7 @@ export default {
       let i = parseInt(Math.floor(Math.log(intNum) / Math.log(1000)), 10);
       return (intNum / Math.pow(1000, i)).toFixed(1) + suffixes[i];
     });
-
+    // filter to humanize a number with an appropriate suffix
     Vue.filter('vuestroHumanNum', (intNum) => {
       if (intNum == null || intNum === undefined) {
         return '';
@@ -239,7 +244,7 @@ export default {
       let i = parseInt(Math.floor(Math.log(intNum) / Math.log(1000)), 10) - 1;
       return (intNum / Math.pow(1000, i+1)).toFixed(1) + suffixes[i];
     });
-
+    // filter for title case, attempt to be smart about titling rules
     Vue.filter('vuestroTitleCase', (str) => {
       return str.split(' ').map(function(word, idx) {
         let exceptions = [
@@ -264,7 +269,9 @@ export default {
         return word;
       }).join(' ');
     });
-
+    // use by adding v-vuestro-blur="onBlur" to your element,
+    // onBlur method will be called when a click event bubbles up to document.body
+    // which didn't originate from within your element
     Vue.directive('vuestro-blur', {
       bind: function (el, binding, vnode) {
         el.clickOutsideEvent = function(event) {
@@ -278,81 +285,9 @@ export default {
         document.body.removeEventListener('click', el.clickOutsideEvent);
       },
     });
-
-    Vue.mixin({
-      methods: {
-        vuestroDownloadAsJson(data, filename) {
-          if (!data || !filename) {
-            console.error('downloadAsJSON needs data and filename params');
-            return;
-          }
-          var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data,null,2));
-          var downloadAnchorNode = document.createElement('a');
-          downloadAnchorNode.setAttribute("href", dataStr);
-          downloadAnchorNode.setAttribute("download", filename);
-          document.body.appendChild(downloadAnchorNode); // required for firefox
-          downloadAnchorNode.click();
-          downloadAnchorNode.remove();
-        },
-        vuestroDownloadWithIframe(url) {
-          let hiddenIFrameID = `vuestroDownloadWithIframe-${Date.now()}`;
-          let iframe = document.createElement('iframe');
-          iframe.id = hiddenIFrameID;
-          iframe.style.display = 'none';
-          document.body.appendChild(iframe);
-          iframe.src = url;
-        },
-        vuestroGet(object, path, defaultVal) {
-          return _.get(object, path, defaultVal);
-        },
-        vuestroGetValueById({ data, idField, idValue, field, backupText }) {
-          let q = {};
-          q[idField] = idValue;
-          let doc = _.find(data, q);
-          if (doc && doc[field]) {
-            return doc[field];
-          } else {
-            return backupText;
-          }
-        },
-        vuestroGenerateId(length) {
-          function dec2hex (dec) {
-            return dec < 10 ? '0' + String(dec):dec.toString(16);
-          }
-          var arr = new Uint8Array((length || 40) / 2);
-          window.crypto.getRandomValues(arr);
-          return Array.from(arr, dec2hex).join('');
-        },
-        vuestroColorPalette() {
-          return [
-            '--vuestro-indigo',
-            '--vuestro-purple',
-            '--vuestro-magenta',
-            '--vuestro-pink',
-
-            '--vuestro-prussian',
-            '--vuestro-navy',
-            '--vuestro-royal',
-            '--vuestro-blue',
-            '--vuestro-cobalt',
-            '--vuestro-cyan',
-            '--vuestro-teal',
-
-            '--vuestro-green',
-            '--vuestro-emerald',
-            '--vuestro-yellow',
-            '--vuestro-gold',
-
-            '--vuestro-orange',
-            '--vuestro-salmon',
-            '--vuestro-brick',
-            '--vuestro-red',
-          ];
-        },
-        vuestroChartColorGenerator(idx) {
-          return colors(idx);
-        },
-      }
-    });
+    //
+    // MIXINS
+    //
+    Vue.mixin(VuestroMixins);
   }
 };
