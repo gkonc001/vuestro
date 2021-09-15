@@ -85,4 +85,18 @@ export default {
   pointer-events: none;
 }
 
+.vuestro-tray.noMargin:first-child {
+  border-bottom: var(--vuestro-control-border-width) solid var(--vuestro-outline);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.vuestro-tray.noMargin:not(:first-child):not(:last-child) {
+  border-bottom: var(--vuestro-control-border-width) solid var(--vuestro-outline);
+  border-radius: 0;
+}
+.vuestro-tray.noMargin:last-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
 </style>

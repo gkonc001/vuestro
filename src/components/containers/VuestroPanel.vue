@@ -163,12 +163,6 @@ export default {
   border: none;
 }
 
-.vuestro-panel .vuestro-tray:not(:last-child) {
-  border-bottom: var(--vuestro-control-border-width) solid var(--vuestro-outline);
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
 .vuestro-panel-title-toolbar {
   min-height: var(--vuestro-panel-titlebar-min-height);
   display: flex;
