@@ -13,7 +13,12 @@
       <slot name="title"></slot>
     </div>
     <vuestro-title v-else-if="title" class="vuestro-tray-title flex-align-self-center">{{ title }}</vuestro-title>
-    <slot></slot>
+    <div class="vuestro-tray-contents">
+      <slot></slot>
+    </div>
+    <div v-if="$slots.buttons" class="vuestro-tray-buttons">
+      <slot name="buttons"></slot>
+    </div>
   </div>
 </template>
 
@@ -97,6 +102,17 @@ export default {
 .vuestro-tray.noMargin:last-child {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.vuestro-tray-contents {
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.vuestro-tray-buttons {
+  display: flex;
+  align-items: center;
 }
 
 </style>
