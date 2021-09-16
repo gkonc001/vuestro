@@ -1,10 +1,13 @@
 // The all-important text field
 //
+//
 // CSS Vars:
 // --vuestro-text-field-fg - text color for entered text
 // --vuestro-text-field-font-weight - font weight for entered text
 // --vuestro-text-field-placeholder - placeholder color
 // --vuestro-text-field-placeholder-font-weight - font weight for placeholder
+// --vuestro-text-field-input-padding - padding around input el
+// --vuestro-text-field-search-radius - border radius for search variant
 // --vuestro-control-margin-v - inherited vuestro vertical margin
 // --vuestro-control-margin-h - inherited vuestro horizontal margin
 // --vuestro-control-border-width - inherited vuestro border width
@@ -23,24 +26,30 @@
                   }
                ]"
        v-vuestro-blur="closeDropdown">
-    <!--the main input, input-el-wrapper provides border for outline variant-->
+    <!--the main input, vuestro-text-field-input-el-wrapper provides border for outline variant-->
     <div class="vuestro-text-field-input-el-wrapper" :style="style">
+      <!--ICON SLOT-->
       <div ref="iconSlot"
            class="vuestro-text-field-icon-slot"
            :class="{ active: $scopedSlots.icon || variant === 'search' }">
         <slot name="icon">
           <div @click="showDropdown = true">
-            <vuestro-icon v-if="variant === 'search'" name="search" scale="0.8"></vuestro-icon>
+            <vuestro-icon v-if="variant === 'search'" name="search" :scale="iconScale"></vuestro-icon>
           </div>
         </slot>
       </div>
+      <!--SHADED PLACEHOLDER-->
+      <div v-if="variant === 'shaded'" class="vuestro-text-field-shaded-placeholder">
+        <vuestro-title>{{ placeholder }}</vuestro-title>
+      </div>
+      <!--THE INPUT-->
       <input ref="inputEl"
              class="vuestro-text-field-input-el"
              :value="inputBuffer"
              :type="showPassword ? 'text':type"
              :autocomplete="autocomplete"
              :spellcheck="spellcheck"
-             :placeholder="variant === 'search' ? 'Search':null"
+             :placeholder="inputPlaceholder"
              @focus="onFocus"
              @focusout="onFocusOut"
              @input="updateValue"
@@ -60,10 +69,12 @@
       <div v-if="invalid" class="vuestro-text-field-invalid-msg">{{ invalid }}</div>
       <!--EDITING BUTTONS-->
       <div v-else-if="editingButtons" class="vuestro-text-field-editing-buttons">
-        <vuestro-button v-if="!invalid" round no-border size="sm" variant="success" @click="onSaveButton">
+        <vuestro-button v-if="!invalid" class="vuestro-text-field-button"
+                        round no-border size="sm" variant="success" @click="onSaveButton">
           <vuestro-icon name="save"></vuestro-icon>
         </vuestro-button>
-        <vuestro-button round no-border size="sm" variant="danger" @click="onCancelButton">
+        <vuestro-button class="vuestro-text-field-button"
+                        round no-border size="sm" variant="danger" @click="onCancelButton">
           <vuestro-icon name="trash"></vuestro-icon>
         </vuestro-button>
       </div>
@@ -71,8 +82,8 @@
       <span class="vuestro-text-field-show-password"
             v-if="type === 'password' || type === 'hidden'"
             @click="showPassword = !showPassword">
-        <vuestro-icon v-if="!showPassword" name="eye-slash"></vuestro-icon>
-        <vuestro-icon v-if="showPassword" name="eye"></vuestro-icon>
+        <vuestro-icon v-if="!showPassword" name="eye-slash" :scale="iconScale"></vuestro-icon>
+        <vuestro-icon v-if="showPassword" name="eye" :scale="iconScale"></vuestro-icon>
       </span>
     </div>
     <!--TEMPLATIZED DROPDOWN MENU-->
@@ -81,17 +92,13 @@
          :style="{ visibility: showDropdown ? 'visible':'hidden'}">
         <slot name="dropdown"></slot>
     </div>
-    <!--PLACEHOLDER-->
-    <div v-if="placeholder"
+    <!--DYNAMIC PLACEHOLDER (only for regular and outline variants)-->
+    <div v-if="placeholder && (variant === 'regular' || variant === 'outline')"
          ref="placeholder"
          class="vuestro-text-field-placeholder"
          :class="{ active: raisedPlaceholder }"
          :style="placeholderStyle">
       {{ placeholder }}
-    </div>
-    <!--HINT-->
-    <div v-if="hint && raisedPlaceholder && value.length === 0" class="vuestro-text-field-hint">
-      {{ hint }}
     </div>
   </div>
 </template>
@@ -103,11 +110,11 @@
 export default {
   name: 'VuestroTextField',
   props: {
-    value: { type: null, default: '' },               // initial value, or bind with v-model
+    value: { type: null, default: '' },               // initial value, or bind with v-model, not required for standalone mode
     placeholder: { type: String, default: null },     // custom placeholder, doesn't use input el standard placeholder
-    variant: { type: String, default: 'regular' },    // { 'regular', 'outline', 'shaded', 'search' }
+    variant: { type: String, default: 'regular' },    // regular, outline, shaded, search
     type: { type: String, default: 'text' },          // standard input el type string
-    hint: { type: String, default: null },            // set to a hint string, this is in addition to placeholder
+    hint: { type: String, default: null },            // uses input el placeholder to provide additional hint, only shown when focused
     center: { type: Boolean, default: false },        // set true to center text
     noMargin: { type: Boolean, default: false },      // disable standard vuestro control margins
     clearable: { type: Boolean, default: false },     // set true to show X button to clear
@@ -116,10 +123,10 @@ export default {
     selected: { type: Boolean, default: false },      // set true for all text selected by default
     readonly: { type: Boolean, default: false },      // set true for readonly
     validate: { type: Function, default: () => { return false; } }, // return true or string to set invalid state
-    autocomplete: { type: String, default: null }, // standard autocomplete field for input el
-    spellcheck: { type: String, default: null },   // standard spellcheck field for input el
-    stretch: { type: Boolean, default: false },    // set true for flexbox grow
-    autoFocus: { type: Boolean, default: false },  // set true for focus on mount
+    autocomplete: { type: String, default: null },    // standard autocomplete field for input el
+    spellcheck: { type: String, default: null },      // standard spellcheck field for input el
+    stretch: { type: Boolean, default: false },       // set true for flexbox grow
+    autoFocus: { type: Boolean, default: false },     // set true for focus on mount (last one wins)
   },
   data() {
     return {
@@ -150,6 +157,30 @@ export default {
         return true;
       }
       return false;
+    },
+    // scale the search icon with size
+    iconScale() {
+      switch (this.size) {
+        case 'sm':
+          return 0.6;
+        case 'md':
+          return 0.8;
+        case 'lg':
+          return 1.0;
+        case 'xl':
+          return 1.05;
+      }
+    },
+    // compute the placeholder for the input el, we use this as the main placeholder
+    // for the search variant. All others only specify it if a hint was provided
+    inputPlaceholder() {
+      if (this.variant === 'search') {
+        return this.placeholder || 'Search';
+      }
+      if (this.focused) {
+        return this.hint;
+      }
+      return null;
     },
   },
   watch: {
@@ -198,18 +229,24 @@ export default {
         } else {
           this.$delete(this.style, 'clip-path');
         }
+        this.$forceUpdate();
       }, 100);
     },
     checkPlaceholder() {
       if (this.$refs.inputEl &&
          (window.getComputedStyle(this.$refs.inputEl).content === `"${String.fromCharCode(0xFEFF)}"` ||
-          this.isContent)) {
+          this.isContent || this.focused)) {
         this.raisedPlaceholder = true;
       } else {
         this.raisedPlaceholder = false;
       }
       if (!this.center && this.$refs.iconSlot) {
-        this.placeholderStyle = { left: `${this.$refs.iconSlot.getBoundingClientRect().width*1.5}px` };
+        let iconWidth = this.$refs.iconSlot.getBoundingClientRect().width;
+        if (this.variant == 'regular') {
+          this.placeholderStyle = { left: `${iconWidth*2.0}px` };
+        } else {
+          this.placeholderStyle = { left: `${iconWidth*1.5}px` };
+        }
       }
       this.updateStyle();
     },
@@ -220,14 +257,16 @@ export default {
         });
       }
     },
+    // fine-grained update, called with every keystroke so parent
+    // can update value prop according to v-model convention, this also
+    // updates the local buffer for standalone operation
     updateValue(e) {
-      // fine-grained, called with every keystroke so parent
-      // can update value prop according to v-model convention
       this.$emit('input', e.target.value);
       // always update local input buffer
       this.inputBuffer = e.target.value;
     },
-    onKeyUp(e) { // passthrough for 'keyup.enter'-type binding
+    // keyup passthrough to allow 'keyup.enter'-type binding
+    onKeyUp(e) {
       this.beginValidation = true; // begin validation
       this.$emit('keyup', e);
     },
@@ -237,7 +276,7 @@ export default {
       }
       this.focused = true;
       this.raisedPlaceholder = true;
-      this.$forceUpdate();
+      this.checkPlaceholder();
       this.updateStyle();
     },
     onFocusOut() {
@@ -291,34 +330,24 @@ export default {
 
 <style scoped>
 
+/*SIZE DERIVATION*/
 .vuestro-text-field.sm {
-  font-size: calc(var(--vuestro-control-sm-height) * 0.5);
+  font-size: calc(var(--vuestro-control-sm-height) * 0.7);
   --vuestro-text-field-local-height: var(--vuestro-control-sm-height);
 }
-.vuestro-text-field-shaded.sm {
-  --vuestro-text-field-local-height: calc(var(--vuestro-control-sm-height)*1.2);
-}
 .vuestro-text-field.md {
-  font-size: calc(var(--vuestro-control-md-height) * 0.5);
+  font-size: calc(var(--vuestro-control-md-height) * 0.6);
   --vuestro-text-field-local-height: var(--vuestro-control-md-height);
-}
-.vuestro-text-field-shaded.md {
-  --vuestro-text-field-local-height: calc(var(--vuestro-control-md-height)*1.2);
 }
 .vuestro-text-field.lg {
   font-size: calc(var(--vuestro-control-lg-height) * 0.5);
   --vuestro-text-field-local-height: var(--vuestro-control-lg-height);
 }
-.vuestro-text-field-shaded.lg {
-  --vuestro-text-field-local-height: calc(var(--vuestro-control-lg-height)*1.2);
-}
 .vuestro-text-field.xl {
   font-size: calc(var(--vuestro-control-xl-height) * 0.5);
   --vuestro-text-field-local-height: var(--vuestro-control-xl-height);
 }
-.vuestro-text-field-shaded.xl {
-  --vuestro-text-field-local-height: calc(var(--vuestro-control-xl-height)*1.2);
-}
+/*OUTER*/
 .vuestro-text-field {
   position: relative;
   margin: var(--vuestro-control-margin-v) var(--vuestro-control-margin-h);
@@ -341,34 +370,33 @@ export default {
 .vuestro-text-field.invalid {
   border-color: var(--vuestro-danger);
 }
-
+/*OUTLINE*/
 .vuestro-text-field-outline .vuestro-text-field-input-el-wrapper {
   border: var(--vuestro-control-border-width) solid var(--vuestro-outline);
 }
+/*REGULAR*/
 .vuestro-text-field-regular {
   border-bottom: var(--vuestro-control-border-width) solid var(--vuestro-outline);
 }
-
+/*SHADED*/
 .vuestro-text-field-shaded {
   border: none;
   border-radius: var(--vuestro-control-border-radius);
   background-color: var(--vuestro-field-bg);
 }
+/*SEARCH*/
 .vuestro-text-field-search {
   border: none;
-  border-radius: 999px;
+  border-radius: var(--vuestro-text-field-search-radius, 999px);
   background-color: var(--vuestro-field-bg);
 }
-.vuestro-dark .vuestro-text-field-shaded,
-.vuestro-dark .vuestro-text-field-search {
-  background-color: var(--vuestro-darker);
-}
 
+/*DYNAMIC PLACEHOLDER (ONLY REGULAR AND OUTLINE*/
 .vuestro-text-field-placeholder {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 1em;
+  font-size: 1em; /* full size when not active */
   font-weight: var(--vuestro-text-field-placeholder-font-weight);
   top: 50%;
   max-width: 100%;
@@ -383,8 +411,8 @@ export default {
   transform: translate(-50%, -50%);
 }
 .vuestro-text-field-placeholder.active {
-  top: -1px;
-  font-size: 0.8em;
+  top: 0px;
+  font-size: 0.7em; /* smaller when active */
   padding-left: 3px;
   padding-right: 3px;
 }
@@ -396,20 +424,27 @@ export default {
   padding: 0 calc(var(--vuestro-control-border-radius)*3);
 }
 
-.vuestro-text-field-shaded .vuestro-text-field-placeholder {
-  padding: 0 8px;
-}
-.vuestro-text-field-shaded .vuestro-text-field-placeholder.active {
-  top: 6px;
+/*SHADED PLACEHOLDER*/
+.vuestro-text-field-shaded-placeholder {
+  color: var(--vuestro-text-field-placeholder);
 }
 
+/*INPUT ELEMENT*/
 .vuestro-text-field-input-el-wrapper {
   flex: 1 1 auto;
   display: flex;
-  padding-left: 0.4em;
-  padding-right: 0.2em;
+  padding: var(--vuestro-text-field-input-padding, 0 0.4em 0 0.4em);
   transition: all 0.15s;
   border-radius: var(--vuestro-control-border-radius);
+  align-items: center;
+}
+.vuestro-text-field-input-el-wrapper > input:-webkit-autofill,
+.vuestro-text-field-input-el-wrapper > input:-webkit-autofill:hover,
+.vuestro-text-field-input-el-wrapper > input:-webkit-autofill:focus {
+  content: "\feff"; /* magic value to detect browser autofill */
+  border: var(--vuestro-control-border-width) solid var(--vuestro-gray);
+  -webkit-text-fill-color: var(--vuestro-black);
+  -webkit-box-shadow: 0 0 0px 1000px var(--vuestro-gray) inset;
 }
 
 .vuestro-text-field-input-el {
@@ -423,14 +458,10 @@ export default {
   color: var(--vuestro-text-field-fg);
   padding: 0;
 }
-.vuestro-text-field-shaded .vuestro-text-field-input-el {
-  align-self: flex-end;
-  padding-left: 0.4em;
-  padding-bottom: 0.3em;
-}
 .vuestro-text-field.center .vuestro-text-field-input-el {
   text-align: center;
 }
+
 
 .vuestro-text-field-show-password {
   margin-left: 4px;
@@ -440,34 +471,17 @@ export default {
   align-items: center;
 }
 
-.vuestro-text-field-hint {
-  position: absolute;
-  top: 50%;
-  left: 1em;
-  transform: translate(0, -50%);
-  pointer-events: none;
-  color: var(--vuestro-text-color-muted);
-}
-.vuestro-text-field.center .vuestro-text-field-hint {
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.vuestro-text-field-input-el-wrapper > input:-webkit-autofill,
-.vuestro-text-field-input-el-wrapper > input:-webkit-autofill:hover,
-.vuestro-text-field-input-el-wrapper > input:-webkit-autofill:focus {
-  content: "\feff"; /* magic value to detect browser autofill */
-  border: var(--vuestro-control-border-width) solid var(--vuestro-gray);
-  -webkit-text-fill-color: var(--vuestro-black);
-  -webkit-box-shadow: 0 0 0px 1000px var(--vuestro-gray) inset;
-}
-
 .vuestro-text-field-editing-buttons {
   display: flex;
+}
+.vuestro-text-field.sm .vuestro-text-field-button {
+  --vuestro-control-sm-height: calc(var(--vuestro-text-field-local-height) - 2px);
 }
 .vuestro-text-field-button {
   flex-shrink: 0;
 }
 
+/*VALIDATION*/
 .vuestro-text-field-invalid-msg {
   position: absolute;
   top: 0;
@@ -495,6 +509,7 @@ export default {
 	border-bottom: var(--vuestro-text-field-invalid-msg-px) solid transparent;
 }
 
+/*DROPDOWN*/
 .vuestro-text-field-dropdown {
   background: var(--vuestro-dropdown-content-bg);
   color: var(--vuestro-dropdown-content-fg);
@@ -511,6 +526,7 @@ export default {
   padding: 0.4em;
 }
 
+/*EXTRA SLOTS*/
 .vuestro-text-field-unit-slot {
   margin-right: 0.25em;
   font-size: 1.2em;

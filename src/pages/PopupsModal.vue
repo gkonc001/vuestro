@@ -122,7 +122,8 @@
       <vuestro-modal :active.sync="modalOpen2" close-on-blur>
         <template #title>VuestroModal</template>
         <template #buttons></template>
-        <vuestro-container column>
+        <vuestro-container>
+          <vuestro-text-field variant="outline" placeholder="Message" auto-focus></vuestro-text-field>
           <vuestro-button rounded>
             <template #icon>
               <vuestro-icon name="hospital"></vuestro-icon>

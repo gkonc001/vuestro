@@ -251,7 +251,7 @@ export default {
   --vuestro-widget-dark-bg: #383b3f;
   --vuestro-widget-light-bg: var(--vuestro-widget-dark-bg);
 
-  --vuestro-field-bg: #5a5959;
+  --vuestro-field-bg: var(--vuestro-darker);
   --vuestro-outline: #7d7d7d;
   --vuestro-active: #37383a;
   --vuestro-hover: #535456;
