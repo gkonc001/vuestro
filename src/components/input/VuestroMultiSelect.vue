@@ -142,6 +142,7 @@ export default {
     },
     onFocus() {
       this.showDropdown = true;
+      this.$emit('open');
     },
     onDragAdd(e) {
       this.$emit('add', e.item.innerText);
@@ -153,6 +154,7 @@ export default {
     closeDropdown() {
       if (!this.focusDebounce) {
         this.showDropdown = false;
+        this.$emit('close');
       }
     },
     // keyup passthrough, passes through keyup but also provides
