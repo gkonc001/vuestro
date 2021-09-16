@@ -8,7 +8,7 @@
 //
 <template>
   <div class="vuestro-tray"
-       :class="[`vuestro-tray-${variant}`, size, { stretch, noMargin }]">
+       :class="[`vuestro-tray-${variant}`, size, { stretch, noMargin, joinable }]">
     <div v-if="$slots.title" class="vuestro-tray-title flex-align-self-center">
       <slot name="title"></slot>
     </div>
@@ -32,6 +32,7 @@ export default {
     size: { type: String, default: 'md' },         // standard vuestro size string
     stretch: { type: Boolean, default: false },    // enable flex-grow
     noMargin: { type: Boolean, default: false },   // set margin: 0
+    joinable: { type: Boolean, default: false },   // lets trays join up if they are adjacent children in a container, also applies noMargin
   },
 };
 
@@ -62,7 +63,8 @@ export default {
 .vuestro-tray.stretch {
   flex-grow: 1;
 }
-.vuestro-tray.noMargin {
+.vuestro-tray.noMargin,
+.vuestro-tray.joinable {
   margin: 0;
 }
 .vuestro-tray-outline {
@@ -90,16 +92,16 @@ export default {
   pointer-events: none;
 }
 
-.vuestro-tray.noMargin:first-child {
+.vuestro-tray.joinable:first-child {
   border-bottom: var(--vuestro-control-border-width) solid var(--vuestro-outline);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
-.vuestro-tray.noMargin:not(:first-child):not(:last-child) {
+.vuestro-tray.joinable:not(:first-child):not(:last-child) {
   border-bottom: var(--vuestro-control-border-width) solid var(--vuestro-outline);
   border-radius: 0;
 }
-.vuestro-tray.noMargin:last-child {
+.vuestro-tray.joinable:last-child {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
