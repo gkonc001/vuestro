@@ -34,7 +34,7 @@
           </div>
           <div v-if="popupMode"
                class="vuestro-notification-timer"
-               :style="{ 'animation-duration': `${this.popupTimeout}ms`}">
+               :style="{ 'animation-duration': `${popupTimeout}ms`}">
           </div>
         </template>
         <!--NORMAL POPUP-->

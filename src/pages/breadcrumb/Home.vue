@@ -106,6 +106,7 @@ export default {
         title: 'Edit',
         icon: 'pen',
         component: 'edit',
+        // color: 'var(--vuestro-indigo)',
         data: item,
         options: {},
       });
@@ -114,10 +115,11 @@ export default {
       this.$emit('descend', {
         title: '/',
         component: 'file-browser',
+        // color: 'var(--vuestro-indigo)',
         options: {
           path: '/',
         },
-      })
+      });
     },
     refresh() {
       console.log('refresh called');

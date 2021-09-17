@@ -2,10 +2,14 @@
   <vuestro-container class="vuestro-breadcrumb" :gutter="gutter">
     <div class="vuestro-breadcrumb-trail">
       <template v-for="(p, idx) in stack">
-        <div v-if="idx !== 0" class="vuestro-breadcrumb-delimiter">
+        <div v-if="idx !== 0 && variant !== 'tabs' && variant !== 'arrows'"
+             class="vuestro-breadcrumb-delimiter">
           <vuestro-icon :name="delimiter"></vuestro-icon>
         </div>
-        <div class="vuestro-breadcrumb-item" @click="onClickTrail(idx)">
+        <div class="vuestro-breadcrumb-item"
+
+             :style="getItemStyle(p)"
+             @click="onClickTrail(idx)">
           <vuestro-icon v-if="p.icon" :name="p.icon"></vuestro-icon>
           <div class="vuestro-breadcrumb-title">{{ p.title }}</div>
         </div>
@@ -28,6 +32,7 @@ export default {
     pages: { type: Array, required: true },
     delimiter: { type: String, default: 'angle-right' },
     gutter: { type: String, default: 'md' },   // proxy vuestro-container option
+    variant: { type: String, default: 'regular' }, // regular, tabs
   },
   data() {
     return {
@@ -53,6 +58,11 @@ export default {
     }
   },
   methods: {
+    getItemStyle(item) {
+      return {
+        'background-color': item.color || 'transparent',
+      };
+    },
     // re-read the stack from the pages prop
     reset() {
       this.stack = this.pages;
@@ -126,9 +136,9 @@ export default {
   display: flex;
   cursor: pointer;
   padding: 0.2em 0.4em;
+  border-radius: var(--vuestro-control-border-radius);
 }
 .vuestro-breadcrumb-item:hover {
-  border-radius: var(--vuestro-control-border-radius);
   background-color: var(--vuestro-selection);
 }
 .vuestro-breadcrumb-title {
@@ -141,6 +151,8 @@ export default {
 
 .vuestro-breadcrumb-delimiter {
   padding: 0 0.3em;
+}
+.vuestro-breadcrumb-item-tabs {
 }
 
 </style>

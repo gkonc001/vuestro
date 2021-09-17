@@ -89,6 +89,7 @@ export default {
       this.$emit('descend', {
         title: d.name,
         component: 'file-browser',
+        // color: 'var(--vuestro-blue)',
         options: {
           path: newPath,
         },
