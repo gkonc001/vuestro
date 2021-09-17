@@ -39,7 +39,7 @@ export default {
           title: 'Home',
           icon: 'home',
           component: 'home',
-          color: 'var(--vuestro-purple)',
+          // color: 'var(--vuestro-purple)',
           data: [],
           options: {},
         },

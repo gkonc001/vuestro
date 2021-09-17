@@ -66,13 +66,18 @@ export default {
   },
   methods: {
     getItemStyle(item) {
+      if (this.variant === 'tabs' || this.variant === 'panel') {
+        return {
+          'background-color': item.color || 'var(--vuestro-breadcrumb-fallback-color)',
+        };
+      }
       return {
         'background-color': item.color || 'transparent',
       };
     },
     getItemArrowStyle(item) {
       return {
-        'border-left': `var(--vuestro-breadcrumb-tab-arrow-width) solid ${item.color}`,
+        'border-left': `var(--vuestro-breadcrumb-tab-arrow-width) solid ${item.color || 'var(--vuestro-breadcrumb-fallback-color)'}`,
       };
     },
     // re-read the stack from the pages prop
@@ -128,6 +133,7 @@ export default {
   --vuestro-breadcrumb-font-size: 1.2em;
   --vuestro-breadcrumb-font-weight: 500;
   --vuestro-breadcrumb-tab-arrow-width: 1em;
+  --vuestro-breadcrumb-fallback-color: var(--vuestro-secondary);
 }
 
 </style>
@@ -188,10 +194,13 @@ export default {
   left: calc(100% + 1px);
   z-index: 1;
 }
-
+/*CHANGE TAB COLOR ON HOVER*/
 .vuestro-breadcrumb-item:hover {
-  background-color: var(--vuestro-selection);
-  /*filter: brightness(130%);*/
+  background-color: var(--vuestro-selection) !important;
+}
+/*CHANGE ARROW COLOR ON HOVER */
+.vuestro-breadcrumb-item:hover .vuestro-breadcrumb-item-arrow {
+  border-left-color: var(--vuestro-selection) !important;
 }
 .vuestro-breadcrumb-title {
   padding-left: 0.2em;
