@@ -1,3 +1,8 @@
+// Breadcrumb component which uses the url to save the stack for bookmarkable trails
+//
+// CSS Vars:
+// --vuestro-breadcrumb-trail-bg - background for breadcrumb bar, defaults to transparent
+//
 <template>
   <vuestro-container class="vuestro-breadcrumb" :gutter="gutter">
     <div class="vuestro-breadcrumb-trail"
@@ -152,9 +157,12 @@ export default {
   font-size: var(--vuestro-breadcrumb-font-size);
   font-weight: var(--vuestro-breadcrumb-font-weight);
   overflow: hidden;
+  background-color: var(--vuestro-breadcrumb-trail-bg, transparent);
 }
 .vuestro-breadcrumb-trail-panel {
   border-bottom: 1px solid var(--vuestro-outline);
+  border-top-left-radius: calc(var(--vuestro-control-border-radius) - 1px);
+  border-top-right-radius: calc(var(--vuestro-control-border-radius) - 1px);
 }
 .vuestro-breadcrumb-item {
   display: flex;
