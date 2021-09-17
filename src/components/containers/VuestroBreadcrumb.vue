@@ -36,7 +36,7 @@
 export default {
   name: 'VuestroBreadcrumb',
   props: {
-    pages: { type: Array, required: true },
+    pages: { type: Array, default: () => [] },
     delimiter: { type: String, default: 'angle-right' },
     gutter: { type: String, default: 'md' },   // proxy vuestro-container option
     variant: { type: String, default: 'regular' }, // regular, tabs, panel
@@ -80,11 +80,11 @@ export default {
         'border-left': `var(--vuestro-breadcrumb-tab-arrow-width) solid ${item.color || 'var(--vuestro-breadcrumb-fallback-color)'}`,
       };
     },
-    // re-read the stack from the pages prop
-    reset() {
+    // re-read the stack from the pages prop or take the arg if provided
+    reset(pages) {
       // provide next tick as convenience so caller doesn't have to
       this.$nextTick(() => {
-        this.stack = this.pages;
+        this.stack = pages || this.pages;
         this.updateUrl();
       });
     },
