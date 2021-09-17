@@ -82,8 +82,11 @@ export default {
     },
     // re-read the stack from the pages prop
     reset() {
-      this.stack = this.pages;
-      this.updateUrl();
+      // provide next tick as convenience so caller doesn't have to
+      this.$nextTick(() => {
+        this.stack = this.pages;
+        this.updateUrl();
+      });
     },
     // add the given pageObj to the stack
     onDescend(pageObj) {
