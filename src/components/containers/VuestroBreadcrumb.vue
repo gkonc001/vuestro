@@ -133,7 +133,7 @@ export default {
   --vuestro-breadcrumb-font-size: 1.2em;
   --vuestro-breadcrumb-font-weight: 500;
   --vuestro-breadcrumb-tab-arrow-width: 1em;
-  --vuestro-breadcrumb-fallback-color: var(--vuestro-secondary);
+  --vuestro-breadcrumb-fallback-color: var(--vuestro-gray-dark);
 }
 
 </style>
@@ -172,7 +172,7 @@ export default {
 }
 .vuestro-breadcrumb-item-tabs:not(:first-child),
 .vuestro-breadcrumb-item-panel:not(:first-child) {
-  padding-left: 1em;
+  padding-left: 1.5em;
 }
 
 .vuestro-breadcrumb-item-arrow {
@@ -202,12 +202,11 @@ export default {
 .vuestro-breadcrumb-item:hover .vuestro-breadcrumb-item-arrow {
   border-left-color: var(--vuestro-selection) !important;
 }
-.vuestro-breadcrumb-title {
-  padding-left: 0.2em;
-  font-size: 0.9em;
+.vuestro-breadcrumb-item > .vuestro-icon {
+  margin-right: 0.4em;
 }
-.vuestro-breadcrumb-title:not(:only-child) {
-  margin-left: 0.2em;
+.vuestro-breadcrumb-title {
+  font-size: 0.9em;
 }
 
 .vuestro-breadcrumb-delimiter {
