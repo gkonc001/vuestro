@@ -1,17 +1,24 @@
 <template>
   <vuestro-container class="vuestro-breadcrumb" :gutter="gutter">
-    <div class="vuestro-breadcrumb-trail">
+    <div class="vuestro-breadcrumb-trail"
+         :class="`vuestro-breadcrumb-trail-${variant}`">
       <template v-for="(p, idx) in stack">
-        <div v-if="idx !== 0 && variant !== 'tabs' && variant !== 'arrows'"
+        <div v-if="idx !== 0 && variant !== 'tabs' && variant !== 'panel'"
              class="vuestro-breadcrumb-delimiter">
           <vuestro-icon :name="delimiter"></vuestro-icon>
         </div>
         <div class="vuestro-breadcrumb-item"
-
+             :class="`vuestro-breadcrumb-item-${variant}`"
              :style="getItemStyle(p)"
              @click="onClickTrail(idx)">
           <vuestro-icon v-if="p.icon" :name="p.icon"></vuestro-icon>
           <div class="vuestro-breadcrumb-title">{{ p.title }}</div>
+          <template v-if="variant === 'tabs' || variant === 'panel'">
+            <div class="vuestro-breadcrumb-item-arrow"
+                 :style="getItemArrowStyle(p)">
+            </div>
+            <div class="vuestro-breadcrumb-item-arrow-border"></div>
+          </template>
         </div>
       </template>
     </div>
@@ -32,7 +39,7 @@ export default {
     pages: { type: Array, required: true },
     delimiter: { type: String, default: 'angle-right' },
     gutter: { type: String, default: 'md' },   // proxy vuestro-container option
-    variant: { type: String, default: 'regular' }, // regular, tabs
+    variant: { type: String, default: 'regular' }, // regular, tabs, panel
   },
   data() {
     return {
@@ -61,6 +68,11 @@ export default {
     getItemStyle(item) {
       return {
         'background-color': item.color || 'transparent',
+      };
+    },
+    getItemArrowStyle(item) {
+      return {
+        'border-left': `var(--vuestro-breadcrumb-tab-arrow-width) solid ${item.color}`,
       };
     },
     // re-read the stack from the pages prop
@@ -115,6 +127,7 @@ export default {
   --vuestro-breadcrumb-root-bg: var(--vuestro-primary);
   --vuestro-breadcrumb-font-size: 1.2em;
   --vuestro-breadcrumb-font-weight: 500;
+  --vuestro-breadcrumb-tab-arrow-width: 1em;
 }
 
 </style>
@@ -122,8 +135,6 @@ export default {
 <style scoped>
 
 .vuestro-breadcrumb-trail {
-  padding-left: 0.2em;
-  padding-right: 0.2em;
   flex: none;
   height: var(--vuestro-breadcrumb-height);
   width: 100%;
@@ -131,15 +142,56 @@ export default {
   align-items: center;
   font-size: var(--vuestro-breadcrumb-font-size);
   font-weight: var(--vuestro-breadcrumb-font-weight);
+  overflow: hidden;
+}
+.vuestro-breadcrumb-trail-panel {
+  border-bottom: 1px solid var(--vuestro-outline);
 }
 .vuestro-breadcrumb-item {
   display: flex;
+  align-items: center;
   cursor: pointer;
   padding: 0.2em 0.4em;
   border-radius: var(--vuestro-control-border-radius);
+  position: relative;
 }
+.vuestro-breadcrumb-item-tabs,
+.vuestro-breadcrumb-item-panel {
+  height: 100%;
+  padding-right: 0;
+  border-radius: 0;
+}
+.vuestro-breadcrumb-item-panel:first-child {
+  border-top-left-radius: calc(var(--vuestro-control-border-radius) - 1px);
+}
+.vuestro-breadcrumb-item-tabs:not(:first-child),
+.vuestro-breadcrumb-item-panel:not(:first-child) {
+  padding-left: 1em;
+}
+
+.vuestro-breadcrumb-item-arrow {
+  border-top: var(--vuestro-breadcrumb-height) solid transparent;
+  border-bottom: var(--vuestro-breadcrumb-height) solid transparent;
+  position: absolute;
+  top: 50%;
+  margin-top: calc(var(--vuestro-breadcrumb-height)*-1);
+  left: 100%;
+  z-index: 4;
+}
+.vuestro-breadcrumb-item-arrow-border {
+  border-top: var(--vuestro-breadcrumb-height) solid transparent;
+  border-bottom: var(--vuestro-breadcrumb-height) solid transparent;
+  border-left: var(--vuestro-breadcrumb-tab-arrow-width) solid var(--vuestro-outline);
+  position: absolute;
+  top: 50%;
+  margin-top: calc(var(--vuestro-breadcrumb-height)*-1);
+  left: calc(100% + 1px);
+  z-index: 1;
+}
+
 .vuestro-breadcrumb-item:hover {
   background-color: var(--vuestro-selection);
+  /*filter: brightness(130%);*/
 }
 .vuestro-breadcrumb-title {
   padding-left: 0.2em;
@@ -151,8 +203,6 @@ export default {
 
 .vuestro-breadcrumb-delimiter {
   padding: 0 0.3em;
-}
-.vuestro-breadcrumb-item-tabs {
 }
 
 </style>

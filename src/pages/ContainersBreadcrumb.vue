@@ -1,5 +1,23 @@
 <template>
-  <vuestro-breadcrumb :pages="pages"></vuestro-breadcrumb>
+  <vuestro-container>
+    <vuestro-card>
+      <template #heading>Default Style</template>
+      <template #subheading><vuestro-code>variant="regular"</vuestro-code></template>
+      <vuestro-breadcrumb :pages="pages" gutter="none"></vuestro-breadcrumb>
+    </vuestro-card>
+    <vuestro-card>
+      <template #heading>Tab Style</template>
+      <template #subheading><vuestro-code>variant="tabs"</vuestro-code></template>
+      <vuestro-breadcrumb :pages="pages" gutter="none" variant="tabs"></vuestro-breadcrumb>
+    </vuestro-card>
+    <vuestro-card>
+      <template #heading>Fit into VuestroPanel Style</template>
+      <template #subheading><vuestro-code>variant="panel"</vuestro-code></template>
+      <vuestro-panel>
+        <vuestro-breadcrumb :pages="pages" gutter="none" variant="panel"></vuestro-breadcrumb>
+      </vuestro-panel>
+    </vuestro-card>
+  </vuestro-container>
 </template>
 
 <script>
@@ -21,7 +39,7 @@ export default {
           title: 'Home',
           icon: 'home',
           component: 'home',
-          // color: 'var(--vuestro-purple)',
+          color: 'var(--vuestro-purple)',
           data: [],
           options: {},
         },
