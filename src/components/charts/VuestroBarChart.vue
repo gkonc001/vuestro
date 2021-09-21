@@ -61,7 +61,8 @@
           </vuestro-svg-tooltip>
         </template>
       </svg>
-      <vuestro-title>
+      <!--ONLY SHOW IF TOOLTIP NOT SHOWN-->
+      <vuestro-title v-if="cursorLine.length === 0">
         <slot name="title"></slot>
       </vuestro-title>
     </div>

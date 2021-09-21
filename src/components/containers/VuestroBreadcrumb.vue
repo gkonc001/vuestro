@@ -30,7 +30,11 @@
     <template v-if="top && top.component">
       <component ref="top" :is="top.component" :data="top.data" :options="top.options" @descend="onDescend" @ascend="onAscend"></component>
     </template>
-    <div v-else>Component not found</div>
+    <vuestro-container v-else>
+      <slot name="no-data">
+        No selection
+      </slot>
+    </vuestro-container>
   </vuestro-container>
 </template>
 
