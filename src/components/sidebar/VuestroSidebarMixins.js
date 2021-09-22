@@ -1,5 +1,5 @@
 /* global _ */
-module.exports = {
+export default {
   methods: {
     isShown(role, route) {
       function makeArray(d) {

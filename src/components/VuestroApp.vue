@@ -169,8 +169,13 @@ export default {
   /* palette */
   --vuestro-indigo: #682fa1;
   --vuestro-purple: #551A8B;
+  --vuestro-plum: #601A3E;
+  --vuestro-lavender: #b481e0;
+
   --vuestro-magenta: #d831a0;
   --vuestro-pink: #f13c6e;
+  --vuestro-watermelon: #fe7f9c;
+  --vuestro-salmon: #f13c6e;
 
   --vuestro-prussian: #3b4161;
   --vuestro-navy: #004475;
@@ -186,9 +191,11 @@ export default {
   --vuestro-gold: #fce228;
 
   --vuestro-orange: #f47633;
-  --vuestro-salmon: #f13c6e;
+
   --vuestro-brick: #8a270c;
   --vuestro-red: #ea4958;
+  --vuestro-crimson: #ba110c;
+  --vuestro-scarlet: #ff2400;
 
   --vuestro-white: #fff;
   --vuestro-light: #f5f5f5;
@@ -233,8 +240,6 @@ export default {
   --vuestro-active: #cfdaee;
   --vuestro-hover: #c4c7c9;
 
-  --vuestro-notifications-bg: var(--vuestro-salmon);
-
   /* text colors */
   --vuestro-text-color: #323334;
   --vuestro-text-color-secondary: #696969;
@@ -259,8 +264,13 @@ export default {
 
   --vuestro-indigo: #441473;
   --vuestro-purple: #8747c1;
+  --vuestro-plum: #7c1f4e;
+  --vuestro-lavender: #b481e0;
+
   --vuestro-magenta: #bd2c70;
   --vuestro-pink: #e04aad;
+  --vuestro-watermelon: #de5676;
+  --vuestro-salmon: #ff7965;
 
   --vuestro-prussian: #1f2233;
   --vuestro-navy: #002540;
@@ -276,9 +286,10 @@ export default {
   --vuestro-gold: #b38c05;
 
   --vuestro-orange: #ed6b26;
-  --vuestro-salmon: #e25058;
   --vuestro-brick: #8a270c;
   --vuestro-red: #de1f31;
+  --vuestro-crimson: #ba110c;
+  --vuestro-scarlet: #dd0000;
 
   --vuestro-light: #9e9999;
   --vuestro-light-med: #878585;

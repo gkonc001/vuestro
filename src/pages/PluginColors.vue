@@ -48,7 +48,7 @@
     </vuestro-card>
 
     <vuestro-card cols="12">
-      <template #subheading><span>Vuestro also provides <em>vuestroChartColorGenerator()</em> a color palette generator for chart colors that works with either numbers or strings.</span></template>
+      <template #subheading><span>Vuestro also provides <em>vuestroChartColorGenerator()</em> a color palette generator for chart colors that works with either numbers or strings as a seed.</span></template>
     </vuestro-card>
     <vuestro-card cols="3" v-for="c in 10" :key="c">
       <div class="color-chip" :style="{color: 'white', 'background-color': vuestroChartColorGenerator(c)}">
@@ -69,8 +69,13 @@ export default {
       colorVars: [
         '--vuestro-indigo',
         '--vuestro-purple',
+        '--vuestro-plum',
+        '--vuestro-lavender',
+
         '--vuestro-magenta',
         '--vuestro-pink',
+        '--vuestro-watermelon',
+        '--vuestro-salmon',
 
         '--vuestro-prussian',
         '--vuestro-navy',
@@ -86,9 +91,10 @@ export default {
         '--vuestro-gold',
 
         '--vuestro-orange',
-        '--vuestro-salmon',
         '--vuestro-brick',
         '--vuestro-red',
+        '--vuestro-crimson',
+        '--vuestro-scarlet',
       ],
       grayScale: [
         '--vuestro-white',
@@ -124,7 +130,6 @@ export default {
         '--vuestro-outline',
         '--vuestro-active',
         '--vuestro-hover',
-        '--vuestro-notifications-bg',
       ],
       textColors: [
         '--vuestro-text-color',
