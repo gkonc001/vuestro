@@ -1,5 +1,11 @@
 // Modal component
 //
+// CSS Vars:
+// --vuestro-modal-content-bg - the background shade (outside modal)
+// --vuestro-modal-margin-top - space above modal
+// --vuestro-modal-title-font-size
+// --vuestro-modal-titlebar-padding
+// --vuestro-modal-buttons-padding
 //
 <template>
   <transition name="vuestro-modal" mode="out-in"
@@ -8,7 +14,8 @@
     <div class="vuestro-modal" v-if="active || localActive" @click.exact="onBlur">
       <div class="vuestro-modal-inner">
         <!--TITLEBAR (ALWAYS DARK)-->
-        <div class="vuestro-modal-titlebar vuestro-dark">
+        <div v-if="$scopedSlots.title || $scopedSlots.toolbar"
+             class="vuestro-modal-titlebar vuestro-dark">
           <!--TITLE-->
           <div class="vuestro-modal-title">
             <slot name="title"></slot>
@@ -48,9 +55,9 @@
 export default {
   name: 'VuestroModal',
   props: {
-    active: { type: Boolean, required: false },
-    closeText: { type: String, default: '' },
-    closeOnBlur: { type: Boolean, default: false },
+    active: { type: Boolean, required: false },     // flag for controlling/binding open/close to outside var
+    closeText: { type: String, default: '' },       // override default close button with this text
+    closeOnBlur: { type: Boolean, default: false }, // close modal with a click outside the modal
   },
   data() {
     return {
@@ -90,7 +97,6 @@ export default {
   --vuestro-modal-font-size: 14px;
   --vuestro-modal-title-bg: var(--vuestro-dark);
   --vuestro-modal-title-fg: var(--vuestro-text-color-light);
-  --vuestro-modal-content-bg: var(--vuestro-content-bg);
   --vuestro-modal-footer-bg: var(--vuestro-content-bg);
   --vuestro-modal-active-bg: rgba(0,0,0,0.5);
   --vuestro-modal-header-border: 1px solid rgba(0,0,0,0.2);
@@ -133,12 +139,11 @@ export default {
 }
 
 .vuestro-modal-inner {
-  background-color: var(--vuestro-modal-content-bg);
+  background-color: var(--vuestro-modal-content-bg, var(--vuestro-content-bg));
   transition: background-color 0.4s;
   width: var(--vuestro-modal-width);
   min-height: 15vh;
-  margin-top: 10vh;
-  margin-bottom: 10vh;
+  margin-top: var(--vuestro-modal-margin-top, 10vh);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -153,11 +158,11 @@ export default {
 }
 
 .vuestro-modal-titlebar {
-  padding: 0 0.1em 0 0.6em;
+  padding: var(--vuestro-modal-titlebar-padding, 0 0.1em 0 0.6em);
   background-color: var(--vuestro-modal-title-bg);
   color: var(--vuestro-modal-title-fg);
   flex: none;
-  font-size: 1.2em;
+  font-size: var(--vuestro-modal-title-font-size, 1.2em);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -190,7 +195,7 @@ export default {
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
-  padding: 0 0.2em;
+  padding: var(--vuestro-modal-buttons-padding, 0 0.2em);
   background-color: var(--vuestro-modal-footer-bg);
 	border-bottom-left-radius: var(--vuestro-modal-border-radius);
 	border-bottom-right-radius: var(--vuestro-modal-border-radius);

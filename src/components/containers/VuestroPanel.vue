@@ -1,3 +1,8 @@
+//
+//
+// CSS Vars:
+// 
+//
 <template>
   <div class="vuestro-panel"
        :class="[ gutter, { isCollapsed, scroll, noStretch, noBorder, hasTitlebar }]">

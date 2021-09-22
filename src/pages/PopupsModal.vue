@@ -115,9 +115,9 @@
     </vuestro-card>
 
     <vuestro-card>
-      <template #description>
-        Close modal when clicking outside by setting the close-on-blur property
-      </template>
+      <template #description><span>
+        Close modal when clicking outside by setting the <vuestro-code>close-on-blur</vuestro-code> property
+      </span></template>
       <vuestro-button value @click="modalOpen2 = true">Open Modal</vuestro-button>
       <vuestro-modal :active.sync="modalOpen2" close-on-blur>
         <template #title>VuestroModal</template>
@@ -131,6 +131,40 @@
             SOS
           </vuestro-button>
         </vuestro-container>
+      </vuestro-modal>
+    </vuestro-card>
+
+    <vuestro-card>
+      <template #description><span>
+        Leaving out the <vuestro-code>title</vuestro-code> and <vuestro-code>toolbar</vuestro-code> slots will hide the titlebar, perfect for embedding panels.
+      </span></template>
+      <vuestro-button value @click="$refs.embeddedPanelExample.onOpen()">Open Modal</vuestro-button>
+      <vuestro-modal ref="embeddedPanelExample" close-on-blur>
+        <template #buttons></template>
+        <vuestro-panel no-border collapsible>
+          <template #title>Embedded Panel</template>
+          <vuestro-container>
+            <vuestro-text-field variant="outline" placeholder="Message" auto-focus></vuestro-text-field>
+            <vuestro-button rounded>
+              <template #icon>
+                <vuestro-icon name="hospital"></vuestro-icon>
+              </template>
+              SOS
+            </vuestro-button>
+          </vuestro-container>
+        </vuestro-panel>
+        <vuestro-panel no-border collapsible gutter="sm">
+          <template #title>Embedded Panel 2</template>
+          <vuestro-container>
+            <vuestro-text-field variant="outline" placeholder="Message" auto-focus></vuestro-text-field>
+            <vuestro-button rounded>
+              <template #icon>
+                <vuestro-icon name="hospital"></vuestro-icon>
+              </template>
+              SOS
+            </vuestro-button>
+          </vuestro-container>
+        </vuestro-panel>
       </vuestro-modal>
     </vuestro-card>
 
