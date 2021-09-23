@@ -96,6 +96,7 @@ export default {
       showShapeInfoModal: false,
       dataTitleKey: 'title',
       dataCoordinateKey: 'coords',
+      dataTooltipkey: 'tooltip',
       dataExtraKvps: [],
       map: null,
       layers: [],
@@ -226,15 +227,31 @@ export default {
                 kvps[k] = d[k];
               }
             }
-            markers.addLayer(L.marker(d[this.dataCoordinateKey], (this.markers.data ? {icon: this.markers.data.icon} : undefined)).bindPopup(this.$refs.popupContent).on('popupopen', () => {
+            // Bind tooltip to markers only if tooltip is provided
+            if(d[this.dataTooltipkey]){
+              markers.addLayer(L.marker(d[this.dataCoordinateKey], (this.markers.data ? {icon: this.markers.data.icon} : undefined))
+              .bindTooltip(d[this.dataTooltipkey].content, d[this.dataTooltipkey].options)
+              .bindPopup(this.$refs.popupContent).on('popupopen', () => {
               this.currentItem = {
-                title: d[this.dataTitleKey],
-                shape: 'Marker',
-                lat: d[this.dataCoordinateKey][0],
-                lng: d[this.dataCoordinateKey][1],
-                kvps
-              };
-            }));
+                  title: d[this.dataTitleKey],
+                  shape: 'Marker',
+                  lat: d[this.dataCoordinateKey][0],
+                  lng: d[this.dataCoordinateKey][1],
+                  kvps
+                };
+              }));
+              // otherwise add markers as normal
+            }else{
+              markers.addLayer(L.marker(d[this.dataCoordinateKey], (this.markers.data ? {icon: this.markers.data.icon} : undefined)).bindPopup(this.$refs.popupContent).on('popupopen', () => {
+                this.currentItem = {
+                  title: d[this.dataTitleKey],
+                  shape: 'Marker',
+                  lat: d[this.dataCoordinateKey][0],
+                  lng: d[this.dataCoordinateKey][1],
+                  kvps
+                };
+              }));
+            }
           }
           overlayMaps.push(markers);
         }
