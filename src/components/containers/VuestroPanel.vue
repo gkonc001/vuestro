@@ -1,7 +1,17 @@
 //
 //
 // CSS Vars:
-// 
+// --vuestro-panel-bg
+// --vuestro-panel-fg
+// --vuestro-panel-toolbar-bg
+// --vuestro-panel-toolbar-fg
+// --vuestro-panel-toolbar-border
+// --vuestro-panel-border
+// --vuestro-panel-box-shadow
+// --vuestro-panel-border-radius
+// --vuestro-panel-titlebar-min-height
+// --vuestro-panel-title-padding
+//
 //
 <template>
   <div class="vuestro-panel"
@@ -176,8 +186,7 @@ export default {
   background-color: var(--vuestro-panel-toolbar-bg);
   border-top-left-radius: calc(var(--vuestro-panel-border-radius) - 1px);
   border-top-right-radius: calc(var(--vuestro-panel-border-radius) - 1px);
-  padding-left: 0.2em;
-  padding-right: 0.2em;
+  padding: var(--vuestro-panel-titlebar-padding, 0 0.2em);
 }
 .vuestro-panel.isCollapsed .vuestro-panel-title-toolbar {
   border-bottom-left-radius: calc(var(--vuestro-panel-border-radius) - 1px);
@@ -185,7 +194,7 @@ export default {
 }
 .vuestro-panel-title {
   flex-grow: 1;
-  padding: 0.2em 0.4em;
+  padding: var(--vuestro-panel-title-padding, 0.2em 0.4em);
   color: var(--vuestro-panel-toolbar-fg);
 }
 .vuestro-panel-toolbar {
