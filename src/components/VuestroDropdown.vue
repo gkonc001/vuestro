@@ -102,24 +102,26 @@ export default {
     checkDimensions() {
       this.$nextTick(() => {
         this.left = true;
-        // set max height based on available vertical space
-        let bcr = this.$refs.dropdown.getBoundingClientRect();
-        if (!this.noScroll) {
-          if (this.fitWithinPanel) {
-            // get parents bottom edge and fit within
-            let parent = this.$el.closest('.vuestro-panel-contents');
-            if (parent) {
-              let pbcr = parent.getBoundingClientRect();
-              this.maxHeight = `${pbcr.bottom - bcr.top}px`;
+        if (this.$refs.dropdown) {
+          // set max height based on available vertical space
+          let bcr = this.$refs.dropdown.getBoundingClientRect();
+          if (!this.noScroll) {
+            if (this.fitWithinPanel) {
+              // get parents bottom edge and fit within
+              let parent = this.$el.closest('.vuestro-panel-contents');
+              if (parent) {
+                let pbcr = parent.getBoundingClientRect();
+                this.maxHeight = `${pbcr.bottom - bcr.top}px`;
+              }
+            } else {
+              // use window
+              this.maxHeight = `${window.innerHeight - bcr.top}px`;
             }
-          } else {
-            // use window
-            this.maxHeight = `${window.innerHeight - bcr.top}px`;
           }
-        }
-        // see if menu would go offscreen so we can flip it horizontally
-        if (window.innerWidth - bcr.left < bcr.width*1.5) {
-          this.left = false;
+          // see if menu would go offscreen so we can flip it horizontally
+          if (window.innerWidth - bcr.left < bcr.width*1.5) {
+            this.left = false;
+          }
         }
         // see if right-justify was specified
         if (this.right) {
