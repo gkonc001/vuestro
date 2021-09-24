@@ -43,7 +43,7 @@
         </div>
         <!--BUTTON SLOT-->
         <div v-if="$scopedSlots.buttons" class="vuestro-modal-buttons">
-          <slot name="buttons"></slot>
+          <slot name="buttons" :onClose="onClose"></slot>
         </div>
       </div>
     </div>

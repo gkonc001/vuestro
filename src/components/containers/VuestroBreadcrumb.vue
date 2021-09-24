@@ -1,7 +1,12 @@
 // Breadcrumb component which uses the url to save the stack for bookmarkable trails
 //
 // CSS Vars:
+// --vuestro-breadcrumb-height
 // --vuestro-breadcrumb-trail-bg - background for breadcrumb bar, defaults to transparent
+// --vuestro-breadcrumb-fallback-color
+// --vuestro-breadcrumb-tab-arrow-width - width of arrow shape used for tab/panel variant
+// --vuestro-breadcrumb-font-size
+// --vuestro-breadcrumb-font-weight
 //
 <template>
   <vuestro-container class="vuestro-breadcrumb" :gutter="gutter">
@@ -47,8 +52,9 @@ export default {
   props: {
     pages: { type: Array, default: () => [] },
     delimiter: { type: String, default: 'angle-right' },
-    gutter: { type: String, default: 'md' },   // proxy vuestro-container option
+    gutter: { type: String, default: 'md' },       // proxy vuestro-container option
     variant: { type: String, default: 'regular' }, // regular, tabs, panel
+    noUrl: { type: Boolean, default: false },      // suppress updating the url, for when bookmarking is not needed
   },
   data() {
     return {
@@ -62,7 +68,7 @@ export default {
   },
   mounted() {
     // initialize stack with either query param or the pages param
-    if (Object.keys(this.$route.query).length > 0) {
+    if (!this.noUrl && Object.keys(this.$route.query).length > 0) {
       try {
         this.stack = JSON.parse(atob(this.$route.query.p));
       } catch (e) {
@@ -130,7 +136,9 @@ export default {
     },
     // re-render the stack onto the URL as a query string
     updateUrl() {
-      this.$router.push({ query: { p: btoa(JSON.stringify(this.stack)) }}).catch(()=>{});
+      if (!this.noUrl) {
+        this.$router.push({ query: { p: btoa(JSON.stringify(this.stack)) }}).catch(()=>{});
+      }
     },
   },
 };
@@ -141,7 +149,6 @@ export default {
 
 .vuestro-app {
   --vuestro-breadcrumb-height: 30px;
-  --vuestro-breadcrumb-root-bg: var(--vuestro-primary);
   --vuestro-breadcrumb-font-size: 1.2em;
   --vuestro-breadcrumb-font-weight: 500;
   --vuestro-breadcrumb-tab-arrow-width: 1em;
