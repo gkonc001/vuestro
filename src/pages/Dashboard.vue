@@ -5,10 +5,13 @@
     </template>
     <template #footer>
       <div class="grid-footer">
-        <vuestro-button pill>
+        <vuestro-button pill @click="$refs.theModal.onOpen()">
           <vuestro-icon name="plus"></vuestro-icon>
         </vuestro-button>
       </div>
+      <vuestro-modal ref="theModal" close-on-blur>
+        <template #title>Test Modal</template>
+      </vuestro-modal>
     </template>
   </vuestro-grid>
 </template>
@@ -16,9 +19,13 @@
 <script>
 
 /* global Vue */
+import ModalTestWidget from '@/pages/widgets/ModalTestWidget';
 
 export default {
   name: 'Dashboard',
+  components: {
+    ModalTestWidget,
+  },
   data() {
     return {
       exampleData: [{
@@ -296,7 +303,20 @@ export default {
             w: 6,
             h: 2,
           },
-        }
+        },
+        {
+          id: 'wmodal-test',
+          component: 'modal-test-widget',
+          options: {
+            title: 'Modal Test',
+          },
+          position: {
+            x: 0,
+            y: 8,
+            w: 2,
+            h: 1,
+          },
+        },
       ];
     },
     getAreaChart() {

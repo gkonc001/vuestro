@@ -39,8 +39,9 @@ export default {
         return {
           width: pixelPosition.w + 'px',
           height: pixelPosition.h + 'px',
-          transform: `translate(${pixelPosition.x}px, ${pixelPosition.y}px)`,
-          'z-index': this.focused ? 200:100,
+          left: `${pixelPosition.x}px`,
+          top: `${pixelPosition.y}px`,
+          'z-index': this.focused ? 10000:100,
         };
       }
       return {

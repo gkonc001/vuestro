@@ -122,6 +122,7 @@ export default {
       popupTimer: null,
       searchTerm: '',
       muted: false,
+      firstTime: true,
     };
   },
   computed: {
@@ -175,7 +176,9 @@ export default {
   },
   watch: {
     unread(newVal, oldVal) {
-      if (!this.muted && newVal.length > oldVal.length) {
+      if (this.firstTime) {
+        this.firstTime = false;
+      } else if (!this.muted && newVal.length > oldVal.length) {
         this.popupMode = true;
         // manual open dropdown
         this.$refs.theDropdown.open();
