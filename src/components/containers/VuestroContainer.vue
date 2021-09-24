@@ -19,10 +19,11 @@
 export default {
   name: 'VuestroContainer',
   props: {
-    gutter: { type: String, default: 'md' },  // { 'none', 'sm', 'md', 'lg', 'xl' } 
+    gutter: { type: String, default: 'md' },  // { 'none', 'sm', 'md', 'lg', 'xl' }
     inner: { type: Boolean, default: false }, // uses an absolutely positioned inner div
 
     column: { type: Boolean, default: false },
+    reverse: { type: Boolean, default: false },
     noWrap: { type: Boolean, default: false },
 
     grow: { type: String, default: '1' },       // flexbox grow value
@@ -38,9 +39,17 @@ export default {
   },
   computed: {
     style() {
+      let flexDirection = 'row';
+      if (this.column) {
+        flexDirection = 'column';
+      }
+      // add reverse if set
+      if (this.reverse) {
+        flexDirection += '-reverse';
+      }
       return {
         'padding': 'var(--vuestro-gutter)',
-        'flex-direction': this.column ? 'column':'row',
+        'flex-direction': flexDirection,
         'flex-grow': this.grow,
         'flex-shrink': this.shrink,
         'flex-basis': this.basis,
