@@ -1,5 +1,5 @@
 <template>
-  <vuestro-modal :active.sync="active">
+  <vuestro-modal :active.sync="active" close-on-blur>
     <template #title>
       <slot name="title"></slot>
     </template>

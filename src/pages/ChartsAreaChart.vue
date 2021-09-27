@@ -208,6 +208,7 @@ export default {
         ],
       },
       options3: {
+        gradientFill: true,
         showAxes: true,
         valueAxis: {
           render(d) {
@@ -218,6 +219,7 @@ export default {
           {
             title: 'Series 1',
             field: 'value1',
+            color: 'green'
           },
           {
             title: 'Series 2',

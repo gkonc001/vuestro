@@ -10,7 +10,7 @@
         <!--GRADIENT DEFS-->
         <defs>
           <linearGradient v-for="s in processedSeries" :key="s.field"
-                          :id="`${s.field}-gradient`" x1="0%" y1="0%" x2="0%" y2="100%">
+                          :id="`${s.id}-gradient`" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" :stop-color="s.color" stop-opacity="0.8"></stop>
             <stop offset="100%" :stop-color="s.color" stop-opacity="0.2"></stop>
           </linearGradient>
@@ -26,7 +26,7 @@
             <path v-if="!notFilled"
                   v-animate:getArea="s.field"
                   class="vuestro-area-chart-area"
-                  :fill="gradientFill ? `url(#${s.field}-gradient) ${s.color}`:s.color"
+                  :fill="gradientFill ? `url(#${s.id}-gradient) ${s.color}`:s.color"
                   :opacity="gradientFill ? 1:fillOpacity"/>
             <path class="vuestro-area-chart-line"
                   v-animate:getLine="s.field"
@@ -119,9 +119,10 @@ export default {
     getCursor() {
       return d3.area().x(d => d.x).y0(this.height).y1(0);
     },
-    // process series prop by adding default colors
+    // process series prop by adding default colors and an id
     processedSeries() {
       return this.series.map((s) => {
+        s.id = this.vuestroGenerateId();
         if (s.field && !s.color) {
           s.color = this.color(s.field);
         }
