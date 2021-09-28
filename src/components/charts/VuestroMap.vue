@@ -240,6 +240,18 @@ export default {
                   kvps
                 };
               }));
+              // sort tooltip content and dispay on cluster mouseover
+              markers.on('clustermouseover', function(e){
+                var tooltipContent = [];
+                for(let elem of e.layer.getAllChildMarkers()){
+                  tooltipContent.push(elem._tooltip._content);
+                }
+                var sortedContent = tooltipContent.reduce(function(pre, cur){
+                  return pre < cur ? cur : pre;
+                });
+                e.propagatedFrom.bindTooltip(sortedContent).openTooltip();
+              });
+
               // otherwise add markers as normal
             }else{
               markers.addLayer(L.marker(d[this.dataCoordinateKey], (this.markers.data ? {icon: this.markers.data.icon} : undefined)).bindPopup(this.$refs.popupContent).on('popupopen', () => {
