@@ -1,23 +1,31 @@
-// On of the most useful Vuestro components, can be used for tags, badges, key value pairs, etc.
+// On of the most useful Vuestro components, can be used for tags, badges, key-value pairs, etc.
+//
+// Slots:
+//  icon
+//  title
+//  title-buttons
+//  value
+//  value-buttons
 //
 // Events:
 //  click - emitted when there is a click listener
 //  close - emitted when there is a close listener and the x is clicked
 //
 // CSS Vars:
-// --vuestro-pill-radius - use to get squared or slightly-rounded corners
-// --vuestro-pill-title-fg - foreground color for title side (left side)
-// --vuestro-pill-title-bg - background color for title side (left side)
-// --vuestro-pill-value-fg - foreground color for value side (right side)
-// --vuestro-pill-value-bg - background color for value side (right side)
-// --vuestro-control-margin-v - standard vuestro vertical margin
-// --vuestro-control-margin-h - standard vuestro horizontal margin
+//  --vuestro-pill-radius - use to get squared or slightly-rounded corners
+//  --vuestro-pill-title-fg - foreground color for title side (left side)
+//  --vuestro-pill-title-bg - background color for title side (left side)
+//  --vuestro-pill-value-fg - foreground color for value side (right side)
+//  --vuestro-pill-value-bg - background color for value side (right side)
+//  --vuestro-control-margin-v - standard vuestro vertical margin
+//  --vuestro-control-margin-h - standard vuestro horizontal margin
 //
 <template>
   <div class="vuestro-pill"
        :class="[ size, variant,
                  { clickable: $listeners.click,
                    closable: $listeners.close,
+                   'vuestro-pill-title-only': $slots.title && !$slots.value,
                    shadow, draggable, geopattern, noMargin }]"
        :style="style"
        @click="onClick">
@@ -213,7 +221,7 @@ export default {
   border-radius: var(--vuestro-pill-radius);
   background-image: var(--vuestro-pill-geopattern);
 }
-.vuestro-pill.capsule .vuestro-pill-title {
+.vuestro-pill.capsule:not(.vuestro-pill-title-only) .vuestro-pill-title {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -245,6 +253,10 @@ export default {
   /* automatically remove margins for embedded vuestro controls */
   --vuestro-control-margin-v: 0;
   --vuestro-control-margin-h: 0;
+}
+/* add slight overlap for multiple buttons so they don't take up as much space and look weird */
+.vuestro-pill-title-buttons > .vuestro-button:not(:first-child) {
+  margin-left: -0.2em;
 }
 
 .vuestro-pill-value-layer {
@@ -282,7 +294,6 @@ export default {
   box-sizing: content-box;
 }
 
-/* add slight overlap for multiple buttons so they don't take up as much space */
 .vuestro-pill-value-buttons {
   display: flex;
   /* automatically remove margins for embedded vuestro controls */
@@ -290,6 +301,7 @@ export default {
   --vuestro-control-margin-h: 0;
 	z-index: -2;
 }
+/* add slight overlap for multiple buttons so they don't take up as much space */
 .vuestro-pill-value-buttons > .vuestro-button:not(:first-child) {
   margin-left: -0.2em;
 }
@@ -298,6 +310,7 @@ export default {
   padding-left: 0.4em;
   margin-right: -0.3em;
 }
+/* handle case where icon is only slot */
 .vuestro-pill-icon-slot:only-child {
   padding-right: 0.4em;
   margin-right: 0;
@@ -313,10 +326,6 @@ export default {
 }
 .vuestro-pill.xl .vuestro-pill-icon-slot {
   width: var(--vuestro-control-xl-height);
-}
-
-.vuestro-pill.geopattern .vuestro-pill-title {
-  background-repeat: repeat;
 }
 
 </style>
