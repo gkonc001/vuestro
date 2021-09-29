@@ -1,5 +1,9 @@
 // The all-important text field
 //
+// Slots:
+//  #icon - left-aligned slot suitable for icons
+//  #unit - special slot for showing a unit
+//  #dropdown="{ closeDropdown, clear }" - dropdown content, with references to the closeDropdown and clear methods
 //
 // CSS Vars:
 // --vuestro-text-field-fg - text color for entered text
@@ -90,7 +94,10 @@
     <div v-if="$scopedSlots.dropdown"
          class="vuestro-text-field-dropdown vuestro-dark"
          :style="{ visibility: showDropdown ? 'visible':'hidden'}">
-        <slot name="dropdown"></slot>
+        <slot name="dropdown"
+              :closeDropdown="closeDropdown"
+              :clear="onClear">
+        </slot>
     </div>
     <!--DYNAMIC PLACEHOLDER (only for regular and outline variants)-->
     <div v-if="placeholder && (variant === 'regular' || variant === 'outline')"

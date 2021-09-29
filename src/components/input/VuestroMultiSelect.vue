@@ -64,10 +64,10 @@
          class="vuestro-multi-select-dropdown vuestro-dark"
          :style="{ visibility: showDropdown ? 'visible':'hidden', 'max-height': maxHeight }"
          @scroll="checkHeight">
-        <!--PASS METHODS TO SLOT FOR TIGHT INTEGRATION-->
+        <!--PASS METHODS TO SLOT FOR TIGHT INTEGRATION WITHIN THE DROPDOWN-->
         <slot name="dropdown"
               :searchTerm="searchTerm"
-              :close="closeDropdown"
+              :closeDropdown="closeDropdown"
               :clear="clear"
               :closeAndClear="closeAndClear">
         </slot>
