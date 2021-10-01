@@ -12,18 +12,18 @@
 //  click: emitted with e event
 //
 // CSS Vars:
-// --vuestro-list-item-title-font-size
-// --vuestro-list-item-title-font-weight
-// --vuestro-list-item-description-font-size
-// --vuestro-list-item-content-font-size
-// --vuestro-list-item-icon-margin
-// --vuestro-list-item-inner-margin
-// --vuestro-list-item-selected-bg
-// --vuestro-list-item-alt-bg
+//  --vuestro-list-item-title-font-size
+//  --vuestro-list-item-title-font-weight
+//  --vuestro-list-item-description-font-size
+//  --vuestro-list-item-content-font-size
+//  --vuestro-list-item-icon-margin
+//  --vuestro-list-item-inner-margin
+//  --vuestro-list-item-selected-bg
+//  --vuestro-list-item-alt-bg
 //
 <template>
   <div class="vuestro-list-item"
-	     :class="{ selected, readonly }"
+	     :class="{ selected, hover, readonly }"
 			 :style="{ 'z-index': zIndex }"
 			 @mouseenter="onMouseEnter"
 			 @mouseleave="onMouseLeave"
@@ -58,8 +58,9 @@
 export default {
   name: 'VuestroListItem',
   props: {
-    selected: { type: Boolean, default: false },
-    readonly: { type: Boolean, default: false },
+    selected: { type: Boolean, default: false }, // set true to use selected background
+    hover: { type: Boolean, default: false },    // set true for color change on hover
+    readonly: { type: Boolean, default: false }, // set true for readonly
   },
 	data() {
 		return {
@@ -123,9 +124,21 @@ export default {
   background-color: var(--vuestro-list-item-selected-bg, var(--vuestro-selection));
   z-index: -1000;
 }
+/* the hover is drawn as pseudo-element so it can cover the border when active */
+.vuestro-list-item.hover:not(.selected):hover:before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: var(--vuestro-selection-border-radius);
+  background-color: var(--vuestro-hover);
+  z-index: -1000;
+}
 /* draw a border at the bottom of all but the last child */
 /* of course these css pseudo-element manipulations assume all children are vuestro-list-item(s) */
-.vuestro-list-item:not(.selected):not(:last-child):after {
+.vuestro-list-item:not(.selected):not(:hover):not(:last-child):after {
   position: absolute;
   top: 100%;
   left: var(--vuestro-selection-border-radius);

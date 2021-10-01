@@ -21,8 +21,8 @@
         <vuestro-text-field variant="search" v-model="vuestroSearchTerm" stretch></vuestro-text-field>
       </template>
       <!--THE LIST-->
-      <vuestro-container justify="center" v-if="vuestroFilteredMatches.length === 0">No matching items</vuestro-container>
-      <vuestro-list-item v-else v-for="i in vuestroFilteredMatches" :key="i.name" :selected="selectedItem == i" @click="onClick(i)">
+      <vuestro-container justify="center" v-if="vuestroFilteredItems.length === 0">No matching items</vuestro-container>
+      <vuestro-list-item v-else v-for="i in vuestroFilteredItems" :key="i.name" :selected="selectedItem == i" @click="onClick(i)" hover>
         <template #icon>
           <vuestro-icon name="user"></vuestro-icon>
         </template>
