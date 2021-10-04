@@ -96,7 +96,6 @@ export default {
       showShapeInfoModal: false,
       dataTitleKey: 'title',
       dataCoordinateKey: 'coords',
-      dataTooltipkey: 'tooltip',
       dataExtraKvps: [],
       map: null,
       layers: [],
@@ -218,6 +217,14 @@ export default {
       // process data array as clustered markers with tooltips
       if (this.data && this.data.length > 0) {
         var markers = L.markerClusterGroup();
+
+        markers.on('clustermouseover', (e) => {
+          this.$emit('clusterHover', e);
+        });
+        markers.on('mouseover', (e) => {
+          this.$emit('markerHover', e);
+        });
+
         for (let d of this.data) {
           if (d[this.dataCoordinateKey]) {
             let kvps = {};
@@ -227,34 +234,7 @@ export default {
                 kvps[k] = d[k];
               }
             }
-            // Bind tooltip to markers only if tooltip is provided
-            if(d[this.dataTooltipkey]){
-              markers.addLayer(L.marker(d[this.dataCoordinateKey], (this.markers.data ? {icon: this.markers.data.icon} : undefined))
-              .bindTooltip(d[this.dataTooltipkey].content, d[this.dataTooltipkey].options)
-              .bindPopup(this.$refs.popupContent).on('popupopen', () => {
-              this.currentItem = {
-                  title: d[this.dataTitleKey],
-                  shape: 'Marker',
-                  lat: d[this.dataCoordinateKey][0],
-                  lng: d[this.dataCoordinateKey][1],
-                  kvps
-                };
-              }));
-              // sort tooltip content and dispay on cluster mouseover
-              markers.on('clustermouseover', function(e){
-                var tooltipContent = [];
-                for(let elem of e.layer.getAllChildMarkers()){
-                  tooltipContent.push(elem._tooltip._content);
-                }
-                var sortedContent = tooltipContent.reduce(function(pre, cur){
-                  return pre < cur ? cur : pre;
-                });
-                e.propagatedFrom.bindTooltip(sortedContent).openTooltip();
-              });
-
-              // otherwise add markers as normal
-            }else{
-              markers.addLayer(L.marker(d[this.dataCoordinateKey], (this.markers.data ? {icon: this.markers.data.icon} : undefined)).bindPopup(this.$refs.popupContent).on('popupopen', () => {
+            markers.addLayer(L.marker(d[this.dataCoordinateKey], (this.markers.data ? {icon: this.markers.data.icon} : undefined)).bindPopup(this.$refs.popupContent).on('popupopen', () => {
                 this.currentItem = {
                   title: d[this.dataTitleKey],
                   shape: 'Marker',
@@ -263,7 +243,6 @@ export default {
                   kvps
                 };
               }));
-            }
           }
           overlayMaps.push(markers);
         }
